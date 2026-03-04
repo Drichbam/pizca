@@ -1,0 +1,267 @@
+{
+  // ─────────────────────────────────────────────
+  // FORMATO DE RECETA — Pizca / OneNote Export
+  // Versión 1.0 — basado en análisis de _Desserts.pdf
+  // ─────────────────────────────────────────────
+
+  // ── METADATOS ──────────────────────────────────
+  "id": "kebab-slug-del-nombre",              // Ej: "tarte-infiniment-vanille"
+  "nombre": "Tarte Infiniment Vanille",
+  "categoria": "tartes",                      // tartes | entremets | biscuits | crèmes | mousses | glaces | viennoiserie | autre
+  "subcategoria": "tarte-crème",              // libre, más granular
+  "tags": ["vanille", "Pierre Hermé", "avancé", "molde 24cm"],
+  "origen": {
+    "chef_autor": "Pierre Hermé / Mercotte",
+    "fuente_url": "https://www.mercotte.fr/...",
+    "libro": "Best of Pierre Hermé – Éditions Ducasse"
+  },
+  "fecha_creacion": "2015-01-08",             // Fecha de la nota OneNote (ISO 8601)
+  "fecha_actualizacion": null,
+
+  // ── LOGÍSTICA ──────────────────────────────────
+  "porciones": 8,
+  "molde": "Círculo 24 cm × 2 cm",
+  "planificacion_dias": 3,                    // Cuántos días antes hay que empezar (J-3, J-2…)
+  "planning": [
+    { "dia": "J-3", "tareas": ["Pâte sablée (preparar con antelación)"] },
+    { "dia": "J-2", "tareas": ["Crème anglaise à la vanille", "Crème mascarpone", "Congeler el disco"] },
+    { "dia": "J-1", "tareas": ["Fond de tarte", "Sirop d'imbibage", "Biscuit à la cuillère"] },
+    { "dia": "Día J", "tareas": ["Ganache", "Glaçage", "Montage"] }
+  ],
+  "tiempos": {
+    "preparacion_min": 120,
+    "coccion_min": 90,
+    "reposo_min": 240,                        // Tiempo mínimo de nevera/congelador activo
+    "total_activo_min": 210                   // Tiempo real de trabajo (sin reposos pasivos)
+  },
+  "dificultad": "avanzado",                   // basico | intermedio | avanzado | experto
+  "temperatura_horno_c": 190,                 // Temperatura principal; detallar por paso si varía
+
+  // ── INGREDIENTES ───────────────────────────────
+  // Agrupados por componente cuando la receta es compuesta.
+  // Para recetas simples: un único grupo sin nombre.
+  "componentes": [
+    {
+      "nombre": "Pâte sablée",
+      "ingredientes": [
+        { "cantidad": 150, "unidad": "g", "ingrediente": "beurre doux" },
+        { "cantidad": 100, "unidad": "g", "ingrediente": "sucre glace" },
+        { "cantidad": 30,  "unidad": "g", "ingrediente": "poudre d'amande blanche" },
+        { "cantidad": 1,   "unidad": "g", "ingrediente": "vanille en poudre" },
+        { "cantidad": 60,  "unidad": "g", "ingrediente": "oeuf (1 huevo aprox.)" },
+        { "cantidad": 1,   "unidad": "g", "ingrediente": "fleur de sel de Guérande" },
+        { "cantidad": 250, "unidad": "g", "ingrediente": "farine" }
+      ]
+    },
+    {
+      "nombre": "Biscuit à la cuillère",
+      "ingredientes": [
+        { "cantidad": 140, "unidad": "g", "ingrediente": "blancs d'oeufs" },
+        { "cantidad": 90,  "unidad": "g", "ingrediente": "sucre semoule" },
+        { "cantidad": 80,  "unidad": "g", "ingrediente": "jaunes d'oeufs" },
+        { "cantidad": 50,  "unidad": "g", "ingrediente": "farine" },
+        { "cantidad": 50,  "unidad": "g", "ingrediente": "fécule de pomme de terre" }
+      ]
+    },
+    {
+      "nombre": "Crème anglaise à la vanille",
+      "ingredientes": [
+        { "cantidad": 500, "unidad": "g", "ingrediente": "crème liquide 32-34% MG" },
+        { "cantidad": 2,   "unidad": "pcs", "ingrediente": "gousses de vanille Madagascar" },
+        { "cantidad": 100, "unidad": "g", "ingrediente": "jaunes d'oeufs (4-5)" },
+        { "cantidad": 130, "unidad": "g", "ingrediente": "sucre semoule" },
+        { "cantidad": 8,   "unidad": "g", "ingrediente": "gélatine (4 feuilles Or 200 Blooms)" }
+      ]
+    },
+    {
+      "nombre": "Crème mascarpone à la vanille",
+      "ingredientes": [
+        { "cantidad": 450, "unidad": "g", "ingrediente": "crème anglaise à la vanille (ver arriba)" },
+        { "cantidad": 300, "unidad": "g", "ingrediente": "mascarpone" }
+      ]
+    },
+    {
+      "nombre": "Ganache à la vanille",
+      "ingredientes": [
+        { "cantidad": 230, "unidad": "g", "ingrediente": "crème liquide 32-34% MG" },
+        { "cantidad": 2,   "unidad": "pcs", "ingrediente": "gousses de vanille Madagascar" },
+        { "cantidad": 4,   "unidad": "g", "ingrediente": "extrait de vanille naturel sans alcool" },
+        { "cantidad": 1,   "unidad": "g", "ingrediente": "vanille en poudre" },
+        { "cantidad": 250, "unidad": "g", "ingrediente": "chocolat blanc (Ivoire Valrhona)" }
+      ]
+    },
+    {
+      "nombre": "Sirop d'imbibage à la vanille",
+      "ingredientes": [
+        { "cantidad": 100, "unidad": "g", "ingrediente": "eau minérale" },
+        { "cantidad": 3,   "unidad": "pcs", "ingrediente": "gousses de vanille Madagascar" },
+        { "cantidad": 4,   "unidad": "g", "ingrediente": "extrait de vanille liquide sans alcool" },
+        { "cantidad": 100, "unidad": "g", "ingrediente": "sucre semoule" },
+        { "cantidad": 10,  "unidad": "g", "ingrediente": "vieux rhum brun agricole" }
+      ]
+    },
+    {
+      "nombre": "Glaçage à la vanille",
+      "ingredientes": [
+        { "cantidad": 100, "unidad": "g", "ingrediente": "chocolat blanc" },
+        { "cantidad": 30,  "unidad": "g", "ingrediente": "sucre semoule" },
+        { "cantidad": 1,   "unidad": "g", "ingrediente": "pectine NH à confiture" },
+        { "cantidad": 50,  "unidad": "g", "ingrediente": "eau minérale" },
+        { "cantidad": 40,  "unidad": "g", "ingrediente": "crème liquide 32-34% MG" },
+        { "cantidad": 0.5, "unidad": "pcs", "ingrediente": "gousse de vanille Madagascar" },
+        { "cantidad": 2,   "unidad": "g", "ingrediente": "poudre d'oxyde de titane" }
+      ]
+    },
+    {
+      "nombre": "Finition",
+      "ingredientes": [
+        { "cantidad": null, "unidad": "QS", "ingrediente": "poudre de vanille" }
+      ]
+    }
+  ],
+
+  // ── PREPARACIÓN ────────────────────────────────
+  // Pasos agrupados por componente (mismo orden que ingredientes).
+  // Cada paso puede tener temperatura, tiempo y notas técnicas.
+  "preparacion": [
+    {
+      "componente": "Pâte sablée",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Crémer el beurre pommade con el sucre glace en robot con hoja plana. Añadir poudre d'amande, sel, graines de vanille, oeuf y farine tamisée. No trabajar en exceso (no corser la pâte).",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": "La pâte no debe desarrollar gluten. Parar en cuanto sea homogénea."
+        },
+        {
+          "orden": 2,
+          "descripcion": "Extender entre 2 feuilles guitare. Marcar un disco de 24 cm y 2 bandas rectangulares de 1.5 cm para los bordes. Reservar 2h en nevera o 30 min en congelador.",
+          "temp_c": 4,
+          "duracion_min": 120,
+          "notas_tecnicas": "Usar feuilles guitare (plástico alimentario) para no añadir harina."
+        },
+        {
+          "orden": 3,
+          "descripcion": "Forrar el círculo. Picar fondo y bordes con tenedor. Hornear a 190°C unos 12 min hasta dorado. Dejar enfriar y retirar el círculo.",
+          "temp_c": 190,
+          "duracion_min": 12,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème anglaise à la vanille",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Remojar la gélatine 20 min en agua fría. Infusionar las gousses de vanille 30 min en la crème llevada a ebullición. Colar. Mezclar jaunes con sucre, verter la crème caliente, cocinar a 84°C sin parar de remover.",
+          "temp_c": 84,
+          "duracion_min": 15,
+          "notas_tecnicas": "Temperatura crítica: 82-84°C. Por encima, los huevos forman grumos."
+        },
+        {
+          "orden": 2,
+          "descripcion": "Añadir gélatine escurrida, mixar, dejar enfriar y reservar en nevera.",
+          "temp_c": 4,
+          "duracion_min": 240,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème mascarpone à la vanille",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Foisonner ligeramente el mascarpone con el batidor. Incorporar progresivamente la crème anglaise (tibia ~40°C) y dejar montar. Usar inmediatamente.",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": "Foisonner = incorporar aire a velocidad media-constante. No a velocidad alta (burbujas grandes)."
+        },
+        {
+          "orden": 2,
+          "descripcion": "Versión Mercotte: forrar un círculo de 24 cm con rodhoïd, pochar la crème sobre 1.5 cm de altura. Congelar hasta el día del montaje.",
+          "temp_c": -18,
+          "duracion_min": 240,
+          "notas_tecnicas": "También válido: moldar en un círculo de 20 cm de 1.5 cm de alto sumergido en agua caliente y drenar. Usar congelado."
+        }
+      ]
+    },
+    {
+      "componente": "Ganache à la vanille",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Calentar la crème a ~50°C con las gousses de vanille. Infusionar 30 min. Fundir el chocolat blanc al baño maría. Llevar la crème (colada) a ebullición añadiendo el extrait y la poudre de vanille. Verter en 3 veces sobre el chocolat friccionando con la maryse para crear un núcleo elástico y brillante. Mixar.",
+          "temp_c": 50,
+          "duracion_min": 35,
+          "notas_tecnicas": "Emulsión: verter en 3 veces en pequeños círculos para crear el núcleo (Frédéric Bau). Usar inmediatamente."
+        }
+      ]
+    },
+    {
+      "componente": "Montage",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Verter 2/3 de la ganache en el fond de tarte. Empapar el biscuit à la cuillère con el sirop de vanille. Colocarlo en el centro de la tarte y presionar ligeramente. Verter el resto de ganache. Dejar cristalizar en nevera.",
+          "temp_c": 4,
+          "duracion_min": 60,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Preparar el glaçage (ver componente). Sacar el disco de crème mascarpone del congelador, retirar el rodhoïd, colocar sobre rejilla y verter el glaçage calentado a 35°C. Alisar con espátula. Centrar sobre la ganache.",
+          "temp_c": 35,
+          "duracion_min": 10,
+          "notas_tecnicas": "El glaçage debe aplicarse rápido: se solidifica al contacto con el disco frío."
+        },
+        {
+          "orden": 3,
+          "descripcion": "Con un colador de té, espolvorear poudre de vanille sobre el lado izquierdo (~2 cm de ancho). Reservar en nevera hasta el servicio.",
+          "temp_c": 4,
+          "duracion_min": null,
+          "notas_tecnicas": "Mejor al día siguiente. Conservar máx. 2 días en nevera."
+        }
+      ]
+    }
+  ],
+
+  // ── NOTAS Y VARIANTES ──────────────────────────
+  "notas": [
+    "La tarte es mejor al día siguiente: se corta perfectamente y los aromas se desarrollan.",
+    "Pâte sablée vs sucrée: la sablée tiene más beurre (más friable), la sucrée tiene más sucre (más fácil de extender).",
+    "Gélatine: preferir gélatine de calidad Or (200 Blooms). Existe versión boeuf y poisson como alternativa al cerdo.",
+    "Foisonner siempre a velocidad media y constante para obtener micro-burbujas uniformes.",
+    "Pectine NH: diferente a la pectine jaune — es reversible (se puede reutilizar al calentar).",
+    "Oxyde de titane: colorante mineral blanco, E171, disponible en farmacia."
+  ],
+  "variantes": [
+    {
+      "nombre": "Crème citron basilic de Jacques Génin",
+      "descripcion": "Sustituir la crème anglaise por: 20g basilic frais, 180g jus citron vert, 3 zestes citron jaune, 3 oeufs, 170g sucre, cuit a 82°C. Mixar con 200g beurre pommade a 45°C."
+    },
+    {
+      "nombre": "Círculo 17 cm (receta original PH)",
+      "descripcion": "Dividir todas las cantidades por 2. Biscuit cuillère: 70g blancs, 45g sucre, 40g jaunes, 25g farine, 25g fécule."
+    }
+  ],
+
+  // ── ESCALA Y MOLDES ────────────────────────────
+  "escalado": {
+    "referencia": "círculo 17 cm",
+    "factores": [
+      { "molde": "círculo 24 cm", "multiplicador": 2.0 },
+      { "molde": "rectángulo 35x25 cm", "multiplicador": 3.86 }
+    ]
+  },
+
+  // ── FOTOS ──────────────────────────────────────
+  "fotos": [],                                // Rutas o URLs de imágenes
+
+  // ── HISTORIAL DE PRUEBAS ───────────────────────
+  "probado": true,
+  "notas_prueba": "Testado en círculo 24 cm. Resultados excelentes al día siguiente.",
+  "valoracion": 5                             // 1-5
+}

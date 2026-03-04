@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { User, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { IngredientPricesManager } from "@/components/profile/IngredientPricesManager";
+
 
 export default function Perfil() {
   const { user, signOut } = useAuth();
@@ -40,10 +40,6 @@ export default function Perfil() {
         </Button>
       </div>
 
-      {/* Ingredient Prices */}
-      <div className="bg-card rounded-xl p-6 shadow-card">
-        <IngredientPricesManager />
-      </div>
     </div>
   );
 }

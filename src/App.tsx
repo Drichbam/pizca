@@ -13,6 +13,7 @@ import Crear from "./pages/Crear";
 import Editar from "./pages/Editar";
 import ImportarRecetas from "./pages/ImportarRecetas";
 import Perfil from "./pages/Perfil";
+import MisPrecios from "./pages/MisPrecios";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
               <Route path="/crear" element={<Crear />} />
               <Route path="/editar/:id" element={<Editar />} />
               <Route path="/importar" element={<ImportarRecetas />} />
+              <Route path="/mis-precios" element={<MisPrecios />} />
               <Route path="/perfil" element={<Perfil />} />
             </Route>
             <Route path="*" element={<NotFound />} />

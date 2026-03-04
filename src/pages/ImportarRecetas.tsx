@@ -138,7 +138,7 @@ function sanitizeRecipe(json: any) {
           ? c.ingredientes.filter((ing: any) => !!ing.ingrediente)
           : [],
       }))
-      .filter((c: any) => c.ingredientes.length > 0);
+      .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
   }
 }
 

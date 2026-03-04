@@ -349,9 +349,12 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
     errors.push("Falta al menos un componente con ingredientes o pasos");
   } else {
-    json.componentes.forEach((c: any, i: number) => {
-      if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-    });
+    // Only require component name when there are multiple components
+    if (json.componentes.length > 1) {
+      json.componentes.forEach((c: any, i: number) => {
+        if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
+      });
+    }
   }
 
   if (errors.length > 0) return { errors };

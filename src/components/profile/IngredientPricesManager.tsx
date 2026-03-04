@@ -85,8 +85,9 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
       // Extraer nombres únicos normalizados
       const nameSet = new Set<string>();
       (data || []).forEach((r) => {
-        const n = r.name?.trim().toLowerCase();
-        if (n) nameSet.add(n);
+        const n = r.name?.trim();
+        // Filtrar pasos de preparación importados por error (textos muy largos o con verbos/frases)
+        if (n && n.length <= 60 && !n.includes(",") && !n.includes(".")) nameSet.add(n.toLowerCase());
       });
       return Array.from(nameSet).sort();
     },
@@ -407,7 +408,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
                 className="bg-card/50 rounded-xl border border-dashed border-border p-3 flex items-center justify-between opacity-70"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground truncate capitalize">
+                  <p className="text-sm font-medium text-foreground truncate">
                     {item.name}
                   </p>
                   <p className="text-xs text-muted-foreground">Usado en recetas</p>

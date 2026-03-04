@@ -397,16 +397,26 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
   if (!json.categoria || !VALID_CATEGORIES.includes(json.categoria)) errors.push(`Categoría inválida: '${json.categoria}'. Válidas: ${VALID_CATEGORIES.join(", ")}`);
   if (!json.id || typeof json.id !== "string") errors.push("Falta 'id'");
-  if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
+  const hasComponents = Array.isArray(json.componentes) && json.componentes.length > 0;
+  const hasPrepSteps = Array.isArray(json.preparacion) && json.preparacion.some((p: any) => Array.isArray(p.pasos) && p.pasos.length > 0);
+
+  if (!hasComponents && !hasPrepSteps) {
     errors.push("Falta al menos un componente con ingredientes o pasos");
     errors.push(`DEBUG estructura: componentes=${afterShape.componentesType}(${afterShape.componentesLen}), topIngredientes=${beforeShape.topIngredientesLen}, preparacion=${afterShape.preparacionLen}`);
-  } else {
-    // Only require component name when there are multiple components
-    if (json.componentes.length > 1) {
-      json.componentes.forEach((c: any, i: number) => {
-        if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-      });
-    }
+  }
+
+  // Ensure componentes array exists for prep-only recipes
+  if (!hasComponents && hasPrepSteps) {
+    json.componentes = json.preparacion.map((p: any) => ({
+      nombre: p.componente || "",
+      ingredientes: [],
+    }));
+  }
+
+  if (hasComponents && json.componentes.length > 1) {
+    json.componentes.forEach((c: any, i: number) => {
+      if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
+    });
   }
 
   if (errors.length > 0) {

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Search, Plus, Pencil, Trash2, X, Check, BookOpen } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, X, Check, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import type { Database } from "@/integrations/supabase/types";
@@ -51,6 +51,50 @@ interface CombinedItem {
   price?: IngredientPrice;
 }
 
+function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: string; navigate: (path: string) => void }) {
+  const normalizedName = ingredientName.trim().toLowerCase();
+  const { data: recipes, isLoading } = useQuery({
+    queryKey: ["recipes_using_ingredient", normalizedName],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("recipe_ingredients")
+        .select("name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+      if (error) throw error;
+      const matches = (data || []).filter(
+        (r: any) => r.name?.trim().toLowerCase() === normalizedName
+      );
+      const seen = new Set<string>();
+      const result: { id: string; title: string }[] = [];
+      for (const m of matches) {
+        const rec = (m as any).recipe_components?.recipes;
+        if (rec && !seen.has(rec.id)) {
+          seen.add(rec.id);
+          result.push({ id: rec.id, title: rec.title });
+        }
+      }
+      return result.sort((a, b) => a.title.localeCompare(b.title, "es"));
+    },
+  });
+
+  if (isLoading) return <div className="px-3 pb-3"><div className="h-4 bg-secondary rounded animate-pulse" /></div>;
+  if (!recipes?.length) return <p className="px-3 pb-3 text-xs text-muted-foreground">No se encontró en ninguna receta</p>;
+
+  return (
+    <div className="px-3 pb-3 flex flex-wrap gap-1.5">
+      {recipes.map((r) => (
+        <button
+          key={r.id}
+          type="button"
+          onClick={() => navigate(`/receta/${r.id}`)}
+          className="text-xs bg-secondary hover:bg-secondary/80 text-secondary-foreground px-2 py-0.5 rounded-full transition-colors"
+        >
+          {r.title}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function IngredientPricesManager({ initialIngredient }: Props) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -62,6 +106,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
   );
   const [showForm, setShowForm] = useState(!!initialIngredient);
   const [filter, setFilter] = useState<FilterMode>("all");
+  const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
 
   // Query: precios existentes
   const { data: prices, isLoading } = useQuery({
@@ -432,50 +477,82 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
         <div className="space-y-2">
           {filtered.map((item) =>
             item.type === "priced" && item.price ? (
-              <div key={item.price.id} className="bg-card rounded-xl shadow-card p-3 flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {item.price.ingredient_name}
-                    {item.price.is_default && (
-                      <span className="ml-1.5 text-xs text-primary">★</span>
+              <div key={item.price.id} className="bg-card rounded-xl shadow-card overflow-hidden">
+                <div className="p-3 flex items-center justify-between">
+                  <button
+                    type="button"
+                    className="min-w-0 flex-1 text-left"
+                    onClick={() => setExpandedIngredient(
+                      expandedIngredient === item.price!.ingredient_name.toLowerCase()
+                        ? null
+                        : item.price!.ingredient_name.toLowerCase()
                     )}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {[item.price.brand, item.price.supermarket].filter(Boolean).join(" · ") || "Sin detalles"}
-                    {item.price.package_size ? ` · ${item.price.package_size} ${item.price.package_unit || ""}` : ""}
-                  </p>
+                  >
+                    <p className="text-sm font-medium text-foreground truncate flex items-center gap-1">
+                      {item.price.ingredient_name}
+                      {item.price.is_default && (
+                        <span className="text-xs text-primary">★</span>
+                      )}
+                      {expandedIngredient === item.price.ingredient_name.toLowerCase()
+                        ? <ChevronUp className="h-3 w-3 text-muted-foreground shrink-0" />
+                        : <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
+                      }
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {[item.price.brand, item.price.supermarket].filter(Boolean).join(" · ") || "Sin detalles"}
+                      {item.price.package_size ? ` · ${item.price.package_size} ${item.price.package_unit || ""}` : ""}
+                    </p>
+                  </button>
+                  <div className="flex items-center gap-2 ml-3">
+                    <span className="text-sm font-semibold text-foreground tabular-nums whitespace-nowrap">
+                      {Number(item.price.price).toFixed(2)} €
+                    </span>
+                    <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => startEdit(item.price!)}>
+                      <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 ml-3">
-                  <span className="text-sm font-semibold text-foreground tabular-nums whitespace-nowrap">
-                    {Number(item.price.price).toFixed(2)} €
-                  </span>
-                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => startEdit(item.price!)}>
-                    <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
-                  </Button>
-                </div>
+                {expandedIngredient === item.price.ingredient_name.toLowerCase() && (
+                  <IngredientRecipesList ingredientName={item.price.ingredient_name} navigate={navigate} />
+                )}
               </div>
             ) : (
               <div
                 key={`unpriced-${item.name}`}
-                className="bg-card/50 rounded-xl border border-dashed border-border p-3 flex items-center justify-between opacity-70"
+                className="bg-card/50 rounded-xl border border-dashed border-border overflow-hidden opacity-70"
               >
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {item.name}
-                  </p>
-                  <p className="text-xs text-muted-foreground">Usado en recetas</p>
-                </div>
-                <div className="flex items-center gap-2 ml-3">
-                  <span className="text-xs text-muted-foreground italic whitespace-nowrap">Sin precio</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-7 rounded-lg text-xs"
-                    onClick={() => startAddForIngredient(item.name)}
+                <div className="p-3 flex items-center justify-between">
+                  <button
+                    type="button"
+                    className="min-w-0 flex-1 text-left"
+                    onClick={() => setExpandedIngredient(
+                      expandedIngredient === item.name ? null : item.name
+                    )}
                   >
-                    <Plus className="h-3.5 w-3.5 mr-1" /> Añadir
-                  </Button>
+                    <p className="text-sm font-medium text-foreground truncate flex items-center gap-1">
+                      {item.name}
+                      {expandedIngredient === item.name
+                        ? <ChevronUp className="h-3 w-3 text-muted-foreground shrink-0" />
+                        : <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
+                      }
+                    </p>
+                    <p className="text-xs text-muted-foreground">Usado en recetas</p>
+                  </button>
+                  <div className="flex items-center gap-2 ml-3">
+                    <span className="text-xs text-muted-foreground italic whitespace-nowrap">Sin precio</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 rounded-lg text-xs"
+                      onClick={() => startAddForIngredient(item.name)}
+                    >
+                      <Plus className="h-3.5 w-3.5 mr-1" /> Añadir
+                    </Button>
+                  </div>
                 </div>
+                {expandedIngredient === item.name && (
+                  <IngredientRecipesList ingredientName={item.name} navigate={navigate} />
+                )}
               </div>
             )
           )}

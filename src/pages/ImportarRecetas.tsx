@@ -622,10 +622,24 @@ export default function ImportarRecetas() {
         // Steps (from preparacion)
         if (r.json.preparacion) {
           for (const prep of r.json.preparacion) {
-            const compId = compMap.get(prep.componente);
-            if (!compId || !prep.pasos) continue;
+            if (!prep.pasos || prep.pasos.length === 0) continue;
+            let compId = compMap.get(prep.componente);
+
+            // Create fallback component if not found
+            if (!compId) {
+              const fallbackName = prep.componente || "";
+              const { data: fallbackComp } = await supabase.from("recipe_components").insert({
+                recipe_id: newRecipe.id, name: fallbackName, sort_order: compMap.size,
+              }).select().single();
+              if (fallbackComp) {
+                compId = fallbackComp.id;
+                compMap.set(fallbackName, compId);
+              }
+            }
+
+            if (!compId) continue;
             const steps = prep.pasos.map((s, j) => ({
-              component_id: compId,
+              component_id: compId!,
               step_order: s.orden ?? j,
               description: s.descripcion,
               temp_c: s.temp_c ?? null,

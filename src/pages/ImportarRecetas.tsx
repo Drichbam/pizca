@@ -301,6 +301,14 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
     }
   }
 
+  // Build set of component names referenced in preparacion
+  const prepComponentNames = new Set<string>();
+  if (Array.isArray(json.preparacion)) {
+    for (const p of json.preparacion) {
+      if (p.componente) prepComponentNames.add(p.componente);
+    }
+  }
+
   // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
     let removedIngredients = 0;
@@ -333,7 +341,11 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
 
         return { ...c, ingredientes: mapped };
       })
-      .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
+      .filter((c: any) =>
+        c.ingredientes.length > 0 ||
+        (Array.isArray(c.pasos) && c.pasos.length > 0) ||
+        prepComponentNames.has(c.nombre) // keep if referenced by preparacion
+      );
 
     const removedComps = originalCompCount - json.componentes.length;
     if (removedIngredients > 0) corrections.push({
@@ -385,16 +397,26 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
   if (!json.categoria || !VALID_CATEGORIES.includes(json.categoria)) errors.push(`Categoría inválida: '${json.categoria}'. Válidas: ${VALID_CATEGORIES.join(", ")}`);
   if (!json.id || typeof json.id !== "string") errors.push("Falta 'id'");
-  if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
+  const hasComponents = Array.isArray(json.componentes) && json.componentes.length > 0;
+  const hasPrepSteps = Array.isArray(json.preparacion) && json.preparacion.some((p: any) => Array.isArray(p.pasos) && p.pasos.length > 0);
+
+  if (!hasComponents && !hasPrepSteps) {
     errors.push("Falta al menos un componente con ingredientes o pasos");
     errors.push(`DEBUG estructura: componentes=${afterShape.componentesType}(${afterShape.componentesLen}), topIngredientes=${beforeShape.topIngredientesLen}, preparacion=${afterShape.preparacionLen}`);
-  } else {
-    // Only require component name when there are multiple components
-    if (json.componentes.length > 1) {
-      json.componentes.forEach((c: any, i: number) => {
-        if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-      });
-    }
+  }
+
+  // Ensure componentes array exists for prep-only recipes
+  if (!hasComponents && hasPrepSteps) {
+    json.componentes = json.preparacion.map((p: any) => ({
+      nombre: p.componente || "",
+      ingredientes: [],
+    }));
+  }
+
+  if (hasComponents && json.componentes.length > 1) {
+    json.componentes.forEach((c: any, i: number) => {
+      if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
+    });
   }
 
   if (errors.length > 0) {
@@ -600,10 +622,24 @@ export default function ImportarRecetas() {
         // Steps (from preparacion)
         if (r.json.preparacion) {
           for (const prep of r.json.preparacion) {
-            const compId = compMap.get(prep.componente);
-            if (!compId || !prep.pasos) continue;
+            if (!prep.pasos || prep.pasos.length === 0) continue;
+            let compId = compMap.get(prep.componente);
+
+            // Create fallback component if not found
+            if (!compId) {
+              const fallbackName = prep.componente || "";
+              const { data: fallbackComp } = await supabase.from("recipe_components").insert({
+                recipe_id: newRecipe.id, name: fallbackName, sort_order: compMap.size,
+              }).select().single();
+              if (fallbackComp) {
+                compId = fallbackComp.id;
+                compMap.set(fallbackName, compId);
+              }
+            }
+
+            if (!compId) continue;
             const steps = prep.pasos.map((s, j) => ({
-              component_id: compId,
+              component_id: compId!,
               step_order: s.orden ?? j,
               description: s.descripcion,
               temp_c: s.temp_c ?? null,

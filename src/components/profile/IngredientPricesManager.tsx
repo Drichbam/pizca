@@ -304,18 +304,30 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
               </label>
             </div>
           </div>
-          <div className="flex gap-2 justify-end">
-            <Button variant="outline" size="sm" className="rounded-lg" onClick={resetForm}>
-              <X className="h-4 w-4 mr-1" /> Cancelar
-            </Button>
-            <Button
-              size="sm"
-              className="rounded-lg"
-              disabled={!form.ingredient_name.trim() || !form.price || upsert.isPending}
-              onClick={() => upsert.mutate(form)}
-            >
-              <Check className="h-4 w-4 mr-1" /> {editingId ? "Guardar" : "Añadir"}
-            </Button>
+          <div className="flex gap-2 justify-between">
+            {editingId ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-lg text-destructive hover:text-destructive"
+                onClick={() => { deleteMutation.mutate(editingId); resetForm(); }}
+              >
+                <Trash2 className="h-4 w-4 mr-1" /> Eliminar
+              </Button>
+            ) : <div />}
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" className="rounded-lg" onClick={resetForm}>
+                <X className="h-4 w-4 mr-1" /> Cancelar
+              </Button>
+              <Button
+                size="sm"
+                className="rounded-lg"
+                disabled={!form.ingredient_name.trim() || !form.price || upsert.isPending}
+                onClick={() => upsert.mutate(form)}
+              >
+                <Check className="h-4 w-4 mr-1" /> {editingId ? "Guardar" : "Añadir"}
+              </Button>
+            </div>
           </div>
         </div>
       )}
@@ -386,14 +398,6 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
                   </span>
                   <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => startEdit(item.price!)}>
                     <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                    onClick={() => deleteMutation.mutate(item.price!.id)}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
                   </Button>
                 </div>
               </div>

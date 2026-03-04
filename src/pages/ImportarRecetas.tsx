@@ -738,9 +738,6 @@ export default function ImportarRecetas() {
                   );
                 })}
               </div>
-            </>
-            );
-          })()}
 
               {/* Duplicate handling */}
               {duplicatesInSelected > 0 && (
@@ -777,7 +774,8 @@ export default function ImportarRecetas() {
                 </Button>
               </div>
             </>
-          )}
+            );
+          })()}
 
           {recipes.length === 0 && validationErrors.length > 0 && (
             <Button variant="outline" onClick={() => { setPhase("select"); setValidationErrors([]); }}>

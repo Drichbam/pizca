@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Search, Plus, Pencil, Trash2, X, Check } from "lucide-react";
 import { toast } from "sonner";
 import type { Database } from "@/integrations/supabase/types";
@@ -41,6 +42,14 @@ interface Props {
   initialIngredient?: string;
 }
 
+type FilterMode = "all" | "priced" | "unpriced";
+
+interface CombinedItem {
+  type: "priced" | "unpriced";
+  name: string;
+  price?: IngredientPrice;
+}
+
 export function IngredientPricesManager({ initialIngredient }: Props) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -50,7 +59,9 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     initialIngredient ? { ...emptyForm, ingredient_name: initialIngredient } : emptyForm
   );
   const [showForm, setShowForm] = useState(!!initialIngredient);
+  const [filter, setFilter] = useState<FilterMode>("all");
 
+  // Query: precios existentes
   const { data: prices, isLoading } = useQuery({
     queryKey: ["ingredient_prices"],
     queryFn: async () => {
@@ -62,6 +73,72 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
       return data as IngredientPrice[];
     },
   });
+
+  // Query: ingredientes distintos de recetas del usuario
+  const { data: recipeIngredients } = useQuery({
+    queryKey: ["recipe_ingredient_names"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("recipe_ingredients")
+        .select("name");
+      if (error) throw error;
+      // Extraer nombres únicos normalizados
+      const nameSet = new Set<string>();
+      (data || []).forEach((r) => {
+        const n = r.name?.trim().toLowerCase();
+        if (n) nameSet.add(n);
+      });
+      return Array.from(nameSet).sort();
+    },
+  });
+
+  // Fusionar ingredientes con y sin precio
+  const combinedList = useMemo<CombinedItem[]>(() => {
+    const priceMap = new Map<string, IngredientPrice>();
+    (prices || []).forEach((p) => {
+      priceMap.set(p.ingredient_name.trim().toLowerCase(), p);
+    });
+
+    // Ingredientes con precio (pueden no estar en recetas)
+    const items: CombinedItem[] = (prices || []).map((p) => ({
+      type: "priced" as const,
+      name: p.ingredient_name,
+      price: p,
+    }));
+
+    // Ingredientes de recetas sin precio
+    const pricedNames = new Set(
+      (prices || []).map((p) => p.ingredient_name.trim().toLowerCase())
+    );
+    (recipeIngredients || []).forEach((name) => {
+      if (!pricedNames.has(name)) {
+        items.push({ type: "unpriced", name });
+      }
+    });
+
+    // Ordenar: con precio primero, luego sin precio, ambos alfabéticamente
+    items.sort((a, b) => {
+      if (a.type !== b.type) return a.type === "priced" ? -1 : 1;
+      return a.name.localeCompare(b.name, "es");
+    });
+
+    return items;
+  }, [prices, recipeIngredients]);
+
+  const filtered = useMemo(() => {
+    return combinedList.filter((item) => {
+      // Filtro por tipo
+      if (filter === "priced" && item.type !== "priced") return false;
+      if (filter === "unpriced" && item.type !== "unpriced") return false;
+      // Filtro por búsqueda
+      if (!search) return true;
+      const s = search.toLowerCase();
+      if (item.name.toLowerCase().includes(s)) return true;
+      if (item.price?.brand?.toLowerCase().includes(s)) return true;
+      if (item.price?.supermarket?.toLowerCase().includes(s)) return true;
+      return false;
+    });
+  }, [combinedList, filter, search]);
 
   const upsert = useMutation({
     mutationFn: async (data: FormData) => {
@@ -90,6 +167,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ingredient_prices"] });
+      queryClient.invalidateQueries({ queryKey: ["recipe_ingredient_names"] });
       toast.success(editingId ? "Precio actualizado" : "Precio añadido");
       resetForm();
     },
@@ -128,13 +206,14 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     setShowForm(true);
   };
 
-  const filtered = (prices || []).filter(
-    (p) =>
-      !search ||
-      p.ingredient_name.toLowerCase().includes(search.toLowerCase()) ||
-      (p.brand && p.brand.toLowerCase().includes(search.toLowerCase())) ||
-      (p.supermarket && p.supermarket.toLowerCase().includes(search.toLowerCase()))
-  );
+  const startAddForIngredient = (name: string) => {
+    setEditingId(null);
+    setForm({ ...emptyForm, ingredient_name: name });
+    setShowForm(true);
+  };
+
+  const unpricedCount = combinedList.filter((i) => i.type === "unpriced").length;
+  const pricedCount = combinedList.filter((i) => i.type === "priced").length;
 
   return (
     <div className="space-y-4">
@@ -241,16 +320,37 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
         </div>
       )}
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Buscar ingrediente..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 rounded-lg"
-        />
+      {/* Filter toggle */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar ingrediente..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 rounded-lg"
+          />
+        </div>
       </div>
+
+      <ToggleGroup
+        type="single"
+        value={filter}
+        onValueChange={(v) => v && setFilter(v as FilterMode)}
+        variant="outline"
+        size="sm"
+        className="justify-start"
+      >
+        <ToggleGroupItem value="all" className="rounded-lg text-xs">
+          Todos ({combinedList.length})
+        </ToggleGroupItem>
+        <ToggleGroupItem value="priced" className="rounded-lg text-xs">
+          Con precio ({pricedCount})
+        </ToggleGroupItem>
+        <ToggleGroupItem value="unpriced" className="rounded-lg text-xs">
+          Sin precio ({unpricedCount})
+        </ToggleGroupItem>
+      </ToggleGroup>
 
       {/* List */}
       {isLoading ? (
@@ -261,42 +361,67 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
         </div>
       ) : filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground text-center py-6">
-          {prices?.length ? "Sin resultados" : "No hay precios registrados aún."}
+          {combinedList.length ? "Sin resultados" : "No hay ingredientes aún."}
         </p>
       ) : (
         <div className="space-y-2">
-          {filtered.map((p) => (
-            <div key={p.id} className="bg-card rounded-xl shadow-card p-3 flex items-center justify-between">
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-foreground truncate">
-                  {p.ingredient_name}
-                  {p.is_default && (
-                    <span className="ml-1.5 text-xs text-primary">★</span>
-                  )}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {[p.brand, p.supermarket].filter(Boolean).join(" · ") || "Sin detalles"}
-                  {p.package_size ? ` · ${p.package_size} ${p.package_unit || ""}` : ""}
-                </p>
+          {filtered.map((item) =>
+            item.type === "priced" && item.price ? (
+              <div key={item.price.id} className="bg-card rounded-xl shadow-card p-3 flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {item.price.ingredient_name}
+                    {item.price.is_default && (
+                      <span className="ml-1.5 text-xs text-primary">★</span>
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {[item.price.brand, item.price.supermarket].filter(Boolean).join(" · ") || "Sin detalles"}
+                    {item.price.package_size ? ` · ${item.price.package_size} ${item.price.package_unit || ""}` : ""}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 ml-3">
+                  <span className="text-sm font-semibold text-foreground tabular-nums whitespace-nowrap">
+                    {Number(item.price.price).toFixed(2)} €
+                  </span>
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => startEdit(item.price!)}>
+                    <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 w-7 p-0 text-destructive hover:text-destructive"
+                    onClick={() => deleteMutation.mutate(item.price!.id)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-2 ml-3">
-                <span className="text-sm font-semibold text-foreground tabular-nums whitespace-nowrap">
-                  {Number(p.price).toFixed(2)} €
-                </span>
-                <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => startEdit(p)}>
-                  <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                  onClick={() => deleteMutation.mutate(p.id)}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
+            ) : (
+              <div
+                key={`unpriced-${item.name}`}
+                className="bg-card/50 rounded-xl border border-dashed border-border p-3 flex items-center justify-between opacity-70"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground truncate capitalize">
+                    {item.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">Usado en recetas</p>
+                </div>
+                <div className="flex items-center gap-2 ml-3">
+                  <span className="text-xs text-muted-foreground italic whitespace-nowrap">Sin precio</span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 rounded-lg text-xs"
+                    onClick={() => startAddForIngredient(item.name)}
+                  >
+                    <Plus className="h-3.5 w-3.5 mr-1" /> Añadir
+                  </Button>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       )}
     </div>

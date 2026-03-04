@@ -8,7 +8,7 @@ export function useRecipes() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipes")
-        .select("*")
+        .select("*, recipe_tags(*, tags(*))")
         .order("updated_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -33,7 +33,8 @@ export function useRecipeDetail(id: string | undefined) {
           recipe_planning (*),
           recipe_notes (*),
           recipe_variants (*),
-          recipe_scale_factors (*)
+          recipe_scale_factors (*),
+          recipe_tags(*, tags(*))
         `)
         .eq("id", id!)
         .single();
@@ -60,7 +61,6 @@ export function useDuplicateRecipe() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      // Fetch the full recipe
       const { data: recipe, error: fetchError } = await supabase
         .from("recipes")
         .select(`
@@ -73,7 +73,8 @@ export function useDuplicateRecipe() {
           recipe_planning (*),
           recipe_notes (*),
           recipe_variants (*),
-          recipe_scale_factors (*)
+          recipe_scale_factors (*),
+          recipe_tags(*)
         `)
         .eq("id", id)
         .single();
@@ -82,7 +83,6 @@ export function useDuplicateRecipe() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      // Insert new recipe
       const newSlug = `${recipe.slug}-copia-${Date.now()}`;
       const { data: newRecipe, error: insertError } = await supabase
         .from("recipes")
@@ -111,7 +111,7 @@ export function useDuplicateRecipe() {
         .single();
       if (insertError || !newRecipe) throw insertError;
 
-      // Duplicate components with their ingredients and steps
+      // Duplicate components
       for (const comp of (recipe as any).recipe_components || []) {
         const { data: newComp } = await supabase
           .from("recipe_components")
@@ -121,24 +121,23 @@ export function useDuplicateRecipe() {
         if (!newComp) continue;
 
         const ingredients = (comp.recipe_ingredients || []).map((ing: any) => ({
-          component_id: newComp.id,
-          name: ing.name,
-          quantity: ing.quantity,
-          unit: ing.unit,
-          sort_order: ing.sort_order,
+          component_id: newComp.id, name: ing.name, quantity: ing.quantity, unit: ing.unit, sort_order: ing.sort_order,
         }));
         if (ingredients.length) await supabase.from("recipe_ingredients").insert(ingredients);
 
         const steps = (comp.recipe_steps || []).map((step: any) => ({
-          component_id: newComp.id,
-          step_order: step.step_order,
-          description: step.description,
-          temp_c: step.temp_c,
-          duration_min: step.duration_min,
-          technical_notes: step.technical_notes,
-          photo_url: step.photo_url,
+          component_id: newComp.id, step_order: step.step_order, description: step.description,
+          temp_c: step.temp_c, duration_min: step.duration_min, technical_notes: step.technical_notes, photo_url: step.photo_url,
         }));
         if (steps.length) await supabase.from("recipe_steps").insert(steps);
+      }
+
+      // Duplicate tags
+      const tags = (recipe as any).recipe_tags || [];
+      if (tags.length) {
+        await supabase.from("recipe_tags").insert(
+          tags.map((rt: any) => ({ recipe_id: newRecipe.id, tag_id: rt.tag_id }))
+        );
       }
 
       return newRecipe;

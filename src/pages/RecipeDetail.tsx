@@ -146,6 +146,16 @@ export default function RecipeDetail() {
             ✓ Probada
           </span>
         )}
+        {/* Tags */}
+        {(recipe.recipe_tags || []).map((rt: any) => (
+          <span
+            key={rt.id}
+            className="text-xs font-medium px-2.5 py-1 rounded-full border"
+            style={{ color: rt.tags?.color || "#E8784A", borderColor: rt.tags?.color || "#E8784A" }}
+          >
+            {rt.tags?.name}
+          </span>
+        ))}
       </div>
 
       {/* Origin info */}

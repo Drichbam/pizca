@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { User, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export default function Perfil() {
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("pizca_user");
-    if (stored) setUser(JSON.parse(stored));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("pizca_user");
+  const handleLogout = async () => {
+    await signOut();
     navigate("/login");
   };
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Chef";
 
   return (
     <div className="animate-fade-in space-y-6 max-w-lg">
@@ -23,11 +20,15 @@ export default function Perfil() {
 
       <div className="bg-card rounded-xl p-6 shadow-card">
         <div className="flex items-center gap-4 mb-6">
-          <div className="h-14 w-14 rounded-full bg-accent flex items-center justify-center">
-            <User className="h-7 w-7 text-accent-foreground" />
+          <div className="h-14 w-14 rounded-full bg-accent flex items-center justify-center overflow-hidden">
+            {user?.user_metadata?.avatar_url ? (
+              <img src={user.user_metadata.avatar_url} alt="" className="h-full w-full object-cover" />
+            ) : (
+              <User className="h-7 w-7 text-accent-foreground" />
+            )}
           </div>
           <div>
-            <p className="font-semibold text-foreground text-lg">{user?.name || "Chef"}</p>
+            <p className="font-semibold text-foreground text-lg">{displayName}</p>
             <p className="text-sm text-muted-foreground">{user?.email || ""}</p>
           </div>
         </div>

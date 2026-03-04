@@ -3,55 +3,70 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
+import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 export default function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock login - store name for welcome
-    localStorage.setItem("pizca_user", JSON.stringify({ name: name || "Chef", email }));
-    navigate("/");
+    setLoading(true);
+    try {
+      if (isRegister) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: window.location.origin },
+        });
+        if (error) throw error;
+        toast.success("¡Cuenta creada! Ya puedes entrar.");
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+      }
+      navigate("/");
+    } catch (err: any) {
+      toast.error(err.message || "Error de autenticación");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleGoogle = () => {
-    localStorage.setItem("pizca_user", JSON.stringify({ name: "Chef", email: "user@google.com" }));
-    navigate("/");
+  const handleGoogle = async () => {
+    const { error } = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (error) toast.error("Error con Google");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md animate-fade-in">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary mb-2">Pizca</h1>
           <p className="text-muted-foreground">Tu recetario de repostería</p>
         </div>
 
-        {/* Card */}
         <div className="bg-card rounded-xl p-8 shadow-card">
           <h2 className="text-xl font-semibold text-foreground mb-6">
             {isRegister ? "Crear cuenta" : "Iniciar sesión"}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {isRegister && (
-              <div className="space-y-2">
-                <Label htmlFor="name">Nombre</Label>
-                <Input
-                  id="name"
-                  placeholder="Tu nombre"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="rounded-sm"
-                />
-              </div>
-            )}
-
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -74,29 +89,23 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                minLength={6}
                 className="rounded-sm"
               />
             </div>
 
-            <Button type="submit" className="w-full rounded-lg" size="lg">
-              {isRegister ? "Registrarse" : "Entrar"}
+            <Button type="submit" className="w-full rounded-lg" size="lg" disabled={loading}>
+              {loading ? "Cargando..." : isRegister ? "Registrarse" : "Entrar"}
             </Button>
           </form>
 
-          {/* Divider */}
           <div className="flex items-center gap-3 my-6">
             <div className="flex-1 h-px bg-border" />
             <span className="text-xs text-muted-foreground">o</span>
             <div className="flex-1 h-px bg-border" />
           </div>
 
-          {/* Google */}
-          <Button
-            variant="outline"
-            className="w-full rounded-lg"
-            size="lg"
-            onClick={handleGoogle}
-          >
+          <Button variant="outline" className="w-full rounded-lg" size="lg" onClick={handleGoogle}>
             <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -106,13 +115,9 @@ export default function Login() {
             Continuar con Google
           </Button>
 
-          {/* Toggle */}
           <p className="text-center text-sm text-muted-foreground mt-6">
             {isRegister ? "¿Ya tienes cuenta?" : "¿No tienes cuenta?"}{" "}
-            <button
-              onClick={() => setIsRegister(!isRegister)}
-              className="text-primary font-medium hover:underline"
-            >
+            <button onClick={() => setIsRegister(!isRegister)} className="text-primary font-medium hover:underline">
               {isRegister ? "Inicia sesión" : "Regístrate"}
             </button>
           </p>

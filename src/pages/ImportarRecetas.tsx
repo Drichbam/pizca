@@ -109,6 +109,7 @@ interface ParsedRecipe {
   slug: string;
   totalIngredients: number;
   totalSteps: number;
+  corrections: string[];
 }
 
 const VALID_CATEGORIES: RecipeCategory[] = [

@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw, Download } from "lucide-react";
+import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw, Download, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -109,6 +109,7 @@ interface ParsedRecipe {
   slug: string;
   totalIngredients: number;
   totalSteps: number;
+  corrections: string[];
 }
 
 const VALID_CATEGORIES: RecipeCategory[] = [
@@ -194,51 +195,75 @@ const DIFFICULTY_NORMALIZE: Record<string, RecipeDifficulty> = {
   "expert": "experto",
 };
 
-function sanitizeRecipe(json: any) {
+function sanitizeRecipe(json: any): string[] {
+  const corrections: string[] = [];
+
   // Normalize category (case-insensitive)
   if (json.categoria) {
+    const original = json.categoria;
     const catLower = json.categoria.toLowerCase().trim();
     if (CATEGORY_NORMALIZE[catLower]) {
       json.categoria = CATEGORY_NORMALIZE[catLower];
     } else if (!VALID_CATEGORIES.includes(json.categoria)) {
-      // Try lowercase match against valid categories
       const match = VALID_CATEGORIES.find(c => c.toLowerCase() === catLower);
       if (match) json.categoria = match;
+    }
+    if (json.categoria !== original) {
+      corrections.push(`Categoría: "${original}" → "${json.categoria}"`);
     }
   }
 
   // Normalize difficulty
   if (json.dificultad) {
+    const original = json.dificultad;
     const diffLower = json.dificultad.toLowerCase().trim();
     if (DIFFICULTY_NORMALIZE[diffLower]) {
       json.dificultad = DIFFICULTY_NORMALIZE[diffLower];
+    }
+    if (json.dificultad !== original) {
+      corrections.push(`Dificultad: "${original}" → "${json.dificultad}"`);
     }
   }
 
   // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
+    let removedIngredients = 0;
+    let normalizedUnits = 0;
+    const originalCompCount = json.componentes.length;
+
     json.componentes = json.componentes
-      .map((c: any) => ({
-        ...c,
-        ingredientes: Array.isArray(c.ingredientes)
-          ? c.ingredientes
-              .filter((ing: any) => !!ing.ingrediente)
-              .map((ing: any) => {
-                if (ing.unidad) {
-                  const uLower = ing.unidad.toLowerCase().trim();
-                  const normalized = UNIT_NORMALIZE[uLower];
-                  if (normalized) ing.unidad = normalized;
-                }
-                return ing;
-              })
-          : [],
-      }))
+      .map((c: any) => {
+        const originalIngs = Array.isArray(c.ingredientes) ? c.ingredientes : [];
+        const filtered = originalIngs.filter((ing: any) => !!ing.ingrediente);
+        removedIngredients += originalIngs.length - filtered.length;
+
+        const mapped = filtered.map((ing: any) => {
+          if (ing.unidad) {
+            const uLower = ing.unidad.toLowerCase().trim();
+            const normalized = UNIT_NORMALIZE[uLower];
+            if (normalized) {
+              normalizedUnits++;
+              ing.unidad = normalized;
+            }
+          }
+          return ing;
+        });
+
+        return { ...c, ingredientes: mapped };
+      })
       .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
+
+    const removedComps = originalCompCount - json.componentes.length;
+    if (removedIngredients > 0) corrections.push(`${removedIngredients} ingrediente${removedIngredients > 1 ? "s" : ""} sin nombre eliminado${removedIngredients > 1 ? "s" : ""}`);
+    if (removedComps > 0) corrections.push(`${removedComps} componente${removedComps > 1 ? "s" : ""} vacío${removedComps > 1 ? "s" : ""} eliminado${removedComps > 1 ? "s" : ""}`);
+    if (normalizedUnits > 0) corrections.push(`${normalizedUnits} unidad${normalizedUnits > 1 ? "es" : ""} normalizada${normalizedUnits > 1 ? "s" : ""}`);
   }
+
+  return corrections;
 }
 
 function validateRecipe(json: any, fileName: string): { errors: string[]; recipe?: ParsedRecipe } {
-  sanitizeRecipe(json);
+  const corrections = sanitizeRecipe(json);
 
   const errors: string[] = [];
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
@@ -260,7 +285,7 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
 
   return {
     errors: [],
-    recipe: { json, file: fileName, selected: true, slug, totalIngredients, totalSteps },
+    recipe: { json, file: fileName, selected: true, slug, totalIngredients, totalSteps, corrections },
   };
 }
 
@@ -645,8 +670,21 @@ export default function ImportarRecetas() {
           )}
 
           {/* Valid recipes */}
-          {recipes.length > 0 && (
+          {recipes.length > 0 && (() => {
+            const totalCorrections = recipes.reduce((s, r) => s + r.corrections.length, 0);
+            const recipesWithCorrections = recipes.filter(r => r.corrections.length > 0).length;
+            return (
             <>
+              {totalCorrections > 0 && (
+                <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-1">
+                  <div className="flex items-center gap-2 text-sky-800 font-medium text-sm">
+                    <Info className="h-4 w-4" />
+                    {totalCorrections} corrección{totalCorrections !== 1 ? "es" : ""} automática{totalCorrections !== 1 ? "s" : ""} en {recipesWithCorrections} archivo{recipesWithCorrections !== 1 ? "s" : ""}
+                  </div>
+                  <p className="text-xs text-sky-700">Se normalizaron categorías, unidades o se limpiaron datos incompletos.</p>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-foreground">
                   {recipes.length} receta{recipes.length !== 1 ? "s" : ""} válida{recipes.length !== 1 ? "s" : ""}
@@ -685,6 +723,15 @@ export default function ImportarRecetas() {
                           <span>{r.totalSteps} pasos</span>
                           {(r.json.origen_chef || r.json.origen?.chef_autor) && <span>👨‍🍳 {r.json.origen_chef || r.json.origen?.chef_autor}</span>}
                         </div>
+                        {r.corrections.length > 0 && (
+                          <div className="mt-1.5 flex flex-wrap gap-1">
+                            {r.corrections.map((c, j) => (
+                              <span key={j} className="inline-flex items-center text-[11px] px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">
+                                🔧 {c}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <FileJson className="h-5 w-5 text-muted-foreground shrink-0" />
                     </div>
@@ -727,7 +774,8 @@ export default function ImportarRecetas() {
                 </Button>
               </div>
             </>
-          )}
+            );
+          })()}
 
           {recipes.length === 0 && validationErrors.length > 0 && (
             <Button variant="outline" onClick={() => { setPhase("select"); setValidationErrors([]); }}>

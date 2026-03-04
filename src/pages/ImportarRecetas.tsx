@@ -45,6 +45,14 @@ interface JsonScaleFactor {
   molde_destino: string;
   multiplicador: number;
 }
+interface JsonScaleEntry {
+  molde: string;
+  multiplicador: number;
+}
+interface JsonEscalado {
+  referencia: string;
+  factores: JsonScaleEntry[];
+}
 interface JsonRecipe {
   id: string;
   nombre: string;
@@ -54,24 +62,42 @@ interface JsonRecipe {
   descripcion?: string | null;
   porciones?: number | null;
   molde?: string | null;
+  // Flat time fields
   tiempo_preparacion?: number | null;
   tiempo_coccion?: number | null;
   tiempo_reposo?: number | null;
   tiempo_activo?: number | null;
+  // Nested time fields (actual format)
+  tiempos?: {
+    preparacion_min?: number | null;
+    coccion_min?: number | null;
+    reposo_min?: number | null;
+    total_activo_min?: number | null;
+  } | null;
   temperatura?: number | null;
+  temperatura_horno_c?: number | null;
   dificultad?: string | null;
+  // Flat origin fields
   origen_chef?: string | null;
   origen_url?: string | null;
   origen_libro?: string | null;
+  // Nested origin (actual format)
+  origen?: {
+    chef_autor?: string | null;
+    fuente_url?: string | null;
+    libro?: string | null;
+  } | null;
   planning?: JsonPlanning[];
   notas?: string[];
   variantes?: JsonVariant[];
-  escalado?: JsonScaleFactor[];
+  // Both formats for escalado
+  escalado?: JsonEscalado | JsonScaleFactor[] | null;
   probado?: boolean | null;
   valoracion?: number | null;
   notas_prueba?: string | null;
   subcategoria?: string | null;
   dias_planificacion?: number | null;
+  planificacion_dias?: number | null;
 }
 
 // --- Validation ---
@@ -155,7 +181,9 @@ export default function ImportarRecetas() {
     for (const file of Array.from(files)) {
       try {
         const text = await file.text();
-        const json = JSON.parse(text);
+        // Strip JS-style comments (// ...) from JSON
+        const cleanText = text.replace(/\/\/.*$/gm, "").replace(/,\s*([\]}])/g, "$1");
+        const json = JSON.parse(cleanText);
         const result = validateRecipe(json, file.name);
         if (result.errors.length > 0) errors.push({ file: file.name, errors: result.errors });
         else if (result.recipe) parsed.push(result.recipe);
@@ -233,16 +261,16 @@ export default function ImportarRecetas() {
           subcategory: r.json.subcategoria || null,
           servings: r.json.porciones || null,
           mold: r.json.molde || null,
-          prep_time_min: r.json.tiempo_preparacion || null,
-          bake_time_min: r.json.tiempo_coccion || null,
-          rest_time_min: r.json.tiempo_reposo || null,
-          total_active_min: r.json.tiempo_activo || null,
-          temperature: r.json.temperatura || null,
+          prep_time_min: r.json.tiempo_preparacion ?? r.json.tiempos?.preparacion_min ?? null,
+          bake_time_min: r.json.tiempo_coccion ?? r.json.tiempos?.coccion_min ?? null,
+          rest_time_min: r.json.tiempo_reposo ?? r.json.tiempos?.reposo_min ?? null,
+          total_active_min: r.json.tiempo_activo ?? r.json.tiempos?.total_activo_min ?? null,
+          temperature: r.json.temperatura ?? r.json.temperatura_horno_c ?? null,
           difficulty,
-          planning_days: r.json.dias_planificacion || null,
-          origin_chef: r.json.origen_chef || null,
-          origin_url: r.json.origen_url || null,
-          origin_book: r.json.origen_libro || null,
+          planning_days: r.json.dias_planificacion ?? r.json.planificacion_dias ?? null,
+          origin_chef: r.json.origen_chef ?? r.json.origen?.chef_autor ?? null,
+          origin_url: r.json.origen_url ?? r.json.origen?.fuente_url ?? null,
+          origin_book: r.json.origen_libro ?? r.json.origen?.libro ?? null,
           tested: r.json.probado || false,
           rating: r.json.valoracion || null,
           test_notes: r.json.notas_prueba || null,
@@ -311,15 +339,26 @@ export default function ImportarRecetas() {
           await supabase.from("recipe_variants").insert(variants);
         }
 
-        // Scale factors
-        if (r.json.escalado?.length) {
-          const factors = r.json.escalado.map((s) => ({
-            recipe_id: newRecipe.id,
-            reference_mold: s.molde_referencia,
-            target_mold: s.molde_destino,
-            multiplier: s.multiplicador,
-          }));
-          await supabase.from("recipe_scale_factors").insert(factors);
+        // Scale factors - handle both array format and nested object format
+        const escalado = r.json.escalado;
+        if (escalado) {
+          let factors: { recipe_id: string; reference_mold: string; target_mold: string; multiplier: number }[] = [];
+          if (Array.isArray(escalado)) {
+            factors = escalado.map((s) => ({
+              recipe_id: newRecipe.id,
+              reference_mold: s.molde_referencia,
+              target_mold: s.molde_destino,
+              multiplier: s.multiplicador,
+            }));
+          } else if (escalado.referencia && Array.isArray(escalado.factores)) {
+            factors = escalado.factores.map((f) => ({
+              recipe_id: newRecipe.id,
+              reference_mold: escalado.referencia,
+              target_mold: f.molde,
+              multiplier: f.multiplicador,
+            }));
+          }
+          if (factors.length) await supabase.from("recipe_scale_factors").insert(factors);
         }
 
         importResults.push({
@@ -439,7 +478,7 @@ export default function ImportarRecetas() {
                           <span>{r.json.componentes.length} comp.</span>
                           <span>{r.totalIngredients} ing.</span>
                           <span>{r.totalSteps} pasos</span>
-                          {r.json.origen_chef && <span>👨‍🍳 {r.json.origen_chef}</span>}
+                          {(r.json.origen_chef || r.json.origen?.chef_autor) && <span>👨‍🍳 {r.json.origen_chef || r.json.origen?.chef_autor}</span>}
                         </div>
                       </div>
                       <FileJson className="h-5 w-5 text-muted-foreground shrink-0" />

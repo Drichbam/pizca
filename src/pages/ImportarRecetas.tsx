@@ -773,9 +773,19 @@ export default function ImportarRecetas() {
                         </div>
                         {r.corrections.length > 0 && (
                           <div className="mt-1.5 flex flex-wrap gap-1">
-                            {r.corrections.map((c, j) => (
-                              <span key={j} className="inline-flex items-center text-[11px] px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">
-                                🔧 {c}
+                            {r.corrections.map((c) => (
+                              <span key={c.id} className="inline-flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">
+                                🔧 {c.label}
+                                {c.revertable && (
+                                  <button
+                                    type="button"
+                                    onClick={(e) => { e.stopPropagation(); revertCorrection(i, c.id); }}
+                                    className="ml-0.5 hover:text-sky-900 transition-colors"
+                                    title="Deshacer esta corrección"
+                                  >
+                                    <Undo2 className="h-3 w-3" />
+                                  </button>
+                                )}
                               </span>
                             ))}
                           </div>

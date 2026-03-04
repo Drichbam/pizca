@@ -195,47 +195,71 @@ const DIFFICULTY_NORMALIZE: Record<string, RecipeDifficulty> = {
   "expert": "experto",
 };
 
-function sanitizeRecipe(json: any) {
+function sanitizeRecipe(json: any): string[] {
+  const corrections: string[] = [];
+
   // Normalize category (case-insensitive)
   if (json.categoria) {
+    const original = json.categoria;
     const catLower = json.categoria.toLowerCase().trim();
     if (CATEGORY_NORMALIZE[catLower]) {
       json.categoria = CATEGORY_NORMALIZE[catLower];
     } else if (!VALID_CATEGORIES.includes(json.categoria)) {
-      // Try lowercase match against valid categories
       const match = VALID_CATEGORIES.find(c => c.toLowerCase() === catLower);
       if (match) json.categoria = match;
+    }
+    if (json.categoria !== original) {
+      corrections.push(`Categoría: "${original}" → "${json.categoria}"`);
     }
   }
 
   // Normalize difficulty
   if (json.dificultad) {
+    const original = json.dificultad;
     const diffLower = json.dificultad.toLowerCase().trim();
     if (DIFFICULTY_NORMALIZE[diffLower]) {
       json.dificultad = DIFFICULTY_NORMALIZE[diffLower];
+    }
+    if (json.dificultad !== original) {
+      corrections.push(`Dificultad: "${original}" → "${json.dificultad}"`);
     }
   }
 
   // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
+    let removedIngredients = 0;
+    let normalizedUnits = 0;
+    const originalCompCount = json.componentes.length;
+
     json.componentes = json.componentes
-      .map((c: any) => ({
-        ...c,
-        ingredientes: Array.isArray(c.ingredientes)
-          ? c.ingredientes
-              .filter((ing: any) => !!ing.ingrediente)
-              .map((ing: any) => {
-                if (ing.unidad) {
-                  const uLower = ing.unidad.toLowerCase().trim();
-                  const normalized = UNIT_NORMALIZE[uLower];
-                  if (normalized) ing.unidad = normalized;
-                }
-                return ing;
-              })
-          : [],
-      }))
+      .map((c: any) => {
+        const originalIngs = Array.isArray(c.ingredientes) ? c.ingredientes : [];
+        const filtered = originalIngs.filter((ing: any) => !!ing.ingrediente);
+        removedIngredients += originalIngs.length - filtered.length;
+
+        const mapped = filtered.map((ing: any) => {
+          if (ing.unidad) {
+            const uLower = ing.unidad.toLowerCase().trim();
+            const normalized = UNIT_NORMALIZE[uLower];
+            if (normalized) {
+              normalizedUnits++;
+              ing.unidad = normalized;
+            }
+          }
+          return ing;
+        });
+
+        return { ...c, ingredientes: mapped };
+      })
       .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
+
+    const removedComps = originalCompCount - json.componentes.length;
+    if (removedIngredients > 0) corrections.push(`${removedIngredients} ingrediente${removedIngredients > 1 ? "s" : ""} sin nombre eliminado${removedIngredients > 1 ? "s" : ""}`);
+    if (removedComps > 0) corrections.push(`${removedComps} componente${removedComps > 1 ? "s" : ""} vacío${removedComps > 1 ? "s" : ""} eliminado${removedComps > 1 ? "s" : ""}`);
+    if (normalizedUnits > 0) corrections.push(`${normalizedUnits} unidad${normalizedUnits > 1 ? "es" : ""} normalizada${normalizedUnits > 1 ? "s" : ""}`);
   }
+
+  return corrections;
 }
 
 function validateRecipe(json: any, fileName: string): { errors: string[]; recipe?: ParsedRecipe } {

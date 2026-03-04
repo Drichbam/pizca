@@ -243,7 +243,11 @@ export default function RecipeDetail() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => exportRecipeToPdf(recipe)}>
+            <DropdownMenuItem onClick={async () => {
+              const t = toast.loading("Generando PDF…");
+              try { await exportRecipeToPdf(recipe); }
+              finally { toast.dismiss(t); }
+            }}>
               <FileText className="h-4 w-4 mr-2" /> PDF
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success("Receta exportada"); }}>

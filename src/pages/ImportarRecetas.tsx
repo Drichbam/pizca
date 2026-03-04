@@ -670,8 +670,21 @@ export default function ImportarRecetas() {
           )}
 
           {/* Valid recipes */}
-          {recipes.length > 0 && (
+          {recipes.length > 0 && (() => {
+            const totalCorrections = recipes.reduce((s, r) => s + r.corrections.length, 0);
+            const recipesWithCorrections = recipes.filter(r => r.corrections.length > 0).length;
+            return (
             <>
+              {totalCorrections > 0 && (
+                <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-1">
+                  <div className="flex items-center gap-2 text-sky-800 font-medium text-sm">
+                    <Info className="h-4 w-4" />
+                    {totalCorrections} corrección{totalCorrections !== 1 ? "es" : ""} automática{totalCorrections !== 1 ? "s" : ""} en {recipesWithCorrections} archivo{recipesWithCorrections !== 1 ? "s" : ""}
+                  </div>
+                  <p className="text-xs text-sky-700">Se normalizaron categorías, unidades o se limpiaron datos incompletos.</p>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-foreground">
                   {recipes.length} receta{recipes.length !== 1 ? "s" : ""} válida{recipes.length !== 1 ? "s" : ""}
@@ -710,12 +723,24 @@ export default function ImportarRecetas() {
                           <span>{r.totalSteps} pasos</span>
                           {(r.json.origen_chef || r.json.origen?.chef_autor) && <span>👨‍🍳 {r.json.origen_chef || r.json.origen?.chef_autor}</span>}
                         </div>
+                        {r.corrections.length > 0 && (
+                          <div className="mt-1.5 flex flex-wrap gap-1">
+                            {r.corrections.map((c, j) => (
+                              <span key={j} className="inline-flex items-center text-[11px] px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">
+                                🔧 {c}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <FileJson className="h-5 w-5 text-muted-foreground shrink-0" />
                     </div>
                   );
                 })}
               </div>
+            </>
+            );
+          })()}
 
               {/* Duplicate handling */}
               {duplicatesInSelected > 0 && (

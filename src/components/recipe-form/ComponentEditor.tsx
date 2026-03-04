@@ -94,7 +94,34 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
 
       {/* Ingredients */}
       <div>
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Ingredientes</h4>
+        <div className="flex items-center gap-1.5 mb-2">
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Ingredientes</h4>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button type="button" className="text-muted-foreground hover:text-foreground">
+                  <HelpCircle size={13} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="max-w-xs p-3">
+                <p className="text-xs font-semibold mb-1.5">Unidades disponibles</p>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-xs">
+                  <span><strong>g</strong> — gramos</span>
+                  <span><strong>kg</strong> — kilogramos</span>
+                  <span><strong>ml</strong> — mililitros</span>
+                  <span><strong>cl</strong> — centilitros</span>
+                  <span><strong>dl</strong> — decilitros</span>
+                  <span><strong>l</strong> — litros</span>
+                  <span><strong>pcs</strong> — piezas</span>
+                  <span><strong>cc</strong> — cucharita café</span>
+                  <span><strong>cs</strong> — cuchara sopera</span>
+                  <span><strong>pincée</strong> — pizca</span>
+                  <span className="col-span-2"><strong>QS</strong> — cantidad suficiente</span>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <div className="space-y-2">
           {component.ingredients.map((ing, i) => (
             <div key={i} className="flex gap-1.5 items-center">

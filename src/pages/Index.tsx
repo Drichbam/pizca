@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { BookOpen, PlusCircle, ChefHat, Clock } from "lucide-react";
+import { BookOpen, Euro, ChefHat, Clock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Index() {
@@ -38,14 +38,14 @@ export default function Index() {
         </button>
 
         <button
-          onClick={() => navigate("/crear")}
+          onClick={() => navigate("/mis-precios")}
           className="bg-card rounded-xl p-6 shadow-card hover:shadow-elevated transition-shadow text-left group"
         >
           <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-            <PlusCircle className="h-6 w-6 text-primary" />
+            <Euro className="h-6 w-6 text-primary" />
           </div>
-          <h3 className="font-semibold text-foreground text-lg">Crear Receta</h3>
-          <p className="text-sm text-muted-foreground mt-1">Añade una nueva receta a tu colección</p>
+          <h3 className="font-semibold text-foreground text-lg">Mis Precios</h3>
+          <p className="text-sm text-muted-foreground mt-1">Gestiona los precios de tus ingredientes</p>
         </button>
       </div>
 

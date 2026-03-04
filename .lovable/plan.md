@@ -1,35 +1,21 @@
 
 
-## Plan: Export recipe to PDF
+## Plan: Eliminate horizontal scrolling on mobile
 
-### Approach
-Use the browser's native `window.print()` with a print-specific stylesheet. This avoids adding heavy PDF libraries, keeps the bundle small, and produces high-quality output. We'll create a hidden "print view" component that renders the full recipe in a clean, print-friendly layout, then trigger `window.print()`.
+### Problem
+Content overflows horizontally on mobile (iPhone 16 Pro, 402pt), causing unwanted horizontal scroll.
 
 ### Changes
 
-**1. New file: `src/lib/exportRecipePdf.ts`**
-- Function `exportRecipeToPdf(recipe: RecipeWithComponents)` that:
-  - Creates a new window/iframe with a self-contained HTML document
-  - Renders recipe title, category, origin, chips (servings, times, difficulty, temperature, mold)
-  - Ingredients grouped by component in a clean table
-  - Steps grouped by component, numbered
-  - Notes section
-  - Styled with inline CSS for print (no color backgrounds, clean typography, proper page breaks)
-  - Calls `window.print()` on the new window, then closes it
+**1. `src/index.css` — Add global overflow-x protection**
+- Add `overflow-x: hidden` to `html` and `body` in the base layer to prevent any horizontal scroll globally.
 
-**2. Edit: `src/pages/RecipeDetail.tsx`**
-- Import `exportRecipeToPdf` and `FileText` icon
-- Add a new button next to the existing JSON export button with a `FileText` icon
-- On click, call `exportRecipeToPdf(recipe)` and show toast
+**2. `src/components/AppLayout.tsx` — Add overflow-x-hidden to layout**
+- Add `overflow-x-hidden` to the root div and main element to contain any child overflow.
 
-### PDF layout
-- Header: title + category badge + "Probada" if tested
-- Meta row: servings, prep/bake/rest times, difficulty, temperature, mold
-- Origin block (if any): chef, book, URL
-- Per component: ingredient table (qty | unit | name) + numbered steps
-- Notes at the bottom
-- Footer: "Exportado desde Pizca" + date
-- CSS: `@media print` with `page-break-inside: avoid` on component blocks
+**3. `src/pages/MisRecetas.tsx` — Fix header overflow**
+- On mobile, hide text labels on "Exportar" and "Importar" buttons (show only icons). Keep "+ Nueva" with text.
+- Add `min-w-0` to the title container to allow text truncation if needed.
 
-### No new dependencies needed.
+These 3 changes together ensure no content can cause horizontal scroll on any mobile screen.
 

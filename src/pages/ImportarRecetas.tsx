@@ -150,12 +150,10 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!json.categoria || !VALID_CATEGORIES.includes(json.categoria)) errors.push(`Categoría inválida: '${json.categoria}'. Válidas: ${VALID_CATEGORIES.join(", ")}`);
   if (!json.id || typeof json.id !== "string") errors.push("Falta 'id'");
   if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
-    errors.push("Falta al menos un componente con ingredientes");
+    errors.push("Falta al menos un componente con ingredientes o pasos");
   } else {
     json.componentes.forEach((c: any, i: number) => {
       if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-      if (c.ingredientes.length === 0)
-        errors.push(`Componente '${c.nombre || i + 1}': sin ingredientes`);
     });
   }
 

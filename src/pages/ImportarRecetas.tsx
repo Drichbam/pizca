@@ -208,6 +208,58 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
   const corrections: CorrectionItem[] = [];
   let corrId = 0;
 
+  // ── Structure normalization: build componentes from alternative formats ──
+  if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
+    // Case 1: top-level ingredientes array → wrap in a single component
+    if (Array.isArray(json.ingredientes) && json.ingredientes.length > 0) {
+      json.componentes = [{ nombre: json.nombre || "", ingredientes: json.ingredientes }];
+      corrections.push({
+        id: `corr-${corrId++}`,
+        label: `Estructura: ingredientes de nivel superior envueltos en un componente`,
+        revertable: false,
+      });
+    }
+    // Case 2: only preparacion exists → create components from preparation groups
+    else if (Array.isArray(json.preparacion) && json.preparacion.length > 0) {
+      json.componentes = json.preparacion.map((p: any) => ({
+        nombre: p.componente || "",
+        ingredientes: [],
+      }));
+      corrections.push({
+        id: `corr-${corrId++}`,
+        label: `Estructura: componentes creados a partir de la preparación (sin ingredientes)`,
+        revertable: false,
+      });
+    }
+  }
+
+  // Case 3: componentes exist but have inline pasos → extract to preparacion
+  if (Array.isArray(json.componentes)) {
+    const hasInlinePasos = json.componentes.some((c: any) => Array.isArray(c.pasos) && c.pasos.length > 0);
+    if (hasInlinePasos && !Array.isArray(json.preparacion)) {
+      json.preparacion = json.componentes
+        .filter((c: any) => Array.isArray(c.pasos) && c.pasos.length > 0)
+        .map((c: any) => ({ componente: c.nombre, pasos: c.pasos }));
+      corrections.push({
+        id: `corr-${corrId++}`,
+        label: `Estructura: pasos inline extraídos a preparación`,
+        revertable: false,
+      });
+    }
+  }
+
+  // Auto-generate id from nombre if missing
+  if (!json.id && json.nombre) {
+    json.id = json.nombre.toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    corrections.push({
+      id: `corr-${corrId++}`,
+      label: `ID generado automáticamente: "${json.id}"`,
+      revertable: false,
+    });
+  }
+
   // Normalize category (case-insensitive)
   if (json.categoria) {
     const original = json.categoria;
@@ -309,9 +361,12 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
     errors.push("Falta al menos un componente con ingredientes o pasos");
   } else {
-    json.componentes.forEach((c: any, i: number) => {
-      if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-    });
+    // Only require component name when there are multiple components
+    if (json.componentes.length > 1) {
+      json.componentes.forEach((c: any, i: number) => {
+        if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
+      });
+    }
   }
 
   if (errors.length > 0) return { errors };

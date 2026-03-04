@@ -1,26 +1,29 @@
 
 
-## Plan: Auto-corregir errores comunes en importación de recetas
+## Plan: Add unit legend tooltip to ingredient editor
 
-### Problema
-Los archivos JSON usan categorías sin acentos (`gateaux`, `cremes-de-base`, `pates-de-base`) pero el sistema requiere las versiones con acentos (`gâteaux`, `crèmes-de-base`, `pâtes-de-base`). También hay componentes vacíos e ingredientes sin nombre que bloquean la importación.
+### What
+Add a small help icon (HelpCircle) next to the "Ingredientes" heading in `ComponentEditor.tsx` that shows a tooltip/popover explaining the special units.
 
-### Solución
+### How
 
-**Archivo: `src/pages/ImportarRecetas.tsx`**
+**File: `src/components/recipe-form/ComponentEditor.tsx`**
 
-1. **Mapa de normalización de categorías** — Antes de validar, mapear variantes sin acentos a las categorías válidas:
-   ```
-   gateaux → gâteaux
-   cremes-de-base → crèmes-de-base
-   pates-de-base → pâtes-de-base
-   glaces-sorbets → glaces-sorbets (ya ok)
-   ```
-   Aplicar este mapeo al JSON antes de la validación (`validateRecipe`).
+1. Import `Tooltip, TooltipTrigger, TooltipContent, TooltipProvider` and `HelpCircle` icon.
 
-2. **Filtrar componentes vacíos** — Antes de validar, eliminar componentes cuyo array `ingredientes` esté vacío o ausente. Si tras filtrar quedan 0 componentes, ahí sí dar error.
+2. Next to the "Ingredientes" `<h4>`, add a `HelpCircle` icon wrapped in a Tooltip that displays:
 
-3. **Filtrar ingredientes sin nombre** — Dentro de cada componente, descartar ingredientes donde `ingrediente` sea falsy, en vez de rechazar el archivo entero.
+```
+g — gramos          kg — kilogramos
+ml — mililitros     cl — centilitros
+dl — decilitros     l — litros
+pcs — piezas        cc — cucharita café
+cs — cuchara sopera pincée — pizca
+QS — cantidad suficiente (à discrétion)
+```
 
-Estos 3 cambios se aplican como un paso de "sanitización" al inicio de `validateRecipe`, antes de las validaciones estrictas.
+Styled as a compact two-column grid inside `TooltipContent` with `max-w-xs`.
+
+### Scope
+Single file edit, no database or backend changes needed.
 

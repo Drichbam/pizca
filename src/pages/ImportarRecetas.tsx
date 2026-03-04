@@ -101,6 +101,15 @@ interface JsonRecipe {
 }
 
 // --- Validation ---
+interface CorrectionItem {
+  id: string;
+  label: string;
+  revertable: boolean;
+  field?: 'categoria' | 'dificultad';
+  originalValue?: string;
+  correctedValue?: string;
+}
+
 interface ValidationError { file: string; errors: string[]; }
 interface ParsedRecipe {
   json: JsonRecipe;
@@ -109,7 +118,7 @@ interface ParsedRecipe {
   slug: string;
   totalIngredients: number;
   totalSteps: number;
-  corrections: string[];
+  corrections: CorrectionItem[];
 }
 
 const VALID_CATEGORIES: RecipeCategory[] = [

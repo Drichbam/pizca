@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
@@ -14,6 +14,7 @@ import { RecipePlanningTimeline } from "@/components/recipe/RecipePlanningTimeli
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { exportRecipe } from "@/lib/exportRecipe";
+import { exportRecipeToPdf } from "@/lib/exportRecipePdf";
 import { cn } from "@/lib/utils";
 import { Cake } from "lucide-react";
 
@@ -233,9 +234,20 @@ export default function RecipeDetail() {
           variant="outline"
           className="rounded-lg"
           onClick={() => {
+            exportRecipeToPdf(recipe);
+          }}
+          title="Exportar PDF"
+        >
+          <FileText className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="outline"
+          className="rounded-lg"
+          onClick={() => {
             exportRecipe(recipe);
             toast.success("Receta exportada");
           }}
+          title="Exportar JSON"
         >
           <Download className="h-4 w-4" />
         </Button>

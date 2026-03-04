@@ -724,12 +724,32 @@ export default function ImportarRecetas() {
             return (
             <>
               {totalCorrections > 0 && (
-                <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-1">
+                <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-3">
                   <div className="flex items-center gap-2 text-sky-800 font-medium text-sm">
                     <Info className="h-4 w-4" />
                     {totalCorrections} corrección{totalCorrections !== 1 ? "es" : ""} automática{totalCorrections !== 1 ? "s" : ""} en {recipesWithCorrections} archivo{recipesWithCorrections !== 1 ? "s" : ""}
                   </div>
-                  <p className="text-xs text-sky-700">Se normalizaron categorías, unidades o se limpiaron datos incompletos.</p>
+                  <div className="space-y-1">
+                    {recipes.flatMap((r) =>
+                      r.corrections.map((c) => (
+                        <div key={`${r.file}-${c.id}`} className="flex items-center gap-2 text-xs text-sky-800">
+                          <span className="text-sky-400">→</span>
+                          <span className="text-muted-foreground truncate max-w-[140px]" title={r.file}>{r.file}</span>
+                          <span>{c.label}</span>
+                          {c.revertable && (
+                            <button
+                              type="button"
+                              onClick={() => revertCorrection(recipes.indexOf(r), c.id)}
+                              className="ml-auto text-sky-500 hover:text-sky-800 transition-colors shrink-0"
+                              title="Deshacer"
+                            >
+                              <Undo2 className="h-3 w-3" />
+                            </button>
+                          )}
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               )}
 

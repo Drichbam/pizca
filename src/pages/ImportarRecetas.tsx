@@ -204,8 +204,9 @@ const DIFFICULTY_NORMALIZE: Record<string, RecipeDifficulty> = {
   "expert": "experto",
 };
 
-function sanitizeRecipe(json: any): string[] {
-  const corrections: string[] = [];
+function sanitizeRecipe(json: any): CorrectionItem[] {
+  const corrections: CorrectionItem[] = [];
+  let corrId = 0;
 
   // Normalize category (case-insensitive)
   if (json.categoria) {
@@ -218,7 +219,14 @@ function sanitizeRecipe(json: any): string[] {
       if (match) json.categoria = match;
     }
     if (json.categoria !== original) {
-      corrections.push(`Categoría: "${original}" → "${json.categoria}"`);
+      corrections.push({
+        id: `corr-${corrId++}`,
+        label: `Categoría: "${original}" → "${json.categoria}"`,
+        revertable: true,
+        field: 'categoria',
+        originalValue: original,
+        correctedValue: json.categoria,
+      });
     }
   }
 
@@ -230,7 +238,14 @@ function sanitizeRecipe(json: any): string[] {
       json.dificultad = DIFFICULTY_NORMALIZE[diffLower];
     }
     if (json.dificultad !== original) {
-      corrections.push(`Dificultad: "${original}" → "${json.dificultad}"`);
+      corrections.push({
+        id: `corr-${corrId++}`,
+        label: `Dificultad: "${original}" → "${json.dificultad}"`,
+        revertable: true,
+        field: 'dificultad',
+        originalValue: original,
+        correctedValue: json.dificultad,
+      });
     }
   }
 
@@ -263,9 +278,21 @@ function sanitizeRecipe(json: any): string[] {
       .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
 
     const removedComps = originalCompCount - json.componentes.length;
-    if (removedIngredients > 0) corrections.push(`${removedIngredients} ingrediente${removedIngredients > 1 ? "s" : ""} sin nombre eliminado${removedIngredients > 1 ? "s" : ""}`);
-    if (removedComps > 0) corrections.push(`${removedComps} componente${removedComps > 1 ? "s" : ""} vacío${removedComps > 1 ? "s" : ""} eliminado${removedComps > 1 ? "s" : ""}`);
-    if (normalizedUnits > 0) corrections.push(`${normalizedUnits} unidad${normalizedUnits > 1 ? "es" : ""} normalizada${normalizedUnits > 1 ? "s" : ""}`);
+    if (removedIngredients > 0) corrections.push({
+      id: `corr-${corrId++}`,
+      label: `${removedIngredients} ingrediente${removedIngredients > 1 ? "s" : ""} sin nombre eliminado${removedIngredients > 1 ? "s" : ""}`,
+      revertable: false,
+    });
+    if (removedComps > 0) corrections.push({
+      id: `corr-${corrId++}`,
+      label: `${removedComps} componente${removedComps > 1 ? "s" : ""} vacío${removedComps > 1 ? "s" : ""} eliminado${removedComps > 1 ? "s" : ""}`,
+      revertable: false,
+    });
+    if (normalizedUnits > 0) corrections.push({
+      id: `corr-${corrId++}`,
+      label: `${normalizedUnits} unidad${normalizedUnits > 1 ? "es" : ""} normalizada${normalizedUnits > 1 ? "s" : ""}`,
+      revertable: false,
+    });
   }
 
   return corrections;

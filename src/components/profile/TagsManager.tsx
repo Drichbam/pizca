@@ -4,8 +4,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Pencil, Trash2, X, Check, Tag } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Check, Tag, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const COLORS = [
   "#E8784A", "#2B4C7E", "#6B8F4A", "#9B59B6",
@@ -26,6 +36,7 @@ export function TagsManager() {
   const [name, setName] = useState("");
   const [color, setColor] = useState(COLORS[0]);
   const [showForm, setShowForm] = useState(false);
+  const [deletingTag, setDeletingTag] = useState<TagRow | null>(null);
 
   const { data: tags, isLoading } = useQuery({
     queryKey: ["tags"],
@@ -178,7 +189,7 @@ export function TagsManager() {
                 variant="ghost"
                 size="sm"
                 className="h-6 w-6 p-0 rounded-full text-destructive hover:text-destructive"
-                onClick={() => deleteMutation.mutate(tag.id)}
+                onClick={() => setDeletingTag(tag)}
               >
                 <Trash2 className="h-3 w-3" />
               </Button>
@@ -186,6 +197,29 @@ export function TagsManager() {
           ))}
         </div>
       )}
+
+      <AlertDialog open={!!deletingTag} onOpenChange={(open) => !open && setDeletingTag(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Eliminar etiqueta?</AlertDialogTitle>
+            <AlertDialogDescription>
+              La etiqueta <strong>"{deletingTag?.name}"</strong> se eliminará de todas las recetas que la tengan asignada. Esta acción no se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => {
+                if (deletingTag) deleteMutation.mutate(deletingTag.id);
+                setDeletingTag(null);
+              }}
+            >
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

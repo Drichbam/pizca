@@ -1,8 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, Share2, MessageCircle } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
 import { CATEGORY_LABELS, CATEGORY_COLORS, DIFFICULTY_LABELS } from "@/types/recipe";
 import { RecipeIngredientsList } from "@/components/recipe/RecipeIngredientsList";
@@ -231,34 +230,27 @@ export default function RecipeDetail() {
         <Button variant="outline" className="rounded-lg flex-1" onClick={handleDuplicate} disabled={duplicateRecipe.isPending}>
           <Copy className="h-4 w-4 mr-1.5" /> Duplicar
         </Button>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="rounded-lg">
-              <Share2 className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="rounded-lg">
-            <DropdownMenuItem onClick={() => exportRecipeToPdf(recipe)}>
-              <FileText className="h-4 w-4 mr-2" /> Exportar PDF
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success("Receta exportada"); }}>
-              <Download className="h-4 w-4 mr-2" /> Exportar JSON
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {
-              const text = `🍰 *${recipe.title}*\n${recipe.description || ""}\n\nCategoría: ${CATEGORY_LABELS[recipe.category]}${recipe.servings ? `\nPorciones: ${recipe.servings}` : ""}${recipe.prep_time_min ? `\nPrep: ${recipe.prep_time_min}′` : ""}${recipe.bake_time_min ? `\nCocción: ${recipe.bake_time_min}′` : ""}\n\n` +
-                (recipe.recipe_components || []).sort((a, b) => a.sort_order - b.sort_order).map(comp => {
-                  const title = comp.name ? `*${comp.name}*\n` : "";
-                  const ings = [...comp.recipe_ingredients].sort((a, b) => a.sort_order - b.sort_order)
-                    .map(i => `• ${i.quantity ?? ""}${i.unit ? " " + i.unit : ""} ${i.name}`).join("\n");
-                  return title + ings;
-                }).join("\n\n") +
-                "\n\n_Compartido desde Pizca_";
-              window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
-            }}>
-              <MessageCircle className="h-4 w-4 mr-2" /> Compartir por WhatsApp
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="outline"
+          className="rounded-lg"
+          onClick={() => {
+            exportRecipeToPdf(recipe);
+          }}
+          title="Exportar PDF"
+        >
+          <FileText className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="outline"
+          className="rounded-lg"
+          onClick={() => {
+            exportRecipe(recipe);
+            toast.success("Receta exportada");
+          }}
+          title="Exportar JSON"
+        >
+          <Download className="h-4 w-4" />
+        </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="rounded-lg text-destructive hover:text-destructive">

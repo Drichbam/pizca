@@ -12,6 +12,7 @@ import { RecipeInfoTab } from "@/components/recipe/RecipeInfoTab";
 import { RecipeMoldsTab } from "@/components/recipe/RecipeMoldsTab";
 import { RecipeCostsTab } from "@/components/recipe/RecipeCostsTab";
 import { RecipePlanningTimeline } from "@/components/recipe/RecipePlanningTimeline";
+import { RecipeFullViewTab } from "@/components/recipe/RecipeFullViewTab";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { exportRecipe } from "@/lib/exportRecipe";
@@ -193,8 +194,9 @@ export default function RecipeDetail() {
       )}
 
       {/* Tabs */}
-      <Tabs defaultValue="ingredientes" className="w-full">
-        <TabsList className="w-full grid grid-cols-6 bg-secondary rounded-lg h-10">
+      <Tabs defaultValue="receta" className="w-full">
+        <TabsList className="w-full grid grid-cols-7 bg-secondary rounded-lg h-10">
+          <TabsTrigger value="receta" className="rounded-md text-xs">Receta</TabsTrigger>
           <TabsTrigger value="ingredientes" className="rounded-md text-xs">Ingredientes</TabsTrigger>
           <TabsTrigger value="pasos" className="rounded-md text-xs">Pasos</TabsTrigger>
           <TabsTrigger value="moldes" className="rounded-md text-xs">Moldes</TabsTrigger>
@@ -203,6 +205,9 @@ export default function RecipeDetail() {
           <TabsTrigger value="info" className="rounded-md text-xs">Info</TabsTrigger>
         </TabsList>
 
+        <TabsContent value="receta" className="mt-4">
+          <RecipeFullViewTab recipe={recipe} />
+        </TabsContent>
         <TabsContent value="ingredientes" className="mt-4">
           <RecipeIngredientsList components={recipe.recipe_components} />
         </TabsContent>

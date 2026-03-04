@@ -181,8 +181,22 @@ export default function ImportarRecetas() {
     for (const file of Array.from(files)) {
       try {
         const text = await file.text();
-        // Strip JS-style comments (// ...) from JSON
-        const cleanText = text.replace(/\/\/.*$/gm, "").replace(/,\s*([\]}])/g, "$1");
+        // Strip JS-style comments that are outside of strings
+        // Process line by line: remove only comments that appear after the last closing quote
+        const cleanText = text.split('\n').map(line => {
+          // Find // that is not inside a string by tracking quote state
+          let inString = false;
+          let escapeNext = false;
+          for (let i = 0; i < line.length; i++) {
+            if (escapeNext) { escapeNext = false; continue; }
+            if (line[i] === '\\') { escapeNext = true; continue; }
+            if (line[i] === '"') { inString = !inString; continue; }
+            if (!inString && line[i] === '/' && line[i + 1] === '/') {
+              return line.substring(0, i);
+            }
+          }
+          return line;
+        }).join('\n').replace(/,\s*([\]}])/g, "$1");
         const json = JSON.parse(cleanText);
         const result = validateRecipe(json, file.name);
         if (result.errors.length > 0) errors.push({ file: file.name, errors: result.errors });

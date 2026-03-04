@@ -262,16 +262,18 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
 
         const mapped = filtered.map((ing: any) => {
           if (ing.unidad) {
-            const uLower = ing.unidad.toLowerCase().trim();
+            const originalUnit = ing.unidad;
+            const uLower = originalUnit.toLowerCase().trim();
             const normalized = UNIT_NORMALIZE[uLower];
             if (normalized) {
-              const originalUnit = ing.unidad;
               ing.unidad = normalized;
-              corrections.push({
-                id: `corr-${corrId++}`,
-                label: `Unidad en "${ing.ingrediente}": "${originalUnit}" → "${normalized}"`,
-                revertable: false,
-              });
+              if (originalUnit !== normalized) {
+                corrections.push({
+                  id: `corr-${corrId++}`,
+                  label: `Unidad en "${ing.ingrediente}": "${originalUnit}" → "${normalized}"`,
+                  revertable: false,
+                });
+              }
             }
           }
           return ing;

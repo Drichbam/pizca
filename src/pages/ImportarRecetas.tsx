@@ -263,7 +263,7 @@ function sanitizeRecipe(json: any): string[] {
 }
 
 function validateRecipe(json: any, fileName: string): { errors: string[]; recipe?: ParsedRecipe } {
-  sanitizeRecipe(json);
+  const corrections = sanitizeRecipe(json);
 
   const errors: string[] = [];
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
@@ -285,7 +285,7 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
 
   return {
     errors: [],
-    recipe: { json, file: fileName, selected: true, slug, totalIngredients, totalSteps },
+    recipe: { json, file: fileName, selected: true, slug, totalIngredients, totalSteps, corrections },
   };
 }
 

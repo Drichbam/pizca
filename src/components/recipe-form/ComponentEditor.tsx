@@ -2,7 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trash2, Plus, ChevronUp, ChevronDown } from "lucide-react";
+import { Trash2, Plus, ChevronUp, ChevronDown, HelpCircle } from "lucide-react";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { Constants } from "@/integrations/supabase/types";
 
 const units = Constants.public.Enums.ingredient_unit;

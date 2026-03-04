@@ -83,6 +83,13 @@ function StepRow({ step, index }: { step: RecipeStep; index: number }) {
             💡 {step.technical_notes}
           </p>
         )}
+        {step.photo_url && (
+          <img
+            src={step.photo_url}
+            alt={`Foto paso ${index}`}
+            className="mt-2 rounded-lg w-full max-h-56 object-cover"
+          />
+        )}
       </div>
     </div>
   );

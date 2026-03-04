@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import { ComponentEditor, ComponentForm, emptyComponent } from "./ComponentEditor";
+import { compressImage } from "@/lib/imageUtils";
 import { TagSelector } from "./TagSelector";
 import { useRecipeTags, useSetRecipeTags } from "@/hooks/useTags";
 import type { RecipeWithComponents } from "@/types/recipe";
@@ -86,6 +87,7 @@ function recipeToForm(r: RecipeWithComponents): FormData {
           description: s.description, temp_c: s.temp_c ? String(s.temp_c) : "",
           duration_min: s.duration_min ? String(s.duration_min) : "",
           technical_notes: s.technical_notes || "", step_order: s.step_order,
+          photo_url: s.photo_url || "",
         })),
       })),
     planning_enabled: (r.recipe_planning || []).length > 0,
@@ -229,9 +231,22 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
           ings.map((ig, i) => ({ component_id: nc.id, name: ig.name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
         );
         const stps = comp.steps.filter(s => s.description.trim());
-        if (stps.length) await supabase.from("recipe_steps").insert(
-          stps.map((s, i) => ({ component_id: nc.id, description: s.description.trim(), temp_c: num(s.temp_c), duration_min: num(s.duration_min), technical_notes: s.technical_notes || null, step_order: i }))
-        );
+        if (stps.length) {
+          const stepsWithUrls = await Promise.all(stps.map(async (s, i) => {
+            let photo_url = s.photo_url || null;
+            if (s.photo_file) {
+              const blob = await compressImage(s.photo_file);
+              const path = `${user!.id}/steps/${Date.now()}-${i}.webp`;
+              const { error: upErr } = await supabase.storage.from("recipe-photos").upload(path, blob, { contentType: "image/webp" });
+              if (upErr) throw upErr;
+              photo_url = supabase.storage.from("recipe-photos").getPublicUrl(path).data.publicUrl;
+            }
+            return { ...s, photo_url };
+          }));
+          await supabase.from("recipe_steps").insert(
+            stepsWithUrls.map((s, i) => ({ component_id: nc.id, description: s.description.trim(), temp_c: num(s.temp_c), duration_min: num(s.duration_min), technical_notes: s.technical_notes || null, step_order: i, photo_url: s.photo_url }))
+          );
+        }
       }
 
       // Planning

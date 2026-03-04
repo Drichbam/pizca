@@ -13,6 +13,10 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import type { Database } from "@/integrations/supabase/types";
 import { Constants } from "@/integrations/supabase/types";
+import { BarcodeSearchField } from "@/components/profile/BarcodeSearchField";
+import { CommunityPricesPanel } from "@/components/profile/CommunityPricesPanel";
+import { IngredientPriceSearchPanel } from "@/components/profile/IngredientPriceSearchPanel";
+import type { OpenFoodFactsProduct } from "@/hooks/useOpenFoodFacts";
 
 type IngredientPrice = Database["public"]["Tables"]["ingredient_prices"]["Row"];
 type IngredientUnit = Database["public"]["Enums"]["ingredient_unit"];
@@ -105,6 +109,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     initialIngredient ? { ...emptyForm, ingredient_name: initialIngredient } : emptyForm
   );
   const [showForm, setShowForm] = useState(!!initialIngredient);
+  const [foundBarcode, setFoundBarcode] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterMode>("all");
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
 
@@ -267,6 +272,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     setForm(emptyForm);
     setEditingId(null);
     setShowForm(false);
+    setFoundBarcode(null);
   };
 
   const startEdit = (p: IngredientPrice) => {
@@ -289,6 +295,20 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     setShowForm(true);
   };
 
+  const handleProductFound = (product: OpenFoodFactsProduct & { barcode: string }) => {
+    const packageUnit = UNITS.includes(product.package_unit as IngredientUnit)
+      ? (product.package_unit as IngredientUnit)
+      : "g";
+    setFoundBarcode(product.barcode);
+    setForm((prev) => ({
+      ...prev,
+      ingredient_name: prev.ingredient_name || product.name,
+      brand: prev.brand || product.brand,
+      package_size: product.package_size != null ? String(product.package_size) : prev.package_size,
+      package_unit: packageUnit,
+    }));
+  };
+
   const unpricedCount = combinedList.filter((i) => i.type === "unpriced").length;
   const pricedCount = combinedList.filter((i) => i.type === "priced").length;
 
@@ -307,6 +327,12 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
       {/* Form */}
       {showForm && (
         <div className="bg-accent/30 rounded-xl p-4 space-y-3 border border-border">
+          {!editingId && (
+            <BarcodeSearchField onProductFound={handleProductFound} />
+          )}
+          {foundBarcode && !editingId && (
+            <CommunityPricesPanel barcode={foundBarcode} />
+          )}
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-2">
               <Label className="text-xs text-muted-foreground">Ingrediente *</Label>
@@ -316,6 +342,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
                 className="rounded-lg"
                 placeholder="Ej: harina"
               />
+              <IngredientPriceSearchPanel ingredientName={form.ingredient_name} />
             </div>
             <div>
               <Label className="text-xs text-muted-foreground">Marca</Label>

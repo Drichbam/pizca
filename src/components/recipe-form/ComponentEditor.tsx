@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Trash2, Plus, ChevronUp, ChevronDown, HelpCircle } from "lucide-react";
+import { Trash2, Plus, ChevronUp, ChevronDown, HelpCircle, ImagePlus, X } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { Constants } from "@/integrations/supabase/types";
 
@@ -21,6 +21,8 @@ export interface StepForm {
   duration_min: string;
   technical_notes: string;
   step_order: number;
+  photo_url: string;
+  photo_file?: File;
 }
 
 export interface ComponentForm {
@@ -34,7 +36,7 @@ export function emptyIngredient(order = 0): IngredientForm {
   return { name: "", quantity: "", unit: "", sort_order: order };
 }
 export function emptyStep(order = 0): StepForm {
-  return { description: "", temp_c: "", duration_min: "", technical_notes: "", step_order: order };
+  return { description: "", temp_c: "", duration_min: "", technical_notes: "", step_order: order, photo_url: "" };
 }
 export function emptyComponent(order = 0): ComponentForm {
   return { name: "", sort_order: order, ingredients: [emptyIngredient()], steps: [] };
@@ -68,6 +70,12 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
   const updateStep = (i: number, field: keyof StepForm, value: string) => {
     const steps = [...component.steps];
     steps[i] = { ...steps[i], [field]: value };
+    onChange({ ...component, steps });
+  };
+
+  const setStepPhoto = (i: number, file: File | null) => {
+    const steps = [...component.steps];
+    steps[i] = { ...steps[i], photo_file: file ?? undefined, photo_url: file ? steps[i].photo_url : "" };
     onChange({ ...component, steps });
   };
 
@@ -170,6 +178,40 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
                 <Input placeholder="°C" value={step.temp_c} onChange={(e) => updateStep(i, "temp_c", e.target.value)} className="w-16 text-sm h-8" type="number" />
                 <Input placeholder="Min" value={step.duration_min} onChange={(e) => updateStep(i, "duration_min", e.target.value)} className="w-16 text-sm h-8" type="number" />
                 <Input placeholder="Notas técnicas" value={step.technical_notes} onChange={(e) => updateStep(i, "technical_notes", e.target.value)} className="flex-1 text-sm h-8" />
+              </div>
+              {/* Step photo */}
+              <div className="ml-6">
+                {(step.photo_file || step.photo_url) ? (
+                  <div className="relative inline-block">
+                    <img
+                      src={step.photo_file ? URL.createObjectURL(step.photo_file) : step.photo_url}
+                      alt="Foto del paso"
+                      className="h-20 w-32 object-cover rounded-lg border border-border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setStepPhoto(i, null)}
+                      className="absolute -top-1.5 -right-1.5 bg-destructive text-destructive-foreground rounded-full p-0.5 shadow"
+                    >
+                      <X size={11} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="inline-flex items-center gap-1 text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors py-1">
+                    <ImagePlus size={13} />
+                    Añadir foto
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) setStepPhoto(i, file);
+                        e.target.value = "";
+                      }}
+                    />
+                  </label>
+                )}
               </div>
             </div>
           ))}

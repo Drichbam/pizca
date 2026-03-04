@@ -41,14 +41,14 @@ export default function MisRecetas() {
   return (
     <div className="animate-fade-in space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Mis Recetas</h1>
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-foreground truncate">Mis Recetas</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             {recipes?.length || 0} receta{recipes?.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 shrink-0">
           <Button
             variant="outline"
             onClick={async () => {
@@ -64,10 +64,10 @@ export default function MisRecetas() {
             size="sm"
             disabled={!recipes?.length}
           >
-            <Download className="h-4 w-4 mr-1" /> Exportar
+            <Download className="h-4 w-4" /> <span className="hidden md:inline">Exportar</span>
           </Button>
           <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg" size="sm">
-            <Upload className="h-4 w-4 mr-1" /> Importar
+            <Upload className="h-4 w-4" /> <span className="hidden md:inline">Importar</span>
           </Button>
           <Button onClick={() => navigate("/crear")} className="rounded-lg" size="sm">
             + Nueva

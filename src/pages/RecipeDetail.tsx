@@ -195,14 +195,14 @@ export default function RecipeDetail() {
 
       {/* Tabs */}
       <Tabs defaultValue="receta" className="w-full">
-        <TabsList className="w-full grid grid-cols-7 bg-secondary rounded-lg h-10">
-          <TabsTrigger value="receta" className="rounded-md text-xs">Receta</TabsTrigger>
-          <TabsTrigger value="ingredientes" className="rounded-md text-xs">Ingredientes</TabsTrigger>
-          <TabsTrigger value="pasos" className="rounded-md text-xs">Pasos</TabsTrigger>
-          <TabsTrigger value="moldes" className="rounded-md text-xs">Moldes</TabsTrigger>
-          <TabsTrigger value="costes" className="rounded-md text-xs">Costes</TabsTrigger>
-          <TabsTrigger value="notas" className="rounded-md text-xs">Notas</TabsTrigger>
-          <TabsTrigger value="info" className="rounded-md text-xs">Info</TabsTrigger>
+        <TabsList className="w-full flex overflow-x-auto bg-secondary rounded-lg h-10 p-1 gap-0.5 scrollbar-hide">
+          <TabsTrigger value="receta" className="rounded-md text-xs shrink-0 px-3">Receta</TabsTrigger>
+          <TabsTrigger value="ingredientes" className="rounded-md text-xs shrink-0 px-3">Ingredientes</TabsTrigger>
+          <TabsTrigger value="pasos" className="rounded-md text-xs shrink-0 px-3">Pasos</TabsTrigger>
+          <TabsTrigger value="moldes" className="rounded-md text-xs shrink-0 px-3">Moldes</TabsTrigger>
+          <TabsTrigger value="costes" className="rounded-md text-xs shrink-0 px-3">Costes</TabsTrigger>
+          <TabsTrigger value="notas" className="rounded-md text-xs shrink-0 px-3">Notas</TabsTrigger>
+          <TabsTrigger value="info" className="rounded-md text-xs shrink-0 px-3">Info</TabsTrigger>
         </TabsList>
 
         <TabsContent value="receta" className="mt-4">

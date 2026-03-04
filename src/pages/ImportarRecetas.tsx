@@ -301,6 +301,14 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
     }
   }
 
+  // Build set of component names referenced in preparacion
+  const prepComponentNames = new Set<string>();
+  if (Array.isArray(json.preparacion)) {
+    for (const p of json.preparacion) {
+      if (p.componente) prepComponentNames.add(p.componente);
+    }
+  }
+
   // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
     let removedIngredients = 0;
@@ -333,7 +341,11 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
 
         return { ...c, ingredientes: mapped };
       })
-      .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));
+      .filter((c: any) =>
+        c.ingredientes.length > 0 ||
+        (Array.isArray(c.pasos) && c.pasos.length > 0) ||
+        prepComponentNames.has(c.nombre) // keep if referenced by preparacion
+      );
 
     const removedComps = originalCompCount - json.componentes.length;
     if (removedIngredients > 0) corrections.push({

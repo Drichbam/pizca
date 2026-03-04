@@ -1,11 +1,11 @@
-import { Home, BookOpen, PlusCircle, User } from "lucide-react";
+import { Home, BookOpen, DollarSign, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: "/", label: "Inicio", icon: Home },
   { to: "/mis-recetas", label: "Mis Recetas", icon: BookOpen },
-  { to: "/crear", label: "Crear", icon: PlusCircle },
+  { to: "/mis-precios", label: "Mis Precios", icon: DollarSign },
   { to: "/perfil", label: "Perfil", icon: User },
 ];
 

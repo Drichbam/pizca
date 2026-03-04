@@ -403,6 +403,18 @@ export default function ImportarRecetas() {
     setRecipes((prev) => prev.map((r, i) => (i === index ? { ...r, selected: !r.selected } : r)));
   };
 
+  const revertCorrection = (recipeIndex: number, correctionId: string) => {
+    setRecipes((prev) => prev.map((r, i) => {
+      if (i !== recipeIndex) return r;
+      const correction = r.corrections.find(c => c.id === correctionId);
+      if (!correction || !correction.revertable || !correction.field || !correction.originalValue) return r;
+      
+      const updatedJson = { ...r.json, [correction.field]: correction.originalValue };
+      const updatedCorrections = r.corrections.filter(c => c.id !== correctionId);
+      return { ...r, json: updatedJson as JsonRecipe, corrections: updatedCorrections };
+    }));
+  };
+
   const toggleAll = (selected: boolean) => {
     setRecipes((prev) => prev.map((r) => ({ ...r, selected })));
   };

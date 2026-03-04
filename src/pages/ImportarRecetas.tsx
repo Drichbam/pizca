@@ -352,7 +352,34 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
 }
 
 function validateRecipe(json: any, fileName: string): { errors: string[]; recipe?: ParsedRecipe } {
+  const beforeShape = {
+    keys: Object.keys(json || {}),
+    componentesType: Array.isArray(json?.componentes) ? "array" : typeof json?.componentes,
+    componentesLen: Array.isArray(json?.componentes) ? json.componentes.length : 0,
+    topIngredientesLen: Array.isArray(json?.ingredientes) ? json.ingredientes.length : 0,
+    preparacionLen: Array.isArray(json?.preparacion) ? json.preparacion.length : 0,
+  };
+
   const corrections = sanitizeRecipe(json);
+
+  const afterShape = {
+    componentesType: Array.isArray(json?.componentes) ? "array" : typeof json?.componentes,
+    componentesLen: Array.isArray(json?.componentes) ? json.componentes.length : 0,
+    componentesDetail: Array.isArray(json?.componentes)
+      ? json.componentes.map((c: any, i: number) => ({
+          i,
+          nombre: c?.nombre,
+          ingredientes: Array.isArray(c?.ingredientes) ? c.ingredientes.length : null,
+          pasosInline: Array.isArray(c?.pasos) ? c.pasos.length : null,
+        }))
+      : [],
+    preparacionLen: Array.isArray(json?.preparacion) ? json.preparacion.length : 0,
+  };
+
+  console.groupCollapsed(`[Import Debug] ${fileName}`);
+  console.info("Before sanitize", beforeShape);
+  console.info("After sanitize", afterShape);
+  if (corrections.length) console.info("Corrections", corrections.map(c => c.label));
 
   const errors: string[] = [];
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
@@ -360,6 +387,7 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   if (!json.id || typeof json.id !== "string") errors.push("Falta 'id'");
   if (!Array.isArray(json.componentes) || json.componentes.length === 0) {
     errors.push("Falta al menos un componente con ingredientes o pasos");
+    errors.push(`DEBUG estructura: componentes=${afterShape.componentesType}(${afterShape.componentesLen}), topIngredientes=${beforeShape.topIngredientesLen}, preparacion=${afterShape.preparacionLen}`);
   } else {
     // Only require component name when there are multiple components
     if (json.componentes.length > 1) {
@@ -369,11 +397,18 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
     }
   }
 
-  if (errors.length > 0) return { errors };
+  if (errors.length > 0) {
+    console.warn("Validation errors", errors);
+    console.groupEnd();
+    return { errors };
+  }
 
   const totalIngredients = (json.componentes as JsonComponent[]).reduce((s, c) => s + c.ingredientes.length, 0);
   const totalSteps = (json.preparacion || []).reduce((s: number, p: JsonPreparation) => s + (p.pasos?.length || 0), 0);
   const slug = json.id.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+  console.info("Validation OK", { slug, totalIngredients, totalSteps });
+  console.groupEnd();
 
   return {
     errors: [],
@@ -414,6 +449,8 @@ export default function ImportarRecetas() {
     for (const file of Array.from(files)) {
       try {
         const text = await file.text();
+        console.info(`[Import Debug] Reading ${file.name}`, { size: file.size, type: file.type, chars: text.length });
+
         // Strip JS-style comments that are outside of strings
         // Process line by line: remove only comments that appear after the last closing quote
         const cleanText = text.split('\n').map(line => {
@@ -430,12 +467,15 @@ export default function ImportarRecetas() {
           }
           return line;
         }).join('\n').replace(/,\s*([\]}])/g, "$1");
+
         const json = JSON.parse(cleanText);
         const result = validateRecipe(json, file.name);
         if (result.errors.length > 0) errors.push({ file: file.name, errors: result.errors });
         else if (result.recipe) parsed.push(result.recipe);
-      } catch {
-        errors.push({ file: file.name, errors: ["No es un archivo JSON válido"] });
+      } catch (err) {
+        console.error(`[Import Debug] Parse failed for ${file.name}`, err);
+        const reason = err instanceof Error ? err.message : "No es un archivo JSON válido";
+        errors.push({ file: file.name, errors: ["No es un archivo JSON válido", `DEBUG parse: ${reason}`] });
       }
     }
 

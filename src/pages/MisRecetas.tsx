@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, BookOpen, SlidersHorizontal } from "lucide-react";
+import { Search, BookOpen, SlidersHorizontal, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRecipes } from "@/hooks/useRecipes";
@@ -42,9 +42,14 @@ export default function MisRecetas() {
             {recipes?.length || 0} receta{recipes?.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <Button onClick={() => navigate("/crear")} className="rounded-lg" size="sm">
-          + Nueva
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg" size="sm">
+            <Upload className="h-4 w-4 mr-1" /> Importar
+          </Button>
+          <Button onClick={() => navigate("/crear")} className="rounded-lg" size="sm">
+            + Nueva
+          </Button>
+        </div>
       </div>
 
       {/* Search */}

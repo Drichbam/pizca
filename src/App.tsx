@@ -11,6 +11,7 @@ import MisRecetas from "./pages/MisRecetas";
 import RecipeDetail from "./pages/RecipeDetail";
 import Crear from "./pages/Crear";
 import Editar from "./pages/Editar";
+import ImportarRecetas from "./pages/ImportarRecetas";
 import Perfil from "./pages/Perfil";
 import NotFound from "./pages/NotFound";
 
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/receta/:id" element={<RecipeDetail />} />
               <Route path="/crear" element={<Crear />} />
               <Route path="/editar/:id" element={<Editar />} />
+              <Route path="/importar" element={<ImportarRecetas />} />
               <Route path="/perfil" element={<Perfil />} />
             </Route>
             <Route path="*" element={<NotFound />} />

@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw } from "lucide-react";
+import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -414,21 +414,96 @@ export default function ImportarRecetas() {
 
       {/* PHASE: SELECT FILES */}
       {phase === "select" && (
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-border rounded-xl p-12 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
-        >
-          <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <p className="font-medium text-foreground mb-1">Selecciona archivos .json</p>
-          <p className="text-sm text-muted-foreground">Uno o varios archivos, cada uno con una receta</p>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            multiple
-            className="hidden"
-            onChange={(e) => handleFiles(e.target.files)}
-          />
+        <div className="space-y-4">
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="border-2 border-dashed border-border rounded-xl p-12 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
+          >
+            <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <p className="font-medium text-foreground mb-1">Selecciona archivos .json</p>
+            <p className="text-sm text-muted-foreground">Uno o varios archivos, cada uno con una receta</p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              multiple
+              className="hidden"
+              onChange={(e) => handleFiles(e.target.files)}
+            />
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={() => {
+              const example = {
+                id: "mi-receta-ejemplo",
+                nombre: "Mi Receta de Ejemplo",
+                categoria: "tartes",
+                subcategoria: "tarte-fruits",
+                tags: ["ejemplo", "sencilla"],
+                origen: { chef_autor: "Chef Ejemplo", fuente_url: null, libro: null },
+                porciones: 8,
+                molde: "Círculo 22 cm",
+                planificacion_dias: 1,
+                planning: [{ dia: "Día J", tareas: ["Preparar masa", "Hornear", "Montar"] }],
+                tiempos: { preparacion_min: 30, coccion_min: 25, reposo_min: 60, total_activo_min: 55 },
+                dificultad: "intermedio",
+                temperatura_horno_c: 180,
+                componentes: [
+                  {
+                    nombre: "Masa sablée",
+                    ingredientes: [
+                      { cantidad: 150, unidad: "g", ingrediente: "mantequilla" },
+                      { cantidad: 250, unidad: "g", ingrediente: "harina" },
+                      { cantidad: 80, unidad: "g", ingrediente: "azúcar glas" },
+                      { cantidad: 1, unidad: "pcs", ingrediente: "huevo" }
+                    ]
+                  },
+                  {
+                    nombre: "Crema pastelera",
+                    ingredientes: [
+                      { cantidad: 500, unidad: "ml", ingrediente: "leche entera" },
+                      { cantidad: 100, unidad: "g", ingrediente: "azúcar" },
+                      { cantidad: 4, unidad: "pcs", ingrediente: "yemas de huevo" },
+                      { cantidad: 40, unidad: "g", ingrediente: "maicena" }
+                    ]
+                  }
+                ],
+                preparacion: [
+                  {
+                    componente: "Masa sablée",
+                    pasos: [
+                      { orden: 1, descripcion: "Mezclar mantequilla pomada con azúcar glas.", temp_c: null, duracion_min: 5, notas_tecnicas: "No trabajar en exceso." },
+                      { orden: 2, descripcion: "Añadir huevo y harina. Formar disco y refrigerar.", temp_c: 4, duracion_min: 60, notas_tecnicas: null }
+                    ]
+                  },
+                  {
+                    componente: "Crema pastelera",
+                    pasos: [
+                      { orden: 1, descripcion: "Hervir leche. Mezclar yemas, azúcar y maicena. Verter leche caliente y cocinar hasta espesar.", temp_c: 85, duracion_min: 10, notas_tecnicas: "Remover constantemente para evitar grumos." }
+                    ]
+                  }
+                ],
+                notas: ["Mejor al día siguiente.", "Se puede congelar la masa hasta 1 mes."],
+                variantes: [{ nombre: "Versión chocolate", descripcion: "Sustituir 30g de harina por cacao en polvo." }],
+                escalado: { referencia: "círculo 22 cm", factores: [{ molde: "círculo 28 cm", multiplicador: 1.6 }] },
+                probado: true,
+                notas_prueba: "Resultado excelente.",
+                valoracion: 4
+              };
+              const blob = new Blob([JSON.stringify(example, null, 2)], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "receta_ejemplo.json";
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Descargar formato de ejemplo
+          </Button>
         </div>
       )}
 

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
@@ -11,6 +11,7 @@ import { RecipeInfoTab } from "@/components/recipe/RecipeInfoTab";
 import { RecipePlanningTimeline } from "@/components/recipe/RecipePlanningTimeline";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { exportRecipe } from "@/lib/exportRecipe";
 import { cn } from "@/lib/utils";
 import { Cake } from "lucide-react";
 
@@ -207,6 +208,16 @@ export default function RecipeDetail() {
         </Button>
         <Button variant="outline" className="rounded-lg flex-1" onClick={handleDuplicate} disabled={duplicateRecipe.isPending}>
           <Copy className="h-4 w-4 mr-1.5" /> Duplicar
+        </Button>
+        <Button
+          variant="outline"
+          className="rounded-lg"
+          onClick={() => {
+            exportRecipe(recipe);
+            toast.success("Receta exportada");
+          }}
+        >
+          <Download className="h-4 w-4" />
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, BookOpen, SlidersHorizontal, Upload } from "lucide-react";
+import { Search, BookOpen, SlidersHorizontal, Upload, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRecipes } from "@/hooks/useRecipes";
@@ -8,6 +8,8 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty } from "@/types/recipe";
 import { cn } from "@/lib/utils";
+import { exportMultipleRecipes } from "@/lib/exportRecipe";
+import { toast } from "sonner";
 
 const ALL_CATEGORIES: RecipeCategory[] = [
   "tartes", "entremets", "biscuits", "gâteaux", "pâtes-de-base",
@@ -43,6 +45,23 @@ export default function MisRecetas() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={async () => {
+              if (!recipes?.length) return;
+              try {
+                await exportMultipleRecipes(recipes.map((r) => r.id));
+                toast.success(`${recipes.length} receta(s) exportada(s)`);
+              } catch {
+                toast.error("Error al exportar");
+              }
+            }}
+            className="rounded-lg"
+            size="sm"
+            disabled={!recipes?.length}
+          >
+            <Download className="h-4 w-4 mr-1" /> Exportar
+          </Button>
           <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg" size="sm">
             <Upload className="h-4 w-4 mr-1" /> Importar
           </Button>

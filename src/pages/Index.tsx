@@ -49,16 +49,6 @@ export default function Index() {
         </button>
       </div>
 
-      <div className="bg-card rounded-xl p-6 shadow-card">
-        <div className="flex items-center gap-3 mb-4">
-          <ChefHat className="h-5 w-5 text-primary" />
-          <h2 className="font-semibold text-foreground">Tip del día</h2>
-        </div>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          Para un bizcocho más esponjoso, asegúrate de tamizar la harina y de que los huevos
-          estén a temperatura ambiente antes de mezclar.
-        </p>
-      </div>
 
       <div>
         <h2 className="font-semibold text-foreground mb-4 flex items-center gap-2">

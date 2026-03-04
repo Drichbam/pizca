@@ -39,16 +39,16 @@ export default function MisRecetas() {
   }, [recipes, search, categoryFilter, difficultyFilter, tagFilter]);
 
   return (
-    <div className="animate-fade-in space-y-5">
+    <div className="animate-fade-in space-y-5 max-w-full">
       {/* Header */}
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
           <h1 className="text-2xl font-bold text-foreground truncate">Mis Recetas</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
             {recipes?.length || 0} receta{recipes?.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <div className="flex gap-2 shrink-0">
+        <div className="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
           <Button
             variant="outline"
             onClick={async () => {
@@ -87,7 +87,7 @@ export default function MisRecetas() {
       </div>
 
       {/* Category filters */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-4 px-4">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         <button
           onClick={() => setCategoryFilter(null)}
           className={cn(
@@ -112,7 +112,7 @@ export default function MisRecetas() {
       </div>
 
       {/* Difficulty filters */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-4 px-4">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         <SlidersHorizontal className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
         {ALL_DIFFICULTIES.map((diff) => (
           <button
@@ -130,7 +130,7 @@ export default function MisRecetas() {
 
       {/* Tag filters */}
       {tags && tags.length > 0 && (
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-4 px-4">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           <TagIcon className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
           {tags.map((tag) => (
             <button

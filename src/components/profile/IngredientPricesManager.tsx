@@ -45,6 +45,7 @@ const emptyForm: FormData = {
 
 interface Props {
   initialIngredient?: string;
+  initialBarcode?: string;
 }
 
 type FilterMode = "all" | "priced" | "unpriced";
@@ -99,7 +100,7 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
   );
 }
 
-export function IngredientPricesManager({ initialIngredient }: Props) {
+export function IngredientPricesManager({ initialIngredient, initialBarcode }: Props) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -108,8 +109,8 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
   const [form, setForm] = useState<FormData>(
     initialIngredient ? { ...emptyForm, ingredient_name: initialIngredient } : emptyForm
   );
-  const [showForm, setShowForm] = useState(!!initialIngredient);
-  const [foundBarcode, setFoundBarcode] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(!!initialIngredient || !!initialBarcode);
+  const [foundBarcode, setFoundBarcode] = useState<string | null>(initialBarcode || null);
   const [filter, setFilter] = useState<FilterMode>("all");
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
 

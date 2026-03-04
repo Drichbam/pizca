@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Camera } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { BarcodeScannerDialog } from "@/components/BarcodeScannerDialog";
+import { useNavigate } from "react-router-dom";
 import type { RecipeComponent, RecipeIngredient } from "@/types/recipe";
 
 interface Props {
@@ -8,7 +11,13 @@ interface Props {
 }
 
 export function RecipeIngredientsList({ components }: Props) {
+  const navigate = useNavigate();
+  const [scannerOpen, setScannerOpen] = useState(false);
   const sorted = [...components].sort((a, b) => a.sort_order - b.sort_order);
+
+  const handleScan = (barcode: string) => {
+    navigate(`/mis-precios?barcode=${barcode}`);
+  };
 
   if (!sorted.length) {
     return <p className="text-sm text-muted-foreground">Sin ingredientes.</p>;
@@ -18,19 +27,33 @@ export function RecipeIngredientsList({ components }: Props) {
   if (sorted.length === 1 && !sorted[0].name) {
     const ingredients = [...sorted[0].recipe_ingredients].sort((a, b) => a.sort_order - b.sort_order);
     return (
-      <ul className="space-y-2">
-        {ingredients.map((ing) => (
-          <IngredientRow key={ing.id} ingredient={ing} />
-        ))}
-      </ul>
+      <div className="space-y-3">
+        <div className="flex justify-end">
+          <Button variant="outline" size="sm" className="rounded-lg" onClick={() => setScannerOpen(true)}>
+            <Camera className="h-4 w-4 mr-1" /> Escanear precio
+          </Button>
+        </div>
+        <ul className="space-y-2">
+          {ingredients.map((ing) => (
+            <IngredientRow key={ing.id} ingredient={ing} />
+          ))}
+        </ul>
+        <BarcodeScannerDialog open={scannerOpen} onClose={() => setScannerOpen(false)} onScan={handleScan} />
+      </div>
     );
   }
 
   return (
     <div className="space-y-3">
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" className="rounded-lg" onClick={() => setScannerOpen(true)}>
+          <Camera className="h-4 w-4 mr-1" /> Escanear precio
+        </Button>
+      </div>
       {sorted.map((comp) => (
         <ComponentSection key={comp.id} component={comp} />
       ))}
+      <BarcodeScannerDialog open={scannerOpen} onClose={() => setScannerOpen(false)} onScan={handleScan} />
     </div>
   );
 }

@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Barcode, Loader2, AlertCircle } from "lucide-react";
+import { Barcode, Loader2, AlertCircle, Camera } from "lucide-react";
 import { useOpenFoodFactsProduct, type OpenFoodFactsProduct } from "@/hooks/useOpenFoodFacts";
+import { BarcodeScannerDialog } from "@/components/BarcodeScannerDialog";
 import { toast } from "sonner";
 
 interface Props {
@@ -14,6 +15,7 @@ export function BarcodeSearchField({ onProductFound }: Props) {
   const [barcodeInput, setBarcodeInput] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   const { data: product, isLoading, isError, error } = useOpenFoodFactsProduct(barcodeInput);
 
@@ -35,6 +37,12 @@ export function BarcodeSearchField({ onProductFound }: Props) {
   const handleClear = () => {
     setBarcodeInput("");
     setHasSearched(false);
+    setShowError(false);
+  };
+
+  const handleScan = (barcode: string) => {
+    setBarcodeInput(barcode);
+    setHasSearched(true);
     setShowError(false);
   };
 
@@ -70,6 +78,16 @@ export function BarcodeSearchField({ onProductFound }: Props) {
           />
         </div>
         <div className="flex items-end gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setScannerOpen(true)}
+            disabled={isLoading || hasSearched}
+            className="rounded-lg"
+            title="Escanear con cámara"
+          >
+            <Camera className="h-4 w-4" />
+          </Button>
           {!hasSearched ? (
             <Button
               size="sm"
@@ -132,6 +150,12 @@ export function BarcodeSearchField({ onProductFound }: Props) {
           </div>
         </div>
       )}
+
+      <BarcodeScannerDialog
+        open={scannerOpen}
+        onClose={() => setScannerOpen(false)}
+        onScan={handleScan}
+      />
     </div>
   );
 }

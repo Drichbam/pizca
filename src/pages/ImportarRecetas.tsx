@@ -120,22 +120,117 @@ const VALID_UNITS: IngredientUnit[] = ["g","kg","ml","cl","dl","l","pcs","QS","c
 
 const CATEGORY_NORMALIZE: Record<string, RecipeCategory> = {
   "gateaux": "gâteaux",
+  "gateau": "gâteaux",
+  "gâteau": "gâteaux",
   "pates-de-base": "pâtes-de-base",
+  "pate-de-base": "pâtes-de-base",
+  "pâte-de-base": "pâtes-de-base",
   "cremes-de-base": "crèmes-de-base",
+  "creme-de-base": "crèmes-de-base",
+  "crème-de-base": "crèmes-de-base",
+  "glaces": "glaces-sorbets",
+  "sorbets": "glaces-sorbets",
+  "entremet": "entremets",
+  "tarte": "tartes",
+  "biscuit": "biscuits",
+  "mousse": "mousses",
+};
+
+const UNIT_NORMALIZE: Record<string, IngredientUnit> = {
+  "gr": "g",
+  "grs": "g",
+  "gramos": "g",
+  "grammes": "g",
+  "kilogramos": "kg",
+  "kilo": "kg",
+  "kilos": "kg",
+  "mililitros": "ml",
+  "centilitros": "cl",
+  "litro": "l",
+  "litros": "l",
+  "litres": "l",
+  "litre": "l",
+  "pieza": "pcs",
+  "piezas": "pcs",
+  "pièce": "pcs",
+  "pièces": "pcs",
+  "unidad": "pcs",
+  "unidades": "pcs",
+  "unité": "pcs",
+  "unités": "pcs",
+  "u": "pcs",
+  "ud": "pcs",
+  "cucharadita": "cc",
+  "cucharaditas": "cc",
+  "cdta": "cc",
+  "cucharada": "cs",
+  "cucharadas": "cs",
+  "cda": "cs",
+  "cuillère à café": "cc",
+  "cuillère à soupe": "cs",
+  "cas": "cs",
+  "cac": "cc",
+  "c.a.s": "cs",
+  "c.a.c": "cc",
+  "pizca": "pincée",
+  "pincee": "pincée",
+  "qs": "QS",
+  "q.s.": "QS",
+  "c/n": "QS",
+  "al gusto": "QS",
+};
+
+const DIFFICULTY_NORMALIZE: Record<string, RecipeDifficulty> = {
+  "básico": "basico",
+  "fácil": "basico",
+  "facil": "basico",
+  "easy": "basico",
+  "medium": "intermedio",
+  "medio": "intermedio",
+  "difficile": "avanzado",
+  "difícil": "avanzado",
+  "dificil": "avanzado",
+  "hard": "avanzado",
+  "expert": "experto",
 };
 
 function sanitizeRecipe(json: any) {
-  // Normalize category
-  if (json.categoria && CATEGORY_NORMALIZE[json.categoria]) {
-    json.categoria = CATEGORY_NORMALIZE[json.categoria];
+  // Normalize category (case-insensitive)
+  if (json.categoria) {
+    const catLower = json.categoria.toLowerCase().trim();
+    if (CATEGORY_NORMALIZE[catLower]) {
+      json.categoria = CATEGORY_NORMALIZE[catLower];
+    } else if (!VALID_CATEGORIES.includes(json.categoria)) {
+      // Try lowercase match against valid categories
+      const match = VALID_CATEGORIES.find(c => c.toLowerCase() === catLower);
+      if (match) json.categoria = match;
+    }
   }
-  // Filter ingredients without name, then filter empty components
+
+  // Normalize difficulty
+  if (json.dificultad) {
+    const diffLower = json.dificultad.toLowerCase().trim();
+    if (DIFFICULTY_NORMALIZE[diffLower]) {
+      json.dificultad = DIFFICULTY_NORMALIZE[diffLower];
+    }
+  }
+
+  // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
     json.componentes = json.componentes
       .map((c: any) => ({
         ...c,
         ingredientes: Array.isArray(c.ingredientes)
-          ? c.ingredientes.filter((ing: any) => !!ing.ingrediente)
+          ? c.ingredientes
+              .filter((ing: any) => !!ing.ingrediente)
+              .map((ing: any) => {
+                if (ing.unidad) {
+                  const uLower = ing.unidad.toLowerCase().trim();
+                  const normalized = UNIT_NORMALIZE[uLower];
+                  if (normalized) ing.unidad = normalized;
+                }
+                return ing;
+              })
           : [],
       }))
       .filter((c: any) => c.ingredientes.length > 0 || (Array.isArray(c.pasos) && c.pasos.length > 0));

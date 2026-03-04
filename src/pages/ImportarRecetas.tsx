@@ -118,7 +118,33 @@ const VALID_CATEGORIES: RecipeCategory[] = [
 const VALID_DIFFICULTIES: RecipeDifficulty[] = ["basico","intermedio","avanzado","experto"];
 const VALID_UNITS: IngredientUnit[] = ["g","kg","ml","cl","dl","l","pcs","QS","cc","cs","pincée"];
 
+const CATEGORY_NORMALIZE: Record<string, RecipeCategory> = {
+  "gateaux": "gâteaux",
+  "pates-de-base": "pâtes-de-base",
+  "cremes-de-base": "crèmes-de-base",
+};
+
+function sanitizeRecipe(json: any) {
+  // Normalize category
+  if (json.categoria && CATEGORY_NORMALIZE[json.categoria]) {
+    json.categoria = CATEGORY_NORMALIZE[json.categoria];
+  }
+  // Filter ingredients without name, then filter empty components
+  if (Array.isArray(json.componentes)) {
+    json.componentes = json.componentes
+      .map((c: any) => ({
+        ...c,
+        ingredientes: Array.isArray(c.ingredientes)
+          ? c.ingredientes.filter((ing: any) => !!ing.ingrediente)
+          : [],
+      }))
+      .filter((c: any) => c.ingredientes.length > 0);
+  }
+}
+
 function validateRecipe(json: any, fileName: string): { errors: string[]; recipe?: ParsedRecipe } {
+  sanitizeRecipe(json);
+
   const errors: string[] = [];
   if (!json.nombre || typeof json.nombre !== "string") errors.push("Falta 'nombre'");
   if (!json.categoria || !VALID_CATEGORIES.includes(json.categoria)) errors.push(`Categoría inválida: '${json.categoria}'. Válidas: ${VALID_CATEGORIES.join(", ")}`);
@@ -128,11 +154,8 @@ function validateRecipe(json: any, fileName: string): { errors: string[]; recipe
   } else {
     json.componentes.forEach((c: any, i: number) => {
       if (!c.nombre) errors.push(`Componente ${i + 1}: falta 'nombre'`);
-      if (!Array.isArray(c.ingredientes) || c.ingredientes.length === 0)
+      if (c.ingredientes.length === 0)
         errors.push(`Componente '${c.nombre || i + 1}': sin ingredientes`);
-      else c.ingredientes.forEach((ing: any, j: number) => {
-        if (!ing.ingrediente) errors.push(`Componente '${c.nombre || i + 1}', ingrediente ${j + 1}: falta 'ingrediente'`);
-      });
     });
   }
 

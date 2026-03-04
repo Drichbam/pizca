@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Search, Plus, Pencil, Trash2, X, Check } from "lucide-react";
+import { Search, Plus, Pencil, Trash2, X, Check, BookOpen } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import type { Database } from "@/integrations/supabase/types";
 import { Constants } from "@/integrations/supabase/types";
 
@@ -52,6 +53,7 @@ interface CombinedItem {
 
 export function IngredientPricesManager({ initialIngredient }: Props) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -91,6 +93,35 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
       });
       return Array.from(nameSet).sort();
     },
+  });
+
+  // Query: recetas que usan el ingrediente actualmente en el formulario
+  const activeIngredientName = showForm ? form.ingredient_name.trim().toLowerCase() : "";
+  const { data: recipesUsingIngredient } = useQuery({
+    queryKey: ["recipes_using_ingredient", activeIngredientName],
+    queryFn: async () => {
+      if (!activeIngredientName) return [];
+      const { data, error } = await supabase
+        .from("recipe_ingredients")
+        .select("component_id, name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+      if (error) throw error;
+      // Filtrar por nombre (case-insensitive)
+      const matches = (data || []).filter(
+        (r: any) => r.name?.trim().toLowerCase() === activeIngredientName
+      );
+      // Deduplicar por recipe id
+      const seen = new Set<string>();
+      const recipes: { id: string; title: string }[] = [];
+      for (const m of matches) {
+        const rec = (m as any).recipe_components?.recipes;
+        if (rec && !seen.has(rec.id)) {
+          seen.add(rec.id);
+          recipes.push({ id: rec.id, title: rec.title });
+        }
+      }
+      return recipes.sort((a, b) => a.title.localeCompare(b.title, "es"));
+    },
+    enabled: !!activeIngredientName,
   });
 
   // Fusionar ingredientes con y sin precio
@@ -330,6 +361,27 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
               </Button>
             </div>
           </div>
+
+          {/* Recetas que usan este ingrediente */}
+          {activeIngredientName && recipesUsingIngredient && recipesUsingIngredient.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                <BookOpen className="h-3 w-3" /> Usado en {recipesUsingIngredient.length} receta{recipesUsingIngredient.length > 1 ? "s" : ""}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {recipesUsingIngredient.map((r) => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => navigate(`/receta/${r.id}`)}
+                    className="text-xs bg-secondary hover:bg-secondary/80 text-secondary-foreground px-2 py-0.5 rounded-full transition-colors"
+                  >
+                    {r.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

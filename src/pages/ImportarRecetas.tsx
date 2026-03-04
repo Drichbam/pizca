@@ -449,6 +449,8 @@ export default function ImportarRecetas() {
     for (const file of Array.from(files)) {
       try {
         const text = await file.text();
+        console.info(`[Import Debug] Reading ${file.name}`, { size: file.size, type: file.type, chars: text.length });
+
         // Strip JS-style comments that are outside of strings
         // Process line by line: remove only comments that appear after the last closing quote
         const cleanText = text.split('\n').map(line => {
@@ -465,12 +467,15 @@ export default function ImportarRecetas() {
           }
           return line;
         }).join('\n').replace(/,\s*([\]}])/g, "$1");
+
         const json = JSON.parse(cleanText);
         const result = validateRecipe(json, file.name);
         if (result.errors.length > 0) errors.push({ file: file.name, errors: result.errors });
         else if (result.recipe) parsed.push(result.recipe);
-      } catch {
-        errors.push({ file: file.name, errors: ["No es un archivo JSON válido"] });
+      } catch (err) {
+        console.error(`[Import Debug] Parse failed for ${file.name}`, err);
+        const reason = err instanceof Error ? err.message : "No es un archivo JSON válido";
+        errors.push({ file: file.name, errors: ["No es un archivo JSON válido", `DEBUG parse: ${reason}`] });
       }
     }
 

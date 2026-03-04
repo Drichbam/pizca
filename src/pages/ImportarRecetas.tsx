@@ -248,6 +248,18 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
     }
   }
 
+  // Auto-generate id from nombre if missing
+  if (!json.id && json.nombre) {
+    json.id = json.nombre.toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    corrections.push({
+      id: `corr-${corrId++}`,
+      label: `ID generado automáticamente: "${json.id}"`,
+      revertable: false,
+    });
+  }
+
   // Normalize category (case-insensitive)
   if (json.categoria) {
     const original = json.categoria;

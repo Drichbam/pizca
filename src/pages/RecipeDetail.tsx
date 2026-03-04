@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, ChevronDown } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
@@ -230,27 +231,21 @@ export default function RecipeDetail() {
         <Button variant="outline" className="rounded-lg flex-1" onClick={handleDuplicate} disabled={duplicateRecipe.isPending}>
           <Copy className="h-4 w-4 mr-1.5" /> Duplicar
         </Button>
-        <Button
-          variant="outline"
-          className="rounded-lg"
-          onClick={() => {
-            exportRecipeToPdf(recipe);
-          }}
-          title="Exportar PDF"
-        >
-          <FileText className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="outline"
-          className="rounded-lg"
-          onClick={() => {
-            exportRecipe(recipe);
-            toast.success("Receta exportada");
-          }}
-          title="Exportar JSON"
-        >
-          <Download className="h-4 w-4" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="rounded-lg">
+              <Download className="h-4 w-4 mr-1.5" /> Exportar <ChevronDown className="h-3 w-3 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => exportRecipeToPdf(recipe)}>
+              <FileText className="h-4 w-4 mr-2" /> PDF
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success("Receta exportada"); }}>
+              <Download className="h-4 w-4 mr-2" /> JSON
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="rounded-lg text-destructive hover:text-destructive">

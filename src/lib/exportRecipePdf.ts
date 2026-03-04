@@ -58,6 +58,10 @@ export function exportRecipeToPdf(recipe: RecipeWithComponents) {
 
   const today = new Date().toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" });
 
+  const photoHtml = recipe.photo_url
+    ? `<div class="photo"><img src="${esc(recipe.photo_url)}" alt="${esc(recipe.title)}"></div>`
+    : "";
+
   const html = `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -66,6 +70,8 @@ export function exportRecipeToPdf(recipe: RecipeWithComponents) {
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family: Georgia, "Times New Roman", serif; color:#1a1a1a; max-width:700px; margin:0 auto; padding:40px 24px; line-height:1.5; }
+  .photo { margin-bottom:16px; }
+  .photo img { width:100%; max-height:300px; object-fit:cover; border-radius:8px; }
   h1 { font-size:28px; margin-bottom:4px; }
   .subtitle { color:#666; font-size:14px; margin-bottom:8px; }
   .badge { display:inline-block; background:#f3f3f3; border-radius:4px; padding:2px 8px; font-size:12px; margin-right:6px; }
@@ -93,6 +99,7 @@ export function exportRecipeToPdf(recipe: RecipeWithComponents) {
 </style>
 </head>
 <body>
+  ${photoHtml}
   <h1>${esc(recipe.title)}</h1>
   ${recipe.description ? `<p class="subtitle">${esc(recipe.description)}</p>` : ""}
   <div class="meta">

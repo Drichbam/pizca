@@ -44,8 +44,8 @@ export default function Index() {
           <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
             <Euro className="h-6 w-6 text-primary" />
           </div>
-          <h3 className="font-semibold text-foreground text-lg">Mis Precios</h3>
-          <p className="text-sm text-muted-foreground mt-1">Gestiona los precios de tus ingredientes</p>
+          <h3 className="font-semibold text-foreground text-lg">Mis Ingredientes</h3>
+          <p className="text-sm text-muted-foreground mt-1">Gestiona tus ingredientes y precios</p>
         </button>
       </div>
 

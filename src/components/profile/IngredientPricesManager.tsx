@@ -296,7 +296,7 @@ export function IngredientPricesManager({ initialIngredient }: Props) {
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Mis Precios</p>
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Mis Ingredientes</p>
         {!showForm && (
           <Button size="sm" className="rounded-lg" onClick={() => setShowForm(true)}>
             <Plus className="h-4 w-4 mr-1" /> Añadir

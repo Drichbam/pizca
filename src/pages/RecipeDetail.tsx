@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
@@ -8,6 +8,8 @@ import { RecipeIngredientsList } from "@/components/recipe/RecipeIngredientsList
 import { RecipeStepsList } from "@/components/recipe/RecipeStepsList";
 import { RecipeNotesTab } from "@/components/recipe/RecipeNotesTab";
 import { RecipeInfoTab } from "@/components/recipe/RecipeInfoTab";
+import { RecipeMoldsTab } from "@/components/recipe/RecipeMoldsTab";
+import { RecipeCostsTab } from "@/components/recipe/RecipeCostsTab";
 import { RecipePlanningTimeline } from "@/components/recipe/RecipePlanningTimeline";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
@@ -180,9 +182,11 @@ export default function RecipeDetail() {
 
       {/* Tabs */}
       <Tabs defaultValue="ingredientes" className="w-full">
-        <TabsList className="w-full grid grid-cols-4 bg-secondary rounded-lg h-10">
+        <TabsList className="w-full grid grid-cols-6 bg-secondary rounded-lg h-10">
           <TabsTrigger value="ingredientes" className="rounded-md text-xs">Ingredientes</TabsTrigger>
           <TabsTrigger value="pasos" className="rounded-md text-xs">Pasos</TabsTrigger>
+          <TabsTrigger value="moldes" className="rounded-md text-xs">Moldes</TabsTrigger>
+          <TabsTrigger value="costes" className="rounded-md text-xs">Costes</TabsTrigger>
           <TabsTrigger value="notas" className="rounded-md text-xs">Notas</TabsTrigger>
           <TabsTrigger value="info" className="rounded-md text-xs">Info</TabsTrigger>
         </TabsList>
@@ -192,6 +196,12 @@ export default function RecipeDetail() {
         </TabsContent>
         <TabsContent value="pasos" className="mt-4">
           <RecipeStepsList components={recipe.recipe_components} />
+        </TabsContent>
+        <TabsContent value="moldes" className="mt-4">
+          <RecipeMoldsTab recipe={recipe} />
+        </TabsContent>
+        <TabsContent value="costes" className="mt-4">
+          <RecipeCostsTab recipe={recipe} />
         </TabsContent>
         <TabsContent value="notas" className="mt-4">
           <RecipeNotesTab notes={recipe.recipe_notes} variants={recipe.recipe_variants} />

@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw, Download, Info } from "lucide-react";
+import { Upload, FileJson, Check, X, AlertTriangle, ChevronLeft, RefreshCw, Download, Info, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";

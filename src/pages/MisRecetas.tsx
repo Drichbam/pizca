@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, BookOpen, SlidersHorizontal, Upload, Download } from "lucide-react";
+import { Search, BookOpen, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRecipes } from "@/hooks/useRecipes";
+import { useTags } from "@/hooks/useTags";
 import { RecipeCard } from "@/components/RecipeCard";
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty } from "@/types/recipe";
@@ -20,19 +21,22 @@ const ALL_DIFFICULTIES: RecipeDifficulty[] = ["basico", "intermedio", "avanzado"
 export default function MisRecetas() {
   const navigate = useNavigate();
   const { data: recipes, isLoading } = useRecipes();
+  const { data: tags } = useTags();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<RecipeCategory | null>(null);
   const [difficultyFilter, setDifficultyFilter] = useState<RecipeDifficulty | null>(null);
+  const [tagFilter, setTagFilter] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     if (!recipes) return [];
-    return recipes.filter((r) => {
+    return recipes.filter((r: any) => {
       const matchesSearch = !search || r.title.toLowerCase().includes(search.toLowerCase());
       const matchesCategory = !categoryFilter || r.category === categoryFilter;
       const matchesDifficulty = !difficultyFilter || r.difficulty === difficultyFilter;
-      return matchesSearch && matchesCategory && matchesDifficulty;
+      const matchesTag = !tagFilter || (r.recipe_tags || []).some((rt: any) => rt.tag_id === tagFilter);
+      return matchesSearch && matchesCategory && matchesDifficulty && matchesTag;
     });
-  }, [recipes, search, categoryFilter, difficultyFilter]);
+  }, [recipes, search, categoryFilter, difficultyFilter, tagFilter]);
 
   return (
     <div className="animate-fade-in space-y-5">
@@ -50,7 +54,7 @@ export default function MisRecetas() {
             onClick={async () => {
               if (!recipes?.length) return;
               try {
-                await exportMultipleRecipes(recipes.map((r) => r.id));
+                await exportMultipleRecipes(recipes.map((r: any) => r.id));
                 toast.success(`${recipes.length} receta(s) exportada(s)`);
               } catch {
                 toast.error("Error al exportar");
@@ -124,6 +128,27 @@ export default function MisRecetas() {
         ))}
       </div>
 
+      {/* Tag filters */}
+      {tags && tags.length > 0 && (
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-4 px-4">
+          <TagIcon className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
+          {tags.map((tag) => (
+            <button
+              key={tag.id}
+              onClick={() => setTagFilter(tagFilter === tag.id ? null : tag.id)}
+              className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all border whitespace-nowrap"
+              style={{
+                backgroundColor: tagFilter === tag.id ? (tag.color || "#E8784A") : "transparent",
+                color: tagFilter === tag.id ? "#fff" : (tag.color || "#E8784A"),
+                borderColor: tag.color || "#E8784A",
+              }}
+            >
+              {tag.name}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Content */}
       {isLoading ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -139,26 +164,35 @@ export default function MisRecetas() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="bg-card rounded-xl p-12 shadow-card text-center">
-          <div className="h-16 w-16 rounded-full bg-accent flex items-center justify-center mx-auto mb-4">
-            <BookOpen className="h-8 w-8 text-accent-foreground" />
+          <div className="h-20 w-20 rounded-full bg-accent flex items-center justify-center mx-auto mb-4">
+            {recipes?.length ? (
+              <Search className="h-10 w-10 text-accent-foreground" />
+            ) : (
+              <Cake className="h-10 w-10 text-accent-foreground" />
+            )}
           </div>
           <h3 className="font-semibold text-foreground text-lg mb-2">
-            {recipes?.length ? "Sin resultados" : "Sin recetas aún"}
+            {recipes?.length ? "Sin resultados" : "Aún no tienes recetas"}
           </h3>
           <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
             {recipes?.length
               ? "Prueba cambiando los filtros o la búsqueda."
-              : "Empieza a crear tu colección de recetas de repostería."}
+              : "¡Crea tu primera receta o importa desde un archivo JSON!"}
           </p>
           {!recipes?.length && (
-            <Button onClick={() => navigate("/crear")} className="rounded-lg">
-              Crear mi primera receta
-            </Button>
+            <div className="flex gap-3 justify-center">
+              <Button onClick={() => navigate("/crear")} className="rounded-lg">
+                Crear receta
+              </Button>
+              <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg">
+                <Upload className="h-4 w-4 mr-1" /> Importar
+              </Button>
+            </div>
           )}
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {filtered.map((recipe) => (
+          {filtered.map((recipe: any) => (
             <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>

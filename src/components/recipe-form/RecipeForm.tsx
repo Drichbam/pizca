@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 
 import { ComponentEditor, ComponentForm, emptyComponent } from "./ComponentEditor";
+import { TagSelector } from "./TagSelector";
+import { useRecipeTags, useSetRecipeTags } from "@/hooks/useTags";
 import type { RecipeWithComponents } from "@/types/recipe";
 
 const categories = Constants.public.Enums.recipe_category;
@@ -43,6 +45,7 @@ interface FormData {
   notes: NoteForm[]; variants: VariantForm[];
   scale_factors: ScaleForm[];
   tested: boolean; test_notes: string; rating: number | null;
+  tag_ids: string[];
 }
 
 function defaultForm(): FormData {
@@ -57,6 +60,7 @@ function defaultForm(): FormData {
     notes: [], variants: [],
     scale_factors: [],
     tested: false, test_notes: "", rating: null,
+    tag_ids: [],
   };
 }
 
@@ -92,6 +96,7 @@ function recipeToForm(r: RecipeWithComponents): FormData {
     variants: (r.recipe_variants || []).map(v => ({ name: v.name, description: v.description || "" })),
     scale_factors: (r.recipe_scale_factors || []).map(s => ({ reference_mold: s.reference_mold, target_mold: s.target_mold, multiplier: String(s.multiplier) })),
     tested: r.tested || false, test_notes: r.test_notes || "", rating: r.rating || null,
+    tag_ids: [], // loaded separately
   };
 }
 
@@ -136,6 +141,15 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const setRecipeTags = useSetRecipeTags();
+
+  // Load existing tags for this recipe
+  const { data: existingTags } = useRecipeTags(recipeId);
+  const [tagsLoaded, setTagsLoaded] = useState(false);
+  if (existingTags && !tagsLoaded) {
+    setData(prev => ({ ...prev, tag_ids: existingTags.map(rt => rt.tag_id) }));
+    setTagsLoaded(true);
+  }
 
   const toggle = (k: string) => setOpen(prev => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
   const set = <K extends keyof FormData>(k: K, v: FormData[K]) => setData(p => ({ ...p, [k]: v }));
@@ -244,6 +258,9 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
         vScales.map(s => ({ recipe_id: finalId, reference_mold: s.reference_mold, target_mold: s.target_mold, multiplier: Number(s.multiplier) || 1 }))
       );
 
+      // Tags
+      await setRecipeTags.mutateAsync({ recipeId: finalId, tagIds: data.tag_ids });
+
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
       queryClient.invalidateQueries({ queryKey: ["recipe", finalId] });
       toast.success(recipeId ? "¡Receta actualizada!" : "¡Receta guardada!");
@@ -306,6 +323,15 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
               <Label>Subcategoría</Label>
               <Input value={data.subcategory} onChange={e => set("subcategory", e.target.value)} placeholder="Opcional" className="rounded-sm" />
             </div>
+          </div>
+          {/* Tags */}
+          <div className="space-y-1.5">
+            <Label>Etiquetas</Label>
+            <TagSelector
+              recipeId={recipeId}
+              selectedTagIds={data.tag_ids}
+              onTagsChange={ids => set("tag_ids", ids)}
+            />
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="space-y-1.5">

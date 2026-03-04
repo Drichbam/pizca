@@ -67,4 +67,5 @@ export type RecipeWithComponents = Recipe & {
   recipe_notes: RecipeNote[];
   recipe_variants: RecipeVariant[];
   recipe_scale_factors: RecipeScaleFactor[];
+  recipe_tags?: (RecipeTag & { tags: Tag })[];
 };

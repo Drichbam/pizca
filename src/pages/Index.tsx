@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, PlusCircle, ChefHat, Clock } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Index() {
-  const [userName, setUserName] = useState("Chef");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    const stored = localStorage.getItem("pizca_user");
-    if (!stored) {
-      navigate("/login");
-      return;
-    }
-    const user = JSON.parse(stored);
-    setUserName(user.name || "Chef");
-  }, [navigate]);
+  const userName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Chef";
 
   const greeting = () => {
     const hour = new Date().getHours();
@@ -25,7 +17,6 @@ export default function Index() {
 
   return (
     <div className="animate-fade-in space-y-8">
-      {/* Welcome */}
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">
           {greeting()}, <span className="text-primary">{userName}</span> 👋
@@ -58,7 +49,6 @@ export default function Index() {
         </button>
       </div>
 
-      {/* Tips section */}
       <div className="bg-card rounded-xl p-6 shadow-card">
         <div className="flex items-center gap-3 mb-4">
           <ChefHat className="h-5 w-5 text-primary" />
@@ -70,7 +60,6 @@ export default function Index() {
         </p>
       </div>
 
-      {/* Recent activity placeholder */}
       <div>
         <h2 className="font-semibold text-foreground mb-4 flex items-center gap-2">
           <Clock className="h-4 w-4 text-muted-foreground" />

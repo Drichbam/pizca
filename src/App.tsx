@@ -7,6 +7,7 @@ import { AppLayout } from "./components/AppLayout";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import MisRecetas from "./pages/MisRecetas";
+import RecipeDetail from "./pages/RecipeDetail";
 import Crear from "./pages/Crear";
 import Perfil from "./pages/Perfil";
 import NotFound from "./pages/NotFound";
@@ -24,6 +25,7 @@ const App = () => (
           <Route element={<AppLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/mis-recetas" element={<MisRecetas />} />
+            <Route path="/receta/:id" element={<RecipeDetail />} />
             <Route path="/crear" element={<Crear />} />
             <Route path="/perfil" element={<Perfil />} />
           </Route>

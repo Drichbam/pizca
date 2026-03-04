@@ -252,7 +252,6 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
   // Normalize units & filter ingredients without name, then filter empty components
   if (Array.isArray(json.componentes)) {
     let removedIngredients = 0;
-    let normalizedUnits = 0;
     const originalCompCount = json.componentes.length;
 
     json.componentes = json.componentes
@@ -266,8 +265,13 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
             const uLower = ing.unidad.toLowerCase().trim();
             const normalized = UNIT_NORMALIZE[uLower];
             if (normalized) {
-              normalizedUnits++;
+              const originalUnit = ing.unidad;
               ing.unidad = normalized;
+              corrections.push({
+                id: `corr-${corrId++}`,
+                label: `Unidad en "${ing.ingrediente}": "${originalUnit}" → "${normalized}"`,
+                revertable: false,
+              });
             }
           }
           return ing;
@@ -286,11 +290,6 @@ function sanitizeRecipe(json: any): CorrectionItem[] {
     if (removedComps > 0) corrections.push({
       id: `corr-${corrId++}`,
       label: `${removedComps} componente${removedComps > 1 ? "s" : ""} vacío${removedComps > 1 ? "s" : ""} eliminado${removedComps > 1 ? "s" : ""}`,
-      revertable: false,
-    });
-    if (normalizedUnits > 0) corrections.push({
-      id: `corr-${corrId++}`,
-      label: `${normalizedUnits} unidad${normalizedUnits > 1 ? "es" : ""} normalizada${normalizedUnits > 1 ? "s" : ""}`,
       revertable: false,
     });
   }

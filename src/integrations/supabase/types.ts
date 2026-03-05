@@ -19,6 +19,7 @@ export type Database = {
           brand: string | null
           created_at: string
           id: string
+          ingredient_id: string | null
           ingredient_name: string
           is_default: boolean | null
           package_size: number | null
@@ -32,6 +33,7 @@ export type Database = {
           brand?: string | null
           created_at?: string
           id?: string
+          ingredient_id?: string | null
           ingredient_name: string
           is_default?: boolean | null
           package_size?: number | null
@@ -45,6 +47,7 @@ export type Database = {
           brand?: string | null
           created_at?: string
           id?: string
+          ingredient_id?: string | null
           ingredient_name?: string
           is_default?: boolean | null
           package_size?: number | null
@@ -53,6 +56,44 @@ export type Database = {
           supermarket?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ingredient_prices_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ingredients: {
+        Row: {
+          aliases: Json
+          canonical_name: string
+          category: string
+          created_at: string
+          id: string
+          off_category: string | null
+          translations: Json
+        }
+        Insert: {
+          aliases?: Json
+          canonical_name: string
+          category?: string
+          created_at?: string
+          id?: string
+          off_category?: string | null
+          translations?: Json
+        }
+        Update: {
+          aliases?: Json
+          canonical_name?: string
+          category?: string
+          created_at?: string
+          id?: string
+          off_category?: string | null
+          translations?: Json
         }
         Relationships: []
       }
@@ -88,24 +129,27 @@ export type Database = {
       recipe_ingredients: {
         Row: {
           component_id: string
+          display_name: string
           id: string
-          name: string
+          ingredient_id: string | null
           quantity: number | null
           sort_order: number
           unit: Database["public"]["Enums"]["ingredient_unit"] | null
         }
         Insert: {
           component_id: string
+          display_name: string
           id?: string
-          name: string
+          ingredient_id?: string | null
           quantity?: number | null
           sort_order?: number
           unit?: Database["public"]["Enums"]["ingredient_unit"] | null
         }
         Update: {
           component_id?: string
+          display_name?: string
           id?: string
-          name?: string
+          ingredient_id?: string | null
           quantity?: number | null
           sort_order?: number
           unit?: Database["public"]["Enums"]["ingredient_unit"] | null
@@ -116,6 +160,13 @@ export type Database = {
             columns: ["component_id"]
             isOneToOne: false
             referencedRelation: "recipe_components"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_ingredients_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
             referencedColumns: ["id"]
           },
         ]
@@ -404,6 +455,7 @@ export type Database = {
         Row: {
           checked: boolean | null
           id: string
+          ingredient_id: string | null
           ingredient_name: string
           quantity: number | null
           shopping_list_id: string
@@ -413,6 +465,7 @@ export type Database = {
         Insert: {
           checked?: boolean | null
           id?: string
+          ingredient_id?: string | null
           ingredient_name: string
           quantity?: number | null
           shopping_list_id: string
@@ -422,6 +475,7 @@ export type Database = {
         Update: {
           checked?: boolean | null
           id?: string
+          ingredient_id?: string | null
           ingredient_name?: string
           quantity?: number | null
           shopping_list_id?: string
@@ -429,6 +483,13 @@ export type Database = {
           unit?: Database["public"]["Enums"]["ingredient_unit"] | null
         }
         Relationships: [
+          {
+            foreignKeyName: "shopping_list_items_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "shopping_list_items_shopping_list_id_fkey"
             columns: ["shopping_list_id"]

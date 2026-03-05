@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Ruler, ArrowRight } from "lucide-react";
 import type { RecipeWithComponents, RecipeScaleFactor } from "@/types/recipe";
-import { useTranslation } from "react-i18next";
 
 type MoldShape = "circular" | "cuadrado" | "rectangular";
 
@@ -58,7 +58,6 @@ interface Props {
 }
 
 export function RecipeMoldsTab({ recipe }: Props) {
-  const { t } = useTranslation();
   const [srcShape, setSrcShape] = useState<MoldShape>("circular");
   const [srcDims, setSrcDims] = useState<MoldDimensions>({ shape: "circular", d: 24, h: 4 });
   const [dstShape, setDstShape] = useState<MoldShape>("circular");
@@ -77,6 +76,8 @@ export function RecipeMoldsTab({ recipe }: Props) {
 
   const handleQuickFactor = (sf: RecipeScaleFactor) => {
     setActiveQuick(sf.id);
+    // We just apply the multiplier directly by setting a matching volume ratio
+    // Reset shapes and set dimensions so factor = multiplier
     setSrcShape("circular");
     setSrcDims({ shape: "circular", d: 10, h: 10 });
     setDstShape("circular");
@@ -109,7 +110,7 @@ export function RecipeMoldsTab({ recipe }: Props) {
       {/* Quick scale factors */}
       {scaleFactors.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("molds.quickScales")}</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Escalas rápidas</p>
           <div className="flex flex-wrap gap-2">
             {scaleFactors.map((sf) => (
               <Button
@@ -129,7 +130,7 @@ export function RecipeMoldsTab({ recipe }: Props) {
       {/* Mold selectors */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-end">
         <MoldSelector
-          label={t("molds.sourceMold")}
+          label="Molde original"
           shape={srcShape}
           dims={srcDims}
           onShapeChange={handleSrcShapeChange}
@@ -139,7 +140,7 @@ export function RecipeMoldsTab({ recipe }: Props) {
           <ArrowRight className="h-5 w-5 text-muted-foreground" />
         </div>
         <MoldSelector
-          label={t("molds.targetMold")}
+          label="Molde destino"
           shape={dstShape}
           dims={dstDims}
           onShapeChange={handleDstShapeChange}
@@ -150,12 +151,12 @@ export function RecipeMoldsTab({ recipe }: Props) {
       {/* Factor display */}
       <div className="bg-card rounded-xl p-4 shadow-card flex items-center justify-between">
         <div>
-          <p className="text-xs text-muted-foreground">{t("molds.scaleFactor")}</p>
+          <p className="text-xs text-muted-foreground">Factor de escala</p>
           <p className="text-2xl font-bold text-primary tabular-nums">×{factor.toFixed(2)}</p>
         </div>
         <div className="text-right text-xs text-muted-foreground space-y-0.5">
-          <p>{t("molds.sourceVol", { value: Math.round(calcVolume(srcDims)) })}</p>
-          <p>{t("molds.targetVol", { value: Math.round(calcVolume(dstDims)) })}</p>
+          <p>Vol. original: {Math.round(calcVolume(srcDims))} cm³</p>
+          <p>Vol. destino: {Math.round(calcVolume(dstDims))} cm³</p>
         </div>
       </div>
 
@@ -176,19 +177,19 @@ export function RecipeMoldsTab({ recipe }: Props) {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="text-xs text-muted-foreground border-b border-border">
-                        <th className="text-left py-1.5 font-medium">{t("molds.colIngredient")}</th>
-                        <th className="text-right py-1.5 font-medium w-20">{t("molds.colOriginal")}</th>
-                        <th className="text-right py-1.5 font-medium w-20">{t("molds.colAdapted")}</th>
+                        <th className="text-left py-1.5 font-medium">Ingrediente</th>
+                        <th className="text-right py-1.5 font-medium w-20">Original</th>
+                        <th className="text-right py-1.5 font-medium w-20">Adaptado</th>
                       </tr>
                     </thead>
                     <tbody>
                       {ingredients.map((ing) => {
                         const adapted = ing.quantity != null
-                          ? smartRound(ing.quantity * factor, ing.unit, ing.display_name)
+                          ? smartRound(ing.quantity * factor, ing.unit, ing.name)
                           : null;
                         return (
                           <tr key={ing.id} className="border-b border-border/50 last:border-0">
-                            <td className="py-1.5 text-foreground">{ing.display_name}</td>
+                            <td className="py-1.5 text-foreground">{ing.name}</td>
                             <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                               {ing.quantity != null ? `${ing.quantity} ${ing.unit || ""}` : "QS"}
                             </td>
@@ -223,7 +224,6 @@ function MoldSelector({
   onShapeChange: (s: MoldShape) => void;
   onDimChange: (key: string, val: number) => void;
 }) {
-  const { t } = useTranslation();
   return (
     <div className="bg-card rounded-xl p-4 shadow-card space-y-3">
       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
@@ -234,16 +234,16 @@ function MoldSelector({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="circular">{t("molds.circular")}</SelectItem>
-          <SelectItem value="cuadrado">{t("molds.square")}</SelectItem>
-          <SelectItem value="rectangular">{t("molds.rectangular")}</SelectItem>
+          <SelectItem value="circular">Circular</SelectItem>
+          <SelectItem value="cuadrado">Cuadrado</SelectItem>
+          <SelectItem value="rectangular">Rectangular</SelectItem>
         </SelectContent>
       </Select>
 
       <div className="grid grid-cols-2 gap-2">
         {shape === "circular" && (
           <div>
-            <Label className="text-xs text-muted-foreground">{t("molds.diameter")}</Label>
+            <Label className="text-xs text-muted-foreground">Diámetro (cm)</Label>
             <Input
               type="number"
               value={dims.d || ""}
@@ -255,7 +255,7 @@ function MoldSelector({
         )}
         {shape === "cuadrado" && (
           <div>
-            <Label className="text-xs text-muted-foreground">{t("molds.side")}</Label>
+            <Label className="text-xs text-muted-foreground">Lado (cm)</Label>
             <Input
               type="number"
               value={dims.l || ""}
@@ -268,7 +268,7 @@ function MoldSelector({
         {shape === "rectangular" && (
           <>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("molds.length")}</Label>
+              <Label className="text-xs text-muted-foreground">Largo (cm)</Label>
               <Input
                 type="number"
                 value={dims.l || ""}
@@ -278,7 +278,7 @@ function MoldSelector({
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("molds.width")}</Label>
+              <Label className="text-xs text-muted-foreground">Ancho (cm)</Label>
               <Input
                 type="number"
                 value={dims.w || ""}
@@ -290,7 +290,7 @@ function MoldSelector({
           </>
         )}
         <div>
-          <Label className="text-xs text-muted-foreground">{t("molds.height")}</Label>
+          <Label className="text-xs text-muted-foreground">Alto (cm)</Label>
           <Input
             type="number"
             value={dims.h || ""}

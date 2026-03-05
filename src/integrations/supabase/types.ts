@@ -67,35 +67,6 @@ export type Database = {
           },
         ]
       }
-      recipe_components: {
-        Row: {
-          id: string
-          name: string
-          recipe_id: string
-          sort_order: number
-        }
-        Insert: {
-          id?: string
-          name?: string
-          recipe_id: string
-          sort_order?: number
-        }
-        Update: {
-          id?: string
-          name?: string
-          recipe_id?: string
-          sort_order?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "recipe_components_recipe_id_fkey"
-            columns: ["recipe_id"]
-            isOneToOne: false
-            referencedRelation: "recipes"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       ingredients: {
         Row: {
           aliases: Json
@@ -125,6 +96,35 @@ export type Database = {
           translations?: Json
         }
         Relationships: []
+      }
+      recipe_components: {
+        Row: {
+          id: string
+          name: string
+          recipe_id: string
+          sort_order: number
+        }
+        Insert: {
+          id?: string
+          name?: string
+          recipe_id: string
+          sort_order?: number
+        }
+        Update: {
+          id?: string
+          name?: string
+          recipe_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_components_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       recipe_ingredients: {
         Row: {

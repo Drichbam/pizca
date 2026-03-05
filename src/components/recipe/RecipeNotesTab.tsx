@@ -1,6 +1,5 @@
 import { MessageSquare, Layers } from "lucide-react";
 import type { RecipeNote, RecipeVariant } from "@/types/recipe";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   notes: RecipeNote[];
@@ -8,11 +7,10 @@ interface Props {
 }
 
 export function RecipeNotesTab({ notes, variants }: Props) {
-  const { t } = useTranslation();
   const sortedNotes = [...notes].sort((a, b) => a.sort_order - b.sort_order);
 
   if (!sortedNotes.length && !variants.length) {
-    return <p className="text-sm text-muted-foreground">{t("notesTab.empty")}</p>;
+    return <p className="text-sm text-muted-foreground">Sin notas ni variantes.</p>;
   }
 
   return (
@@ -20,7 +18,7 @@ export function RecipeNotesTab({ notes, variants }: Props) {
       {sortedNotes.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 text-primary" /> {t("notesTab.chefTips")}
+            <MessageSquare className="h-4 w-4 text-primary" /> Tips del chef
           </h3>
           {sortedNotes.map((note) => (
             <div key={note.id} className="bg-card rounded-xl p-4 shadow-card text-sm text-foreground leading-relaxed">
@@ -33,7 +31,7 @@ export function RecipeNotesTab({ notes, variants }: Props) {
       {variants.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <Layers className="h-4 w-4 text-primary" /> {t("notesTab.variants")}
+            <Layers className="h-4 w-4 text-primary" /> Variantes
           </h3>
           {variants.map((v) => (
             <div key={v.id} className="bg-card rounded-xl p-4 shadow-card">

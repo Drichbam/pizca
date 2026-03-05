@@ -2,18 +2,16 @@ import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { RecipeComponent, RecipeIngredient } from "@/types/recipe";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   components: (RecipeComponent & { recipe_ingredients: RecipeIngredient[] })[];
 }
 
 export function RecipeIngredientsList({ components }: Props) {
-  const { t } = useTranslation();
   const sorted = [...components].sort((a, b) => a.sort_order - b.sort_order);
 
   if (!sorted.length) {
-    return <p className="text-sm text-muted-foreground">{t("ingredientsList.empty")}</p>;
+    return <p className="text-sm text-muted-foreground">Sin ingredientes.</p>;
   }
 
   // Single unnamed component — flat list
@@ -39,7 +37,6 @@ export function RecipeIngredientsList({ components }: Props) {
 
 function ComponentSection({ component }: { component: RecipeComponent & { recipe_ingredients: RecipeIngredient[] } }) {
   const [open, setOpen] = useState(true);
-  const { t } = useTranslation();
   const ingredients = [...component.recipe_ingredients].sort((a, b) => a.sort_order - b.sort_order);
 
   return (
@@ -49,7 +46,7 @@ function ComponentSection({ component }: { component: RecipeComponent & { recipe
         className="w-full flex items-center gap-2 p-4 text-left hover:bg-muted/50 transition-colors"
       >
         {open ? <ChevronDown className="h-4 w-4 text-muted-foreground" /> : <ChevronRight className="h-4 w-4 text-muted-foreground" />}
-        <span className="font-semibold text-foreground text-sm">{component.name || t("ingredientsList.defaultGroup")}</span>
+        <span className="font-semibold text-foreground text-sm">{component.name || "Ingredientes"}</span>
         <span className="text-xs text-muted-foreground ml-auto">{ingredients.length}</span>
       </button>
       {open && (
@@ -70,7 +67,7 @@ function IngredientRow({ ingredient }: { ingredient: RecipeIngredient }) {
         {ingredient.quantity != null ? ingredient.quantity : ""}
         {ingredient.unit ? ` ${ingredient.unit}` : ""}
       </span>
-      <span className="text-foreground">{ingredient.display_name}</span>
+      <span className="text-foreground">{ingredient.name}</span>
     </li>
   );
 }

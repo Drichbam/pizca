@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Camera, X } from "lucide-react";
 import { Html5Qrcode } from "html5-qrcode";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -12,7 +11,6 @@ interface Props {
 }
 
 export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
-  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
   const [scanning, setScanning] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
@@ -51,6 +49,7 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
           aspectRatio: 1.5,
         },
         (decodedText) => {
+          // Only accept numeric barcodes (EAN/UPC)
           const cleaned = decodedText.replace(/\D/g, "");
           if (cleaned.length >= 8) {
             onScan(cleaned);
@@ -65,17 +64,18 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
     } catch (err: any) {
       setScanning(false);
       if (err?.name === "NotAllowedError" || err?.message?.includes("Permission")) {
-        setError(t("barcode.errorPermission"));
+        setError("Permiso de cámara denegado. Activa el acceso a la cámara en los ajustes del navegador.");
       } else if (err?.name === "NotFoundError") {
-        setError(t("barcode.errorNoCamera"));
+        setError("No se encontró una cámara disponible.");
       } else {
-        setError(t("barcode.errorStart"));
+        setError("No se pudo iniciar la cámara. Intenta de nuevo.");
       }
     }
-  }, [onScan, onClose, stopScanner, t]);
+  }, [onScan, onClose, stopScanner]);
 
   useEffect(() => {
     if (open) {
+      // Small delay to let the dialog render the container
       const timer = setTimeout(startScanner, 300);
       return () => clearTimeout(timer);
     } else {
@@ -83,6 +83,7 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
     }
   }, [open, startScanner, stopScanner]);
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       stopScanner();
@@ -95,11 +96,12 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
         <DialogHeader className="p-4 pb-2">
           <DialogTitle className="flex items-center gap-2 text-base">
             <Camera className="h-5 w-5 text-primary" />
-            {t("barcode.dialogTitle")}
+            Escanear código de barras
           </DialogTitle>
         </DialogHeader>
 
         <div className="px-4 pb-4 space-y-3">
+          {/* Camera viewport */}
           <div
             id="barcode-reader"
             ref={containerRef}
@@ -113,7 +115,7 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
           )}
 
           <p className="text-xs text-muted-foreground text-center">
-            {t("barcode.dialogHint")}
+            Apunta la cámara al código de barras del producto
           </p>
 
           <div className="flex gap-2">
@@ -124,7 +126,7 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
                 size="sm"
                 onClick={startScanner}
               >
-                {t("barcode.retry")}
+                Reintentar
               </Button>
             )}
             <Button
@@ -136,7 +138,7 @@ export function BarcodeScannerDialog({ open, onClose, onScan }: Props) {
                 onClose();
               }}
             >
-              <X className="h-4 w-4 mr-1" /> {t("common.cancel")}
+              <X className="h-4 w-4 mr-1" /> Cancelar
             </Button>
           </div>
         </div>

@@ -17,7 +17,6 @@ import { BarcodeSearchField } from "@/components/profile/BarcodeSearchField";
 import { CommunityPricesPanel } from "@/components/profile/CommunityPricesPanel";
 import { IngredientPriceSearchPanel } from "@/components/profile/IngredientPriceSearchPanel";
 import type { OpenFoodFactsProduct } from "@/hooks/useOpenFoodFacts";
-import { useTranslation } from "react-i18next";
 
 type IngredientPrice = Database["public"]["Tables"]["ingredient_prices"]["Row"];
 type IngredientUnit = Database["public"]["Enums"]["ingredient_unit"];
@@ -58,7 +57,6 @@ interface CombinedItem {
 }
 
 function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: string; navigate: (path: string) => void }) {
-  const { t } = useTranslation();
   const normalizedName = ingredientName.trim().toLowerCase();
   const { data: recipes, isLoading } = useQuery({
     queryKey: ["recipes_using_ingredient", normalizedName],
@@ -84,7 +82,7 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
   });
 
   if (isLoading) return <div className="px-3 pb-3"><div className="h-4 bg-secondary rounded animate-pulse" /></div>;
-  if (!recipes?.length) return <p className="px-3 pb-3 text-xs text-muted-foreground">{t("prices.notInRecipes")}</p>;
+  if (!recipes?.length) return <p className="px-3 pb-3 text-xs text-muted-foreground">No se encontró en ninguna receta</p>;
 
   return (
     <div className="px-3 pb-3 flex flex-wrap gap-1.5">
@@ -103,7 +101,6 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
 }
 
 export function IngredientPricesManager({ initialIngredient, initialBarcode }: Props) {
-  const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -117,6 +114,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
   const [filter, setFilter] = useState<FilterMode>("all");
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
 
+  // Query: precios existentes
   const { data: prices, isLoading } = useQuery({
     queryKey: ["ingredient_prices"],
     queryFn: async () => {
@@ -129,6 +127,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     },
   });
 
+  // Query: ingredientes distintos de recetas del usuario
   const { data: recipeIngredients } = useQuery({
     queryKey: ["recipe_ingredient_names"],
     queryFn: async () => {
@@ -136,15 +135,18 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
         .from("recipe_ingredients")
         .select("name");
       if (error) throw error;
+      // Extraer nombres únicos normalizados
       const nameSet = new Set<string>();
       (data || []).forEach((r) => {
         const n = r.name?.trim();
+        // Filtrar pasos de preparación importados por error (textos muy largos o con verbos/frases)
         if (n && n.length <= 60 && !n.includes(",") && !n.includes(".")) nameSet.add(n.toLowerCase());
       });
       return Array.from(nameSet).sort();
     },
   });
 
+  // Query: recetas que usan el ingrediente actualmente en el formulario
   const activeIngredientName = showForm ? form.ingredient_name.trim().toLowerCase() : "";
   const { data: recipesUsingIngredient } = useQuery({
     queryKey: ["recipes_using_ingredient", activeIngredientName],
@@ -154,9 +156,11 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
         .from("recipe_ingredients")
         .select("component_id, name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
+      // Filtrar por nombre (case-insensitive)
       const matches = (data || []).filter(
         (r: any) => r.name?.trim().toLowerCase() === activeIngredientName
       );
+      // Deduplicar por recipe id
       const seen = new Set<string>();
       const recipes: { id: string; title: string }[] = [];
       for (const m of matches) {
@@ -171,18 +175,21 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     enabled: !!activeIngredientName,
   });
 
+  // Fusionar ingredientes con y sin precio
   const combinedList = useMemo<CombinedItem[]>(() => {
     const priceMap = new Map<string, IngredientPrice>();
     (prices || []).forEach((p) => {
       priceMap.set(p.ingredient_name.trim().toLowerCase(), p);
     });
 
+    // Ingredientes con precio (pueden no estar en recetas)
     const items: CombinedItem[] = (prices || []).map((p) => ({
       type: "priced" as const,
       name: p.ingredient_name,
       price: p,
     }));
 
+    // Ingredientes de recetas sin precio
     const pricedNames = new Set(
       (prices || []).map((p) => p.ingredient_name.trim().toLowerCase())
     );
@@ -192,6 +199,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
       }
     });
 
+    // Ordenar: con precio primero, luego sin precio, ambos alfabéticamente
     items.sort((a, b) => {
       if (a.type !== b.type) return a.type === "priced" ? -1 : 1;
       return a.name.localeCompare(b.name, "es");
@@ -202,8 +210,10 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
 
   const filtered = useMemo(() => {
     return combinedList.filter((item) => {
+      // Filtro por tipo
       if (filter === "priced" && item.type !== "priced") return false;
       if (filter === "unpriced" && item.type !== "unpriced") return false;
+      // Filtro por búsqueda
       if (!search) return true;
       const s = search.toLowerCase();
       if (item.name.toLowerCase().includes(s)) return true;
@@ -241,10 +251,10 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ingredient_prices"] });
       queryClient.invalidateQueries({ queryKey: ["recipe_ingredient_names"] });
-      toast.success(editingId ? t("prices.updated") : t("prices.addedSuccess"));
+      toast.success(editingId ? "Precio actualizado" : "Precio añadido");
       resetForm();
     },
-    onError: () => toast.error(t("prices.saveError")),
+    onError: () => toast.error("Error al guardar"),
   });
 
   const deleteMutation = useMutation({
@@ -254,9 +264,9 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ingredient_prices"] });
-      toast.success(t("prices.deleted"));
+      toast.success("Precio eliminado");
     },
-    onError: () => toast.error(t("prices.deleteError")),
+    onError: () => toast.error("Error al eliminar"),
   });
 
   const resetForm = () => {
@@ -307,10 +317,10 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("nav.ingredients")}</p>
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Mis Ingredientes</p>
         {!showForm && (
           <Button size="sm" className="rounded-lg" onClick={() => setShowForm(true)}>
-            <Plus className="h-4 w-4 mr-1" /> {t("prices.add")}
+            <Plus className="h-4 w-4 mr-1" /> Añadir
           </Button>
         )}
       </div>
@@ -326,17 +336,17 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
           )}
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-2">
-              <Label className="text-xs text-muted-foreground">{t("prices.ingredientLabel")}</Label>
+              <Label className="text-xs text-muted-foreground">Ingrediente *</Label>
               <Input
                 value={form.ingredient_name}
                 onChange={(e) => setForm({ ...form, ingredient_name: e.target.value })}
                 className="rounded-lg"
-                placeholder={t("prices.ingredientPlaceholder")}
+                placeholder="Ej: harina"
               />
               <IngredientPriceSearchPanel ingredientName={form.ingredient_name} />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("prices.brand")}</Label>
+              <Label className="text-xs text-muted-foreground">Marca</Label>
               <Input
                 value={form.brand}
                 onChange={(e) => setForm({ ...form, brand: e.target.value })}
@@ -344,7 +354,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("prices.supermarket")}</Label>
+              <Label className="text-xs text-muted-foreground">Supermercado</Label>
               <Input
                 value={form.supermarket}
                 onChange={(e) => setForm({ ...form, supermarket: e.target.value })}
@@ -352,7 +362,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("prices.priceLabel")}</Label>
+              <Label className="text-xs text-muted-foreground">Precio (€) *</Label>
               <Input
                 type="number"
                 step="0.01"
@@ -363,7 +373,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("prices.packageSize")}</Label>
+              <Label className="text-xs text-muted-foreground">Tamaño envase</Label>
               <Input
                 type="number"
                 value={form.package_size}
@@ -373,7 +383,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
               />
             </div>
             <div>
-              <Label className="text-xs text-muted-foreground">{t("prices.packageUnit")}</Label>
+              <Label className="text-xs text-muted-foreground">Unidad envase</Label>
               <Select
                 value={form.package_unit}
                 onValueChange={(v) => setForm({ ...form, package_unit: v as IngredientUnit })}
@@ -395,7 +405,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                 onCheckedChange={(v) => setForm({ ...form, is_default: !!v })}
               />
               <label htmlFor="is_default" className="text-xs text-muted-foreground cursor-pointer">
-                {t("prices.isDefault")}
+                Precio por defecto
               </label>
             </div>
           </div>
@@ -407,12 +417,12 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                 className="rounded-lg text-destructive hover:text-destructive"
                 onClick={() => { deleteMutation.mutate(editingId); resetForm(); }}
               >
-                <Trash2 className="h-4 w-4 mr-1" /> {t("common.delete")}
+                <Trash2 className="h-4 w-4 mr-1" /> Eliminar
               </Button>
             ) : <div />}
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="rounded-lg" onClick={resetForm}>
-                <X className="h-4 w-4 mr-1" /> {t("common.cancel")}
+                <X className="h-4 w-4 mr-1" /> Cancelar
               </Button>
               <Button
                 size="sm"
@@ -420,15 +430,16 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                 disabled={!form.ingredient_name.trim() || !form.price || upsert.isPending}
                 onClick={() => upsert.mutate(form)}
               >
-                <Check className="h-4 w-4 mr-1" /> {editingId ? t("common.save") : t("prices.add")}
+                <Check className="h-4 w-4 mr-1" /> {editingId ? "Guardar" : "Añadir"}
               </Button>
             </div>
           </div>
 
+          {/* Recetas que usan este ingrediente */}
           {activeIngredientName && recipesUsingIngredient && recipesUsingIngredient.length > 0 && (
             <div className="space-y-1.5">
               <p className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-                <BookOpen className="h-3 w-3" /> {t("prices.usedInRecipes", { count: recipesUsingIngredient.length })}
+                <BookOpen className="h-3 w-3" /> Usado en {recipesUsingIngredient.length} receta{recipesUsingIngredient.length > 1 ? "s" : ""}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {recipesUsingIngredient.map((r) => (
@@ -452,7 +463,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={t("prices.search")}
+            placeholder="Buscar ingrediente..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-10 rounded-lg"
@@ -469,13 +480,13 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
         className="justify-start"
       >
         <ToggleGroupItem value="all" className="rounded-lg text-xs">
-          {t("prices.filterAll", { count: combinedList.length })}
+          Todos ({combinedList.length})
         </ToggleGroupItem>
         <ToggleGroupItem value="priced" className="rounded-lg text-xs">
-          {t("prices.filterPriced", { count: pricedCount })}
+          Con precio ({pricedCount})
         </ToggleGroupItem>
         <ToggleGroupItem value="unpriced" className="rounded-lg text-xs">
-          {t("prices.filterUnpriced", { count: unpricedCount })}
+          Sin precio ({unpricedCount})
         </ToggleGroupItem>
       </ToggleGroup>
 
@@ -488,7 +499,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
         </div>
       ) : filtered.length === 0 ? (
         <p className="text-sm text-muted-foreground text-center py-6">
-          {combinedList.length ? t("prices.noResults") : t("prices.empty")}
+          {combinedList.length ? "Sin resultados" : "No hay ingredientes aún."}
         </p>
       ) : (
         <div className="space-y-2">
@@ -516,7 +527,7 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                       }
                     </p>
                     <p className="text-xs text-muted-foreground truncate">
-                      {[item.price.brand, item.price.supermarket].filter(Boolean).join(" · ") || t("prices.noDetails")}
+                      {[item.price.brand, item.price.supermarket].filter(Boolean).join(" · ") || "Sin detalles"}
                       {item.price.package_size ? ` · ${item.price.package_size} ${item.price.package_unit || ""}` : ""}
                     </p>
                   </button>
@@ -553,17 +564,17 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                         : <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
                       }
                     </p>
-                    <p className="text-xs text-muted-foreground">{t("prices.usedInList")}</p>
+                    <p className="text-xs text-muted-foreground">Usado en recetas</p>
                   </button>
                   <div className="flex items-center gap-2 ml-3">
-                    <span className="text-xs text-muted-foreground italic whitespace-nowrap">{t("prices.noPrice")}</span>
+                    <span className="text-xs text-muted-foreground italic whitespace-nowrap">Sin precio</span>
                     <Button
                       variant="outline"
                       size="sm"
                       className="h-7 rounded-lg text-xs"
                       onClick={() => startAddForIngredient(item.name)}
                     >
-                      <Plus className="h-3.5 w-3.5 mr-1" /> {t("prices.add")}
+                      <Plus className="h-3.5 w-3.5 mr-1" /> Añadir
                     </Button>
                   </div>
                 </div>

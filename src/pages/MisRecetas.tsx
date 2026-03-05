@@ -1,20 +1,16 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { Search, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
+import { Search, BookOpen, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRecipes } from "@/hooks/useRecipes";
 import { useTags } from "@/hooks/useTags";
 import { RecipeCard } from "@/components/RecipeCard";
-import { useRecipeLabels } from "@/hooks/useRecipeLabels";
-import { useIngredientCatalog, findMatchingIngredientIds } from "@/hooks/useIngredientCatalog";
-import { supabase } from "@/integrations/supabase/client";
+import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty } from "@/types/recipe";
 import { cn } from "@/lib/utils";
 import { exportMultipleRecipes } from "@/lib/exportRecipe";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 
 const ALL_CATEGORIES: RecipeCategory[] = [
   "tartes", "entremets", "biscuits", "gâteaux", "pâtes-de-base",
@@ -24,62 +20,32 @@ const ALL_DIFFICULTIES: RecipeDifficulty[] = ["basico", "intermedio", "avanzado"
 
 export default function MisRecetas() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const { data: recipes, isLoading } = useRecipes();
   const { data: tags } = useTags();
-  const { data: catalog = [] } = useIngredientCatalog();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<RecipeCategory | null>(null);
   const [difficultyFilter, setDifficultyFilter] = useState<RecipeDifficulty | null>(null);
   const [tagFilter, setTagFilter] = useState<string | null>(null);
 
-  // Find catalog ingredient IDs that match the search term (client-side, fast)
-  const matchingIngredientIds = useMemo(
-    () => (search ? findMatchingIngredientIds(search, catalog) : []),
-    [search, catalog]
-  );
-
-  // Fetch recipe IDs that contain those ingredient IDs
-  const { data: ingredientMatchIds } = useQuery({
-    queryKey: ["recipe_ids_by_ingredient", matchingIngredientIds],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("recipe_ingredients")
-        .select("component_id, recipe_components!inner(recipe_id)")
-        .in("ingredient_id", matchingIngredientIds);
-      if (error) throw error;
-      const ids = new Set<string>();
-      (data || []).forEach((r: any) => {
-        if (r.recipe_components?.recipe_id) ids.add(r.recipe_components.recipe_id);
-      });
-      return ids;
-    },
-    enabled: matchingIngredientIds.length > 0,
-  });
-
   const filtered = useMemo(() => {
     if (!recipes) return [];
     return recipes.filter((r: any) => {
-      const matchesSearch =
-        !search ||
-        r.title.toLowerCase().includes(search.toLowerCase()) ||
-        (ingredientMatchIds?.has(r.id) ?? false);
+      const matchesSearch = !search || r.title.toLowerCase().includes(search.toLowerCase());
       const matchesCategory = !categoryFilter || r.category === categoryFilter;
       const matchesDifficulty = !difficultyFilter || r.difficulty === difficultyFilter;
       const matchesTag = !tagFilter || (r.recipe_tags || []).some((rt: any) => rt.tag_id === tagFilter);
       return matchesSearch && matchesCategory && matchesDifficulty && matchesTag;
     });
-  }, [recipes, search, ingredientMatchIds, categoryFilter, difficultyFilter, tagFilter]);
+  }, [recipes, search, categoryFilter, difficultyFilter, tagFilter]);
 
   return (
     <div className="animate-fade-in space-y-5 max-w-full">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold text-foreground truncate">{t("recipes.title")}</h1>
+          <h1 className="text-2xl font-bold text-foreground truncate">Mis Recetas</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            {t("recipes.count", { count: recipes?.length || 0 })}
+            {recipes?.length || 0} receta{recipes?.length !== 1 ? "s" : ""}
           </p>
         </div>
         <div className="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
@@ -89,22 +55,22 @@ export default function MisRecetas() {
               if (!recipes?.length) return;
               try {
                 await exportMultipleRecipes(recipes.map((r: any) => r.id));
-                toast.success(t("recipes.exportedMany", { count: recipes.length }));
+                toast.success(`${recipes.length} receta(s) exportada(s)`);
               } catch {
-                toast.error(t("recipes.exportError"));
+                toast.error("Error al exportar");
               }
             }}
             className="rounded-lg"
             size="sm"
             disabled={!recipes?.length}
           >
-            <Download className="h-4 w-4" /> <span className="hidden md:inline">{t("recipes.export")}</span>
+            <Download className="h-4 w-4" /> <span className="hidden md:inline">Exportar</span>
           </Button>
           <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg" size="sm">
-            <Upload className="h-4 w-4" /> <span className="hidden md:inline">{t("recipes.import")}</span>
+            <Upload className="h-4 w-4" /> <span className="hidden md:inline">Importar</span>
           </Button>
           <Button onClick={() => navigate("/crear")} className="rounded-lg" size="sm">
-            {t("recipes.new")}
+            + Nueva
           </Button>
         </div>
       </div>
@@ -113,7 +79,7 @@ export default function MisRecetas() {
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder={t("recipes.search")}
+          placeholder="Buscar receta..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="pl-10 rounded-lg"
@@ -129,7 +95,7 @@ export default function MisRecetas() {
             !categoryFilter ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
           )}
         >
-          {t("recipes.all")}
+          Todas
         </button>
         {ALL_CATEGORIES.map((cat) => (
           <button
@@ -140,7 +106,7 @@ export default function MisRecetas() {
               categoryFilter === cat ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             )}
           >
-            {getCategoryLabel(cat)}
+            {CATEGORY_LABELS[cat]}
           </button>
         ))}
       </div>
@@ -157,7 +123,7 @@ export default function MisRecetas() {
               difficultyFilter === diff ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             )}
           >
-            {getDifficultyLabel(diff)}
+            {DIFFICULTY_LABELS[diff]}
           </button>
         ))}
       </div>
@@ -206,18 +172,20 @@ export default function MisRecetas() {
             )}
           </div>
           <h3 className="font-semibold text-foreground text-lg mb-2">
-            {recipes?.length ? t("recipes.noResults") : t("recipes.empty")}
+            {recipes?.length ? "Sin resultados" : "Aún no tienes recetas"}
           </h3>
           <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-            {recipes?.length ? t("recipes.noResultsHint") : t("recipes.emptyHint")}
+            {recipes?.length
+              ? "Prueba cambiando los filtros o la búsqueda."
+              : "¡Crea tu primera receta o importa desde un archivo JSON!"}
           </p>
           {!recipes?.length && (
             <div className="flex gap-3 justify-center">
               <Button onClick={() => navigate("/crear")} className="rounded-lg">
-                {t("recipes.create")}
+                Crear receta
               </Button>
               <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg">
-                <Upload className="h-4 w-4 mr-1" /> {t("recipes.import")}
+                <Upload className="h-4 w-4 mr-1" /> Importar
               </Button>
             </div>
           )}

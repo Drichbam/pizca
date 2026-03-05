@@ -5,12 +5,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Trash2, Plus, ChevronUp, ChevronDown, HelpCircle, ImagePlus, X } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { Constants } from "@/integrations/supabase/types";
-import { useTranslation } from "react-i18next";
 
 const units = Constants.public.Enums.ingredient_unit;
 
 export interface IngredientForm {
-  display_name: string;
+  name: string;
   quantity: string;
   unit: string;
   sort_order: number;
@@ -34,7 +33,7 @@ export interface ComponentForm {
 }
 
 export function emptyIngredient(order = 0): IngredientForm {
-  return { display_name: "", quantity: "", unit: "", sort_order: order };
+  return { name: "", quantity: "", unit: "", sort_order: order };
 }
 export function emptyStep(order = 0): StepForm {
   return { description: "", temp_c: "", duration_min: "", technical_notes: "", step_order: order, photo_url: "" };
@@ -62,8 +61,6 @@ interface Props {
 }
 
 export function ComponentEditor({ component, index, total, onChange, onDelete, onMoveUp, onMoveDown }: Props) {
-  const { t } = useTranslation();
-
   const updateIng = (i: number, field: keyof IngredientForm, value: string) => {
     const ingredients = [...component.ingredients];
     ingredients[i] = { ...ingredients[i], [field]: value };
@@ -91,7 +88,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
           <button type="button" onClick={onMoveDown} disabled={index === total - 1} className="text-muted-foreground hover:text-foreground disabled:opacity-20 p-0.5"><ChevronDown size={14} /></button>
         </div>
         <Input
-          placeholder={total === 1 ? t("componentEditor.mainComponentPlaceholder") : t("componentEditor.componentPlaceholder")}
+          placeholder={total === 1 ? "Componente principal (opcional)" : "Nombre del componente (ej: Pâte sablée)"}
           value={component.name}
           onChange={(e) => onChange({ ...component, name: e.target.value })}
           className="flex-1 font-medium"
@@ -106,7 +103,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
       {/* Ingredients */}
       <div>
         <div className="flex items-center gap-1.5 mb-2">
-          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{t("componentEditor.ingredients")}</h4>
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Ingredientes</h4>
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -115,19 +112,19 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
                 </button>
               </TooltipTrigger>
               <TooltipContent side="right" className="max-w-xs p-3">
-                <p className="text-xs font-semibold mb-1.5">{t("componentEditor.availableUnits")}</p>
+                <p className="text-xs font-semibold mb-1.5">Unidades disponibles</p>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-xs">
-                  <span><strong>g</strong> — {t("componentEditor.units.g")}</span>
-                  <span><strong>kg</strong> — {t("componentEditor.units.kg")}</span>
-                  <span><strong>ml</strong> — {t("componentEditor.units.ml")}</span>
-                  <span><strong>cl</strong> — {t("componentEditor.units.cl")}</span>
-                  <span><strong>dl</strong> — {t("componentEditor.units.dl")}</span>
-                  <span><strong>l</strong> — {t("componentEditor.units.l")}</span>
-                  <span><strong>pcs</strong> — {t("componentEditor.units.pcs")}</span>
-                  <span><strong>cc</strong> — {t("componentEditor.units.cc")}</span>
-                  <span><strong>cs</strong> — {t("componentEditor.units.cs")}</span>
-                  <span><strong>pincée</strong> — {t("componentEditor.units.pincée")}</span>
-                  <span className="col-span-2"><strong>QS</strong> — {t("componentEditor.units.QS")}</span>
+                  <span><strong>g</strong> — gramos</span>
+                  <span><strong>kg</strong> — kilogramos</span>
+                  <span><strong>ml</strong> — mililitros</span>
+                  <span><strong>cl</strong> — centilitros</span>
+                  <span><strong>dl</strong> — decilitros</span>
+                  <span><strong>l</strong> — litros</span>
+                  <span><strong>pcs</strong> — piezas</span>
+                  <span><strong>cc</strong> — cucharita café</span>
+                  <span><strong>cs</strong> — cuchara sopera</span>
+                  <span><strong>pincée</strong> — pizca</span>
+                  <span className="col-span-2"><strong>QS</strong> — cantidad suficiente</span>
                 </div>
               </TooltipContent>
             </Tooltip>
@@ -136,10 +133,10 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
         <div className="space-y-2">
           {component.ingredients.map((ing, i) => (
             <div key={i} className="flex gap-1.5 items-center">
-              <Input placeholder={t("componentEditor.ingredientName")} value={ing.display_name} onChange={(e) => updateIng(i, "display_name", e.target.value)} className="flex-1 text-sm h-9" />
-              <Input placeholder={t("componentEditor.qty")} value={ing.quantity} onChange={(e) => updateIng(i, "quantity", e.target.value)} className="w-[4.5rem] text-sm h-9" type="number" step="any" />
+              <Input placeholder="Nombre" value={ing.name} onChange={(e) => updateIng(i, "name", e.target.value)} className="flex-1 text-sm h-9" />
+              <Input placeholder="Cant." value={ing.quantity} onChange={(e) => updateIng(i, "quantity", e.target.value)} className="w-[4.5rem] text-sm h-9" type="number" step="any" />
               <Select value={ing.unit || "none"} onValueChange={(v) => updateIng(i, "unit", v === "none" ? "" : v)}>
-                <SelectTrigger className="w-[4.5rem] text-sm h-9"><SelectValue placeholder={t("componentEditor.unitPlaceholder")} /></SelectTrigger>
+                <SelectTrigger className="w-[4.5rem] text-sm h-9"><SelectValue placeholder="Ud." /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {units.map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}
@@ -156,19 +153,19 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
           ))}
         </div>
         <Button type="button" variant="outline" size="sm" onClick={() => onChange({ ...component, ingredients: [...component.ingredients, emptyIngredient(component.ingredients.length)] })} className="mt-2 h-8 text-xs">
-          <Plus size={13} className="mr-1" /> {t("componentEditor.addIngredient")}
+          <Plus size={13} className="mr-1" /> Ingrediente
         </Button>
       </div>
 
       {/* Steps */}
       <div>
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">{t("componentEditor.steps")}</h4>
+        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Pasos</h4>
         <div className="space-y-2">
           {component.steps.map((step, i) => (
             <div key={i} className="border border-border/40 rounded p-3 space-y-2 bg-background/50">
               <div className="flex items-start gap-2">
                 <span className="text-xs font-bold text-primary mt-2.5 min-w-[1.2rem] text-right">{i + 1}.</span>
-                <Textarea placeholder={t("componentEditor.stepPlaceholder")} value={step.description} onChange={(e) => updateStep(i, "description", e.target.value)} rows={2} className="flex-1 text-sm min-h-[2.5rem]" />
+                <Textarea placeholder="Descripción del paso..." value={step.description} onChange={(e) => updateStep(i, "description", e.target.value)} rows={2} className="flex-1 text-sm min-h-[2.5rem]" />
                 <div className="flex flex-col gap-0">
                   <button type="button" onClick={() => onChange({ ...component, steps: swap(component.steps, i, -1) })} disabled={i === 0} className="text-muted-foreground hover:text-foreground disabled:opacity-20"><ChevronUp size={11} /></button>
                   <button type="button" onClick={() => onChange({ ...component, steps: swap(component.steps, i, 1) })} disabled={i === component.steps.length - 1} className="text-muted-foreground hover:text-foreground disabled:opacity-20"><ChevronDown size={11} /></button>
@@ -179,8 +176,8 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
               </div>
               <div className="flex gap-2 ml-6">
                 <Input placeholder="°C" value={step.temp_c} onChange={(e) => updateStep(i, "temp_c", e.target.value)} className="w-16 text-sm h-8" type="number" />
-                <Input placeholder={t("componentEditor.minPlaceholder")} value={step.duration_min} onChange={(e) => updateStep(i, "duration_min", e.target.value)} className="w-16 text-sm h-8" type="number" />
-                <Input placeholder={t("componentEditor.technicalNotes")} value={step.technical_notes} onChange={(e) => updateStep(i, "technical_notes", e.target.value)} className="flex-1 text-sm h-8" />
+                <Input placeholder="Min" value={step.duration_min} onChange={(e) => updateStep(i, "duration_min", e.target.value)} className="w-16 text-sm h-8" type="number" />
+                <Input placeholder="Notas técnicas" value={step.technical_notes} onChange={(e) => updateStep(i, "technical_notes", e.target.value)} className="flex-1 text-sm h-8" />
               </div>
               {/* Step photo */}
               <div className="ml-6">
@@ -188,7 +185,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
                   <div className="relative inline-block">
                     <img
                       src={step.photo_file ? URL.createObjectURL(step.photo_file) : step.photo_url}
-                      alt=""
+                      alt="Foto del paso"
                       className="h-20 w-32 object-cover rounded-lg border border-border"
                     />
                     <button
@@ -202,7 +199,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
                 ) : (
                   <label className="inline-flex items-center gap-1 text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors py-1">
                     <ImagePlus size={13} />
-                    {t("componentEditor.addPhoto")}
+                    Añadir foto
                     <input
                       type="file"
                       accept="image/*"
@@ -220,7 +217,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
           ))}
         </div>
         <Button type="button" variant="outline" size="sm" onClick={() => onChange({ ...component, steps: [...component.steps, emptyStep(component.steps.length)] })} className="mt-2 h-8 text-xs">
-          <Plus size={13} className="mr-1" /> {t("componentEditor.addStep")}
+          <Plus size={13} className="mr-1" /> Paso
         </Button>
       </div>
     </div>

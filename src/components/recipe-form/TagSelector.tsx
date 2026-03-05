@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, Tag as TagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { useTags, useCreateTag, useSetRecipeTags, useRecipeTags } from "@/hooks/useTags";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 
 const TAG_COLORS = [
   "#E8784A", "#2B4C7E", "#4CAF50", "#9C27B0",
@@ -18,7 +18,6 @@ interface Props {
 }
 
 export function TagSelector({ recipeId, selectedTagIds, onTagsChange }: Props) {
-  const { t } = useTranslation();
   const { data: tags } = useTags();
   const createTag = useCreateTag();
   const [showCreate, setShowCreate] = useState(false);
@@ -40,9 +39,9 @@ export function TagSelector({ recipeId, selectedTagIds, onTagsChange }: Props) {
       onTagsChange([...selectedTagIds, tag.id]);
       setNewName("");
       setShowCreate(false);
-      toast.success(t("tagSelector.tagCreated"));
+      toast.success("Etiqueta creada");
     } catch {
-      toast.error(t("tagSelector.tagError"));
+      toast.error("Error al crear la etiqueta");
     }
   };
 
@@ -73,7 +72,7 @@ export function TagSelector({ recipeId, selectedTagIds, onTagsChange }: Props) {
           onClick={() => setShowCreate(true)}
           className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium text-muted-foreground border border-dashed border-border hover:border-primary hover:text-primary transition-colors"
         >
-          <Plus className="h-3 w-3" /> {t("tagSelector.new")}
+          <Plus className="h-3 w-3" /> Nueva
         </button>
       </div>
 
@@ -82,7 +81,7 @@ export function TagSelector({ recipeId, selectedTagIds, onTagsChange }: Props) {
           <Input
             value={newName}
             onChange={e => setNewName(e.target.value)}
-            placeholder={t("tagSelector.tagNamePlaceholder")}
+            placeholder="Nombre de etiqueta"
             className="flex-1 h-8 text-sm rounded-md"
             onKeyDown={e => e.key === "Enter" && (e.preventDefault(), handleCreate())}
           />
@@ -98,7 +97,7 @@ export function TagSelector({ recipeId, selectedTagIds, onTagsChange }: Props) {
             ))}
           </div>
           <Button type="button" size="sm" className="h-8 rounded-md text-xs" onClick={handleCreate} disabled={!newName.trim() || createTag.isPending}>
-            {t("tagSelector.create")}
+            Crear
           </Button>
           <Button type="button" variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setShowCreate(false)}>
             <X className="h-4 w-4" />

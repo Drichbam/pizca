@@ -1,13 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, ChevronDown, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
-import { CATEGORY_COLORS } from "@/types/recipe";
-import { useRecipeLabels } from "@/hooks/useRecipeLabels";
+import { CATEGORY_LABELS, CATEGORY_COLORS, DIFFICULTY_LABELS } from "@/types/recipe";
 import { RecipeIngredientsList } from "@/components/recipe/RecipeIngredientsList";
-import { RecipeShoppingList } from "@/components/recipe/RecipeShoppingList";
 import { RecipeStepsList } from "@/components/recipe/RecipeStepsList";
 import { RecipeNotesTab } from "@/components/recipe/RecipeNotesTab";
 import { RecipeInfoTab } from "@/components/recipe/RecipeInfoTab";
@@ -21,22 +19,13 @@ import { exportRecipe } from "@/lib/exportRecipe";
 import { exportRecipeToPdf } from "@/lib/exportRecipePdf";
 import { cn } from "@/lib/utils";
 import { Cake } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
-
-const DIFFICULTY_STARS: Record<string, number> = {
-  basico: 1, intermedio: 2, avanzado: 3, experto: 4,
-};
 
 export default function RecipeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation();
-  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const { data: recipe, isLoading } = useRecipeDetail(id);
   const deleteRecipe = useDeleteRecipe();
   const duplicateRecipe = useDuplicateRecipe();
-  const [shoppingListOpen, setShoppingListOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -51,31 +40,33 @@ export default function RecipeDetail() {
   if (!recipe) {
     return (
       <div className="animate-fade-in text-center py-12">
-        <p className="text-muted-foreground">{t("recipes.notFound")}</p>
+        <p className="text-muted-foreground">Receta no encontrada</p>
         <Button variant="outline" onClick={() => navigate("/mis-recetas")} className="mt-4 rounded-lg">
-          {t("recipes.backToList")}
+          Volver a mis recetas
         </Button>
       </div>
     );
   }
 
+  const totalTime = (recipe.prep_time_min || 0) + (recipe.bake_time_min || 0) + (recipe.rest_time_min || 0);
+
   const handleDelete = () => {
     deleteRecipe.mutate(recipe.id, {
       onSuccess: () => {
-        toast.success(t("recipes.deleted"));
+        toast.success("Receta eliminada");
         navigate("/mis-recetas");
       },
-      onError: () => toast.error(t("recipes.deleteError")),
+      onError: () => toast.error("Error al eliminar"),
     });
   };
 
   const handleDuplicate = () => {
     duplicateRecipe.mutate(recipe.id, {
       onSuccess: (newRecipe) => {
-        toast.success(t("recipes.duplicated"));
+        toast.success("Receta duplicada");
         navigate(`/receta/${newRecipe.id}`);
       },
-      onError: () => toast.error(t("recipes.duplicateError")),
+      onError: () => toast.error("Error al duplicar"),
     });
   };
 
@@ -87,7 +78,7 @@ export default function RecipeDetail() {
         className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        {t("recipeDetail.backTo")}
+        Mis Recetas
       </button>
 
       {/* Hero photo */}
@@ -112,35 +103,35 @@ export default function RecipeDetail() {
       {/* Chips */}
       <div className="flex flex-wrap gap-2">
         <span className={cn("text-xs font-medium px-2.5 py-1 rounded-full", CATEGORY_COLORS[recipe.category])}>
-          {getCategoryLabel(recipe.category)}
+          {CATEGORY_LABELS[recipe.category]}
         </span>
 
         {recipe.prep_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Clock className="h-3 w-3" /> {t("recipeDetail.prep")} {recipe.prep_time_min}′
+            <Clock className="h-3 w-3" /> Prep {recipe.prep_time_min}′
           </span>
         )}
         {recipe.bake_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Thermometer className="h-3 w-3" /> {t("recipeDetail.cooking")} {recipe.bake_time_min}′
+            <Thermometer className="h-3 w-3" /> Cocción {recipe.bake_time_min}′
           </span>
         )}
         {recipe.rest_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Clock className="h-3 w-3" /> {t("recipeDetail.rest")} {recipe.rest_time_min}′
+            <Clock className="h-3 w-3" /> Reposo {recipe.rest_time_min}′
           </span>
         )}
         {recipe.difficulty && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            {Array.from({ length: DIFFICULTY_STARS[recipe.difficulty] || 1 }).map((_, i) => (
+            {Array.from({ length: { basico: 1, intermedio: 2, avanzado: 3, experto: 4 }[recipe.difficulty] }).map((_, i) => (
               <Star key={i} className="h-3 w-3 fill-primary text-primary" />
             ))}
-            {getDifficultyLabel(recipe.difficulty)}
+            {DIFFICULTY_LABELS[recipe.difficulty]}
           </span>
         )}
         {recipe.servings && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Users className="h-3 w-3" /> {recipe.servings} {t("recipeDetail.servings")}
+            <Users className="h-3 w-3" /> {recipe.servings} porc.
           </span>
         )}
         {recipe.mold && (
@@ -155,9 +146,10 @@ export default function RecipeDetail() {
         )}
         {recipe.tested && (
           <span className="text-xs bg-success text-success-foreground px-2.5 py-1 rounded-full font-medium">
-            ✓ {t("recipeDetail.tested")}
+            ✓ Probada
           </span>
         )}
+        {/* Tags */}
         {(recipe.recipe_tags || []).map((rt: any) => (
           <span
             key={rt.id}
@@ -172,7 +164,7 @@ export default function RecipeDetail() {
       {/* Origin info */}
       {(recipe.origin_chef || recipe.origin_book || recipe.origin_url) && (
         <div className="bg-card rounded-xl p-4 shadow-card space-y-1.5">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("recipeDetail.origin")}</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Origen</p>
           {recipe.origin_chef && (
             <p className="text-sm flex items-center gap-2">
               <ChefHat className="h-4 w-4 text-primary" /> {recipe.origin_chef}
@@ -190,7 +182,7 @@ export default function RecipeDetail() {
               rel="noopener noreferrer"
               className="text-sm flex items-center gap-2 text-primary hover:underline"
             >
-              <Link className="h-4 w-4" /> {t("recipeDetail.sourceLink")}
+              <Link className="h-4 w-4" /> Ver fuente original
             </a>
           )}
         </div>
@@ -204,34 +196,18 @@ export default function RecipeDetail() {
       {/* Tabs */}
       <Tabs defaultValue="receta" className="w-full">
         <TabsList className="w-full grid grid-cols-5 bg-secondary rounded-lg h-10">
-          <TabsTrigger value="receta" className="rounded-md text-xs">{t("recipeDetail.tabRecipe")}</TabsTrigger>
-          <TabsTrigger value="ingredientes" className="rounded-md text-xs">{t("recipeDetail.tabIngredients")}</TabsTrigger>
-          <TabsTrigger value="pasos" className="rounded-md text-xs">{t("recipeDetail.tabSteps")}</TabsTrigger>
-          <TabsTrigger value="calculos" className="rounded-md text-xs">{t("recipeDetail.tabCalc")}</TabsTrigger>
-          <TabsTrigger value="mas" className="rounded-md text-xs">{t("recipeDetail.tabMore")}</TabsTrigger>
+          <TabsTrigger value="receta" className="rounded-md text-xs">Receta</TabsTrigger>
+          <TabsTrigger value="ingredientes" className="rounded-md text-xs">Ingredientes</TabsTrigger>
+          <TabsTrigger value="pasos" className="rounded-md text-xs">Pasos</TabsTrigger>
+          <TabsTrigger value="calculos" className="rounded-md text-xs">Cálculos</TabsTrigger>
+          <TabsTrigger value="mas" className="rounded-md text-xs">Más</TabsTrigger>
         </TabsList>
 
         <TabsContent value="receta" className="mt-4">
           <RecipeFullViewTab recipe={recipe} />
         </TabsContent>
-        <TabsContent value="ingredientes" className="mt-4 space-y-3">
-          <div className="flex justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-lg gap-1.5"
-              onClick={() => setShoppingListOpen(true)}
-            >
-              <ShoppingCart className="h-4 w-4" />
-              {t("shoppingList.generate")}
-            </Button>
-          </div>
+        <TabsContent value="ingredientes" className="mt-4">
           <RecipeIngredientsList components={recipe.recipe_components} />
-          <RecipeShoppingList
-            open={shoppingListOpen}
-            onClose={() => setShoppingListOpen(false)}
-            components={recipe.recipe_components}
-          />
         </TabsContent>
         <TabsContent value="pasos" className="mt-4">
           <RecipeStepsList components={recipe.recipe_components} />
@@ -240,13 +216,13 @@ export default function RecipeDetail() {
           <div className="space-y-8">
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Ruler className="h-4 w-4 text-primary" /> {t("recipeDetail.moldsSection")}
+                <Ruler className="h-4 w-4 text-primary" /> Moldes y escalado
               </h3>
               <RecipeMoldsTab recipe={recipe} />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-primary" /> {t("recipeDetail.costsSection")}
+                <Calculator className="h-4 w-4 text-primary" /> Costes
               </h3>
               <RecipeCostsTab recipe={recipe} />
             </div>
@@ -263,27 +239,27 @@ export default function RecipeDetail() {
       {/* Action buttons */}
       <div className="flex gap-2 pt-2 pb-4">
         <Button variant="outline" className="rounded-lg flex-1" onClick={() => navigate(`/editar/${recipe.id}`)}>
-          <Pencil className="h-4 w-4 mr-1.5" /> {t("recipeDetail.edit")}
+          <Pencil className="h-4 w-4 mr-1.5" /> Editar
         </Button>
         <Button variant="outline" className="rounded-lg flex-1" onClick={handleDuplicate} disabled={duplicateRecipe.isPending}>
-          <Copy className="h-4 w-4 mr-1.5" /> {t("recipeDetail.duplicate")}
+          <Copy className="h-4 w-4 mr-1.5" /> Duplicar
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="rounded-lg">
-              <Download className="h-4 w-4 mr-1.5" /> {t("recipeDetail.export")} <ChevronDown className="h-3 w-3 ml-1" />
+              <Download className="h-4 w-4 mr-1.5" /> Exportar <ChevronDown className="h-3 w-3 ml-1" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={async () => {
-              const toastId = toast.loading(t("recipeDetail.generatingPdf"));
+              const t = toast.loading("Generando PDF…");
               try { await exportRecipeToPdf(recipe); }
-              finally { toast.dismiss(toastId); }
+              finally { toast.dismiss(t); }
             }}>
-              <FileText className="h-4 w-4 mr-2" /> {t("recipeDetail.exportPdf")}
+              <FileText className="h-4 w-4 mr-2" /> PDF
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success(t("recipes.exportedSuccess")); }}>
-              <Download className="h-4 w-4 mr-2" /> {t("recipeDetail.exportJson")}
+            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success("Receta exportada"); }}>
+              <Download className="h-4 w-4 mr-2" /> JSON
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -295,15 +271,15 @@ export default function RecipeDetail() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t("recipeDetail.deleteTitle")}</AlertDialogTitle>
+              <AlertDialogTitle>¿Eliminar receta?</AlertDialogTitle>
               <AlertDialogDescription>
-                {t("recipeDetail.deleteDescription", { title: recipe.title })}
+                Esta acción no se puede deshacer. Se eliminará "{recipe.title}" y todos sus componentes.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="rounded-lg">{t("common.cancel")}</AlertDialogCancel>
+              <AlertDialogCancel className="rounded-lg">Cancelar</AlertDialogCancel>
               <AlertDialogAction onClick={handleDelete} className="rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                {t("recipeDetail.confirmDelete")}
+                Eliminar
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

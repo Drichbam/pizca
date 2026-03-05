@@ -1,26 +1,22 @@
+import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
 import type { RecipeWithComponents } from "@/types/recipe";
-import { useTranslation } from "react-i18next";
-import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 
 interface Props {
   recipe: RecipeWithComponents;
 }
 
 export function RecipeFullViewTab({ recipe }: Props) {
-  const { t } = useTranslation();
-  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
-
   const components = [...(recipe.recipe_components || [])].sort((a, b) => a.sort_order - b.sort_order);
   const notes = [...(recipe.recipe_notes || [])].sort((a, b) => a.sort_order - b.sort_order);
 
   const meta: string[] = [];
-  if (recipe.servings) meta.push(t("recipeDetail.servingsFull", { count: recipe.servings }));
-  if (recipe.prep_time_min) meta.push(`${t("recipeDetail.prep")} ${recipe.prep_time_min}′`);
-  if (recipe.bake_time_min) meta.push(`${t("recipeDetail.cooking")} ${recipe.bake_time_min}′`);
-  if (recipe.rest_time_min) meta.push(`${t("recipeDetail.rest")} ${recipe.rest_time_min}′`);
-  if (recipe.difficulty) meta.push(getDifficultyLabel(recipe.difficulty));
+  if (recipe.servings) meta.push(`${recipe.servings} porciones`);
+  if (recipe.prep_time_min) meta.push(`Prep ${recipe.prep_time_min}′`);
+  if (recipe.bake_time_min) meta.push(`Cocción ${recipe.bake_time_min}′`);
+  if (recipe.rest_time_min) meta.push(`Reposo ${recipe.rest_time_min}′`);
+  if (recipe.difficulty) meta.push(DIFFICULTY_LABELS[recipe.difficulty]);
   if (recipe.temperature) meta.push(`${recipe.temperature}°C`);
-  if (recipe.mold) meta.push(t("recipeDetail.moldBadge", { value: recipe.mold }));
+  if (recipe.mold) meta.push(`Molde: ${recipe.mold}`);
 
   return (
     <div className="space-y-6 text-sm leading-relaxed">
@@ -28,11 +24,11 @@ export function RecipeFullViewTab({ recipe }: Props) {
       {meta.length > 0 && (
         <div className="flex flex-wrap gap-2">
           <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-secondary text-secondary-foreground">
-            {getCategoryLabel(recipe.category)}
+            {CATEGORY_LABELS[recipe.category]}
           </span>
           {recipe.tested && (
             <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-success text-success-foreground">
-              ✓ {t("recipeDetail.tested")}
+              ✓ Probada
             </span>
           )}
           {meta.map((m, i) => (
@@ -46,11 +42,11 @@ export function RecipeFullViewTab({ recipe }: Props) {
       {/* Origin */}
       {(recipe.origin_chef || recipe.origin_book || recipe.origin_url) && (
         <div className="bg-muted/50 border-l-2 border-muted-foreground/20 px-3 py-2 text-muted-foreground text-xs space-y-0.5">
-          {recipe.origin_chef && <p>{t("recipeDetail.chef")}: {recipe.origin_chef}</p>}
-          {recipe.origin_book && <p>{t("recipeDetail.book")}: {recipe.origin_book}</p>}
+          {recipe.origin_chef && <p>Chef: {recipe.origin_chef}</p>}
+          {recipe.origin_book && <p>Libro: {recipe.origin_book}</p>}
           {recipe.origin_url && (
             <a href={recipe.origin_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-              {t("recipeDetail.sourceLink")}
+              Ver fuente original
             </a>
           )}
         </div>
@@ -76,7 +72,7 @@ export function RecipeFullViewTab({ recipe }: Props) {
                         {ing.quantity != null ? ing.quantity : ""}
                       </td>
                       <td className="py-1 pr-3 w-10 text-muted-foreground">{ing.unit || ""}</td>
-                      <td className="py-1">{ing.display_name}</td>
+                      <td className="py-1">{ing.name}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -108,7 +104,7 @@ export function RecipeFullViewTab({ recipe }: Props) {
       {/* Notes */}
       {notes.length > 0 && (
         <section className="space-y-2">
-          <h3 className="text-base font-semibold border-b border-border pb-1">{t("notesTab.chefTips")}</h3>
+          <h3 className="text-base font-semibold border-b border-border pb-1">Notas</h3>
           <ul className="list-disc list-outside pl-5 space-y-1 text-sm">
             {notes.map((n) => (
               <li key={n.id}>{n.content}</li>

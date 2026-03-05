@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "home": "Home",
+    "recipes": "Recipes",
+    "prices": "Ingredients",
+    "profile": "Profile"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "loading": "Loading..."
+  },
+  "recipes": {
+    "title": "My Recipes",
+    "create": "New",
+    "import": "Import",
+    "export": "Export",
+    "empty": "You have no recipes yet",
+    "noResults": "No results",
+    "count_one": "{{count}} recipe",
+    "count_other": "{{count}} recipes",
+    "searchPlaceholder": "Search recipes...",
+    "all": "All",
+    "createFirst": "Create recipe",
+    "emptyHint": "Create your first recipe or import from a JSON file!",
+    "noResultsHint": "Try changing filters or search terms."
+  },
+  "recipeDetail": {
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "notes": "Notes",
+    "info": "Info",
+    "molds": "Molds",
+    "costs": "Costs",
+    "fullView": "Full view",
+    "shoppingList": "Shopping list"
+  },
+  "categories": {
+    "tartes": "Tarts",
+    "entremets": "Entremets",
+    "biscuits": "Biscuits",
+    "gâteaux": "Cakes",
+    "pâtes-de-base": "Base doughs",
+    "crèmes-de-base": "Base creams",
+    "mousses": "Mousses",
+    "glaces-sorbets": "Ice creams & Sorbets",
+    "viennoiserie": "Viennoiserie",
+    "confiserie": "Confectionery",
+    "autre": "Other"
+  },
+  "difficulty": {
+    "basico": "Basic",
+    "intermedio": "Intermediate",
+    "avanzado": "Advanced",
+    "experto": "Expert"
+  },
+  "units": {
+    "g": "g",
+    "kg": "kg",
+    "ml": "ml",
+    "cl": "cl",
+    "dl": "dl",
+    "l": "l",
+    "pcs": "pcs",
+    "QS": "QS",
+    "cc": "tsp",
+    "cs": "tbsp",
+    "pincée": "pinch"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading...",
+    "close": "Close",
+    "add": "Add",
+    "search": "Search"
+  },
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening"
+  },
+  "import": {
+    "title": "Import Recipes",
+    "selectFiles": "Select files",
+    "dropzone": "Drag JSON files here or click to select",
+    "importing": "Importing...",
+    "success": "Recipes imported successfully",
+    "error": "Error importing"
+  },
+  "prices": {
+    "title": "My Ingredients",
+    "addPrice": "Add price",
+    "noIngredient": "No price",
+    "loading": "Loading prices..."
+  },
+  "shoppingList": {
+    "title": "Shopping list",
+    "empty": "No ingredients",
+    "also": "also:",
+    "close": "Close"
+  },
+  "profile": {
+    "title": "Profile",
+    "language": "Language",
+    "logout": "Log out"
+  }
+}

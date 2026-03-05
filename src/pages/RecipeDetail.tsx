@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, Clock, Thermometer, Users, ChefHat, BookOpen, Link, Pencil, Copy, Trash2, Star, Download, Ruler, Calculator, FileText, ChevronDown, ShoppingCart } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
 import { CATEGORY_LABELS, CATEGORY_COLORS, DIFFICULTY_LABELS } from "@/types/recipe";
 import { RecipeIngredientsList } from "@/components/recipe/RecipeIngredientsList";
+import { RecipeShoppingList } from "@/components/recipe/RecipeShoppingList";
 import { RecipeStepsList } from "@/components/recipe/RecipeStepsList";
 import { RecipeNotesTab } from "@/components/recipe/RecipeNotesTab";
 import { RecipeInfoTab } from "@/components/recipe/RecipeInfoTab";
@@ -26,6 +28,7 @@ export default function RecipeDetail() {
   const { data: recipe, isLoading } = useRecipeDetail(id);
   const deleteRecipe = useDeleteRecipe();
   const duplicateRecipe = useDuplicateRecipe();
+  const [shoppingListOpen, setShoppingListOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -207,7 +210,22 @@ export default function RecipeDetail() {
           <RecipeFullViewTab recipe={recipe} />
         </TabsContent>
         <TabsContent value="ingredientes" className="mt-4">
-          <RecipeIngredientsList components={recipe.recipe_components} />
+          <div className="space-y-4">
+            <RecipeIngredientsList components={recipe.recipe_components} />
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full rounded-lg"
+              onClick={() => setShoppingListOpen(true)}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" /> Lista de la compra
+            </Button>
+          </div>
+          <RecipeShoppingList
+            open={shoppingListOpen}
+            onClose={() => setShoppingListOpen(false)}
+            components={recipe.recipe_components}
+          />
         </TabsContent>
         <TabsContent value="pasos" className="mt-4">
           <RecipeStepsList components={recipe.recipe_components} />

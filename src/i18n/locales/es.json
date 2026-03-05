@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "recipes": "Recetas",
+    "prices": "Ingredientes",
+    "profile": "Perfil"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Crear cuenta",
+    "email": "Email",
+    "password": "Contraseña",
+    "loading": "Cargando..."
+  },
+  "recipes": {
+    "title": "Mis Recetas",
+    "create": "Nueva",
+    "import": "Importar",
+    "export": "Exportar",
+    "empty": "Aún no tienes recetas",
+    "noResults": "Sin resultados",
+    "count_one": "{{count}} receta",
+    "count_other": "{{count}} recetas",
+    "searchPlaceholder": "Buscar receta...",
+    "all": "Todas",
+    "createFirst": "Crear receta",
+    "emptyHint": "¡Crea tu primera receta o importa desde un archivo JSON!",
+    "noResultsHint": "Prueba cambiando los filtros o la búsqueda."
+  },
+  "recipeDetail": {
+    "ingredients": "Ingredientes",
+    "steps": "Pasos",
+    "notes": "Notas",
+    "info": "Info",
+    "molds": "Moldes",
+    "costs": "Costes",
+    "fullView": "Vista completa",
+    "shoppingList": "Lista de la compra"
+  },
+  "categories": {
+    "tartes": "Tartes",
+    "entremets": "Entremets",
+    "biscuits": "Biscuits",
+    "gâteaux": "Gâteaux",
+    "pâtes-de-base": "Pâtes de base",
+    "crèmes-de-base": "Crèmes de base",
+    "mousses": "Mousses",
+    "glaces-sorbets": "Glaces & Sorbets",
+    "viennoiserie": "Viennoiserie",
+    "confiserie": "Confiserie",
+    "autre": "Autre"
+  },
+  "difficulty": {
+    "basico": "Básico",
+    "intermedio": "Intermedio",
+    "avanzado": "Avanzado",
+    "experto": "Experto"
+  },
+  "units": {
+    "g": "g",
+    "kg": "kg",
+    "ml": "ml",
+    "cl": "cl",
+    "dl": "dl",
+    "l": "l",
+    "pcs": "pcs",
+    "QS": "QS",
+    "cc": "cc",
+    "cs": "cs",
+    "pincée": "pincée"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "duplicate": "Duplicar",
+    "confirm": "Confirmar",
+    "error": "Error",
+    "success": "Éxito",
+    "loading": "Cargando...",
+    "close": "Cerrar",
+    "add": "Añadir",
+    "search": "Buscar"
+  },
+  "greeting": {
+    "morning": "Buenos días",
+    "afternoon": "Buenas tardes",
+    "evening": "Buenas noches"
+  },
+  "import": {
+    "title": "Importar Recetas",
+    "selectFiles": "Seleccionar archivos",
+    "dropzone": "Arrastra archivos JSON aquí o haz clic para seleccionar",
+    "importing": "Importando...",
+    "success": "Recetas importadas correctamente",
+    "error": "Error al importar"
+  },
+  "prices": {
+    "title": "Mis Ingredientes",
+    "addPrice": "Añadir precio",
+    "noIngredient": "Sin precio",
+    "loading": "Cargando precios..."
+  },
+  "shoppingList": {
+    "title": "Lista de la compra",
+    "empty": "Sin ingredientes",
+    "also": "también:",
+    "close": "Cerrar"
+  },
+  "profile": {
+    "title": "Perfil",
+    "language": "Idioma",
+    "logout": "Cerrar sesión"
+  }
+}

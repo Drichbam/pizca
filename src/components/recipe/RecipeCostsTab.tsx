@@ -48,7 +48,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
       let compAllPriced = true;
 
       const items = ingredients.map((ing) => {
-        const key = ing.name.toLowerCase().trim();
+        const key = ing.display_name.toLowerCase().trim();
         const price = priceMap.get(key);
         let cost: number | null = null;
 
@@ -127,7 +127,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
                 <tbody>
                   {items.map(({ ingredient, cost }) => (
                     <tr key={ingredient.id} className="border-b border-border/50 last:border-0">
-                      <td className="py-1.5 text-foreground">{ingredient.name}</td>
+                      <td className="py-1.5 text-foreground">{ingredient.display_name}</td>
                       <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {ingredient.quantity != null ? `${ingredient.quantity} ${ingredient.unit || ""}` : "QS"}
                       </td>
@@ -139,7 +139,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
                             variant="ghost"
                             size="sm"
                             className="h-6 px-2 text-xs text-muted-foreground hover:text-primary"
-                            onClick={() => onAddPrice?.(ingredient.name)}
+                            onClick={() => onAddPrice?.(ingredient.display_name)}
                           >
                             <HelpCircle className="h-3 w-3 mr-1" />?
                           </Button>

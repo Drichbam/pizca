@@ -611,7 +611,7 @@ export default function ImportarRecetas() {
 
           const ingredients = comp.ingredientes.map((ing, j) => ({
             component_id: newComp.id,
-            name: ing.ingrediente,
+            display_name: ing.ingrediente,
             quantity: ing.cantidad ?? null,
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,

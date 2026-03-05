@@ -9,7 +9,7 @@ import { Constants } from "@/integrations/supabase/types";
 const units = Constants.public.Enums.ingredient_unit;
 
 export interface IngredientForm {
-  name: string;
+  display_name: string;
   quantity: string;
   unit: string;
   sort_order: number;
@@ -33,7 +33,7 @@ export interface ComponentForm {
 }
 
 export function emptyIngredient(order = 0): IngredientForm {
-  return { name: "", quantity: "", unit: "", sort_order: order };
+  return { display_name: "", quantity: "", unit: "", sort_order: order };
 }
 export function emptyStep(order = 0): StepForm {
   return { description: "", temp_c: "", duration_min: "", technical_notes: "", step_order: order, photo_url: "" };
@@ -133,7 +133,7 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
         <div className="space-y-2">
           {component.ingredients.map((ing, i) => (
             <div key={i} className="flex gap-1.5 items-center">
-              <Input placeholder="Nombre" value={ing.name} onChange={(e) => updateIng(i, "name", e.target.value)} className="flex-1 text-sm h-9" />
+              <Input placeholder="Nombre" value={ing.display_name} onChange={(e) => updateIng(i, "display_name", e.target.value)} className="flex-1 text-sm h-9" />
               <Input placeholder="Cant." value={ing.quantity} onChange={(e) => updateIng(i, "quantity", e.target.value)} className="w-[4.5rem] text-sm h-9" type="number" step="any" />
               <Select value={ing.unit || "none"} onValueChange={(v) => updateIng(i, "unit", v === "none" ? "" : v)}>
                 <SelectTrigger className="w-[4.5rem] text-sm h-9"><SelectValue placeholder="Ud." /></SelectTrigger>

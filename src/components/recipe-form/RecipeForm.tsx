@@ -81,7 +81,7 @@ function recipeToForm(r: RecipeWithComponents): FormData {
       .map(c => ({
         name: c.name, sort_order: c.sort_order,
         ingredients: (c.recipe_ingredients || []).sort((a, b) => a.sort_order - b.sort_order).map(i => ({
-          name: i.name, quantity: i.quantity ? String(i.quantity) : "", unit: i.unit || "", sort_order: i.sort_order,
+          display_name: i.display_name, quantity: i.quantity ? String(i.quantity) : "", unit: i.unit || "", sort_order: i.sort_order,
         })),
         steps: (c.recipe_steps || []).sort((a, b) => a.step_order - b.step_order).map(s => ({
           description: s.description, temp_c: s.temp_c ? String(s.temp_c) : "",
@@ -175,7 +175,7 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
     e.preventDefault();
     if (!user) return;
     if (!data.title.trim()) { toast.error("El título es obligatorio"); return; }
-    if (!data.components.some(c => c.ingredients.some(i => i.name.trim()))) {
+    if (!data.components.some(c => c.ingredients.some(i => i.display_name.trim()))) {
       toast.error("Añade al menos un ingrediente"); return;
     }
     setLoading(true);
@@ -226,9 +226,9 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
           .insert({ recipe_id: finalId, name: comp.name, sort_order: comp.sort_order }).select().single();
         if (ce || !nc) throw ce;
 
-        const ings = comp.ingredients.filter(i => i.name.trim());
+        const ings = comp.ingredients.filter(i => i.display_name.trim());
         if (ings.length) await supabase.from("recipe_ingredients").insert(
-          ings.map((ig, i) => ({ component_id: nc.id, name: ig.name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
+          ings.map((ig, i) => ({ component_id: nc.id, display_name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
         );
         const stps = comp.steps.filter(s => s.description.trim());
         if (stps.length) {

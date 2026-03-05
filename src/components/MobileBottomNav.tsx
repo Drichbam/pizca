@@ -1,15 +1,18 @@
 import { Home, BookOpen, Euro, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { to: "/", label: "Inicio", icon: Home },
-  { to: "/mis-recetas", label: "Recetas", icon: BookOpen },
-  { to: "/mis-precios", label: "Ingredientes", icon: Euro },
-  { to: "/perfil", label: "Perfil", icon: User },
-];
-
 export function MobileBottomNav() {
+  const { t } = useTranslation();
+
+  const navItems = [
+    { to: "/", label: t("nav.home"), icon: Home },
+    { to: "/mis-recetas", label: t("nav.recipes"), icon: BookOpen },
+    { to: "/mis-precios", label: t("nav.prices"), icon: Euro },
+    { to: "/perfil", label: t("nav.profile"), icon: User },
+  ];
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card border-t border-border shadow-elevated">
       <div className="flex items-center justify-around h-16 px-2">

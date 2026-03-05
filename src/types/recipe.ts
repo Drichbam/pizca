@@ -1,6 +1,7 @@
 import { Database } from "@/integrations/supabase/types";
 
 export type Recipe = Database["public"]["Tables"]["recipes"]["Row"];
+export type Ingredient = Database["public"]["Tables"]["ingredients"]["Row"];
 export type RecipeInsert = Database["public"]["Tables"]["recipes"]["Insert"];
 export type RecipeComponent = Database["public"]["Tables"]["recipe_components"]["Row"];
 export type RecipeIngredient = Database["public"]["Tables"]["recipe_ingredients"]["Row"];

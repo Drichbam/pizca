@@ -72,7 +72,7 @@ export function RecipeFullViewTab({ recipe }: Props) {
                         {ing.quantity != null ? ing.quantity : ""}
                       </td>
                       <td className="py-1 pr-3 w-10 text-muted-foreground">{ing.unit || ""}</td>
-                      <td className="py-1">{ing.name}</td>
+                      <td className="py-1">{ing.display_name}</td>
                     </tr>
                   ))}
                 </tbody>

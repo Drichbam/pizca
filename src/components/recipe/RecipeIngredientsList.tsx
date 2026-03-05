@@ -67,7 +67,7 @@ function IngredientRow({ ingredient }: { ingredient: RecipeIngredient }) {
         {ingredient.quantity != null ? ingredient.quantity : ""}
         {ingredient.unit ? ` ${ingredient.unit}` : ""}
       </span>
-      <span className="text-foreground">{ingredient.name}</span>
+      <span className="text-foreground">{ingredient.display_name}</span>
     </li>
   );
 }

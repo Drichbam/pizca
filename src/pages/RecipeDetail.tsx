@@ -4,7 +4,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRecipeDetail, useDeleteRecipe, useDuplicateRecipe } from "@/hooks/useRecipes";
-import { CATEGORY_LABELS, CATEGORY_COLORS, DIFFICULTY_LABELS } from "@/types/recipe";
+import { CATEGORY_COLORS } from "@/types/recipe";
+import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 import { RecipeIngredientsList } from "@/components/recipe/RecipeIngredientsList";
 import { RecipeStepsList } from "@/components/recipe/RecipeStepsList";
 import { RecipeNotesTab } from "@/components/recipe/RecipeNotesTab";
@@ -19,10 +20,17 @@ import { exportRecipe } from "@/lib/exportRecipe";
 import { exportRecipeToPdf } from "@/lib/exportRecipePdf";
 import { cn } from "@/lib/utils";
 import { Cake } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
+const DIFFICULTY_STARS: Record<string, number> = {
+  basico: 1, intermedio: 2, avanzado: 3, experto: 4,
+};
 
 export default function RecipeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const { data: recipe, isLoading } = useRecipeDetail(id);
   const deleteRecipe = useDeleteRecipe();
   const duplicateRecipe = useDuplicateRecipe();
@@ -40,33 +48,31 @@ export default function RecipeDetail() {
   if (!recipe) {
     return (
       <div className="animate-fade-in text-center py-12">
-        <p className="text-muted-foreground">Receta no encontrada</p>
+        <p className="text-muted-foreground">{t("recipes.notFound")}</p>
         <Button variant="outline" onClick={() => navigate("/mis-recetas")} className="mt-4 rounded-lg">
-          Volver a mis recetas
+          {t("recipes.backToList")}
         </Button>
       </div>
     );
   }
 
-  const totalTime = (recipe.prep_time_min || 0) + (recipe.bake_time_min || 0) + (recipe.rest_time_min || 0);
-
   const handleDelete = () => {
     deleteRecipe.mutate(recipe.id, {
       onSuccess: () => {
-        toast.success("Receta eliminada");
+        toast.success(t("recipes.deleted"));
         navigate("/mis-recetas");
       },
-      onError: () => toast.error("Error al eliminar"),
+      onError: () => toast.error(t("recipes.deleteError")),
     });
   };
 
   const handleDuplicate = () => {
     duplicateRecipe.mutate(recipe.id, {
       onSuccess: (newRecipe) => {
-        toast.success("Receta duplicada");
+        toast.success(t("recipes.duplicated"));
         navigate(`/receta/${newRecipe.id}`);
       },
-      onError: () => toast.error("Error al duplicar"),
+      onError: () => toast.error(t("recipes.duplicateError")),
     });
   };
 
@@ -78,7 +84,7 @@ export default function RecipeDetail() {
         className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        Mis Recetas
+        {t("recipeDetail.backTo")}
       </button>
 
       {/* Hero photo */}
@@ -103,35 +109,35 @@ export default function RecipeDetail() {
       {/* Chips */}
       <div className="flex flex-wrap gap-2">
         <span className={cn("text-xs font-medium px-2.5 py-1 rounded-full", CATEGORY_COLORS[recipe.category])}>
-          {CATEGORY_LABELS[recipe.category]}
+          {getCategoryLabel(recipe.category)}
         </span>
 
         {recipe.prep_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Clock className="h-3 w-3" /> Prep {recipe.prep_time_min}′
+            <Clock className="h-3 w-3" /> {t("recipeDetail.prep")} {recipe.prep_time_min}′
           </span>
         )}
         {recipe.bake_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Thermometer className="h-3 w-3" /> Cocción {recipe.bake_time_min}′
+            <Thermometer className="h-3 w-3" /> {t("recipeDetail.cooking")} {recipe.bake_time_min}′
           </span>
         )}
         {recipe.rest_time_min && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Clock className="h-3 w-3" /> Reposo {recipe.rest_time_min}′
+            <Clock className="h-3 w-3" /> {t("recipeDetail.rest")} {recipe.rest_time_min}′
           </span>
         )}
         {recipe.difficulty && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            {Array.from({ length: { basico: 1, intermedio: 2, avanzado: 3, experto: 4 }[recipe.difficulty] }).map((_, i) => (
+            {Array.from({ length: DIFFICULTY_STARS[recipe.difficulty] || 1 }).map((_, i) => (
               <Star key={i} className="h-3 w-3 fill-primary text-primary" />
             ))}
-            {DIFFICULTY_LABELS[recipe.difficulty]}
+            {getDifficultyLabel(recipe.difficulty)}
           </span>
         )}
         {recipe.servings && (
           <span className="text-xs bg-secondary text-secondary-foreground px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Users className="h-3 w-3" /> {recipe.servings} porc.
+            <Users className="h-3 w-3" /> {recipe.servings} {t("recipeDetail.servings")}
           </span>
         )}
         {recipe.mold && (
@@ -146,10 +152,9 @@ export default function RecipeDetail() {
         )}
         {recipe.tested && (
           <span className="text-xs bg-success text-success-foreground px-2.5 py-1 rounded-full font-medium">
-            ✓ Probada
+            ✓ {t("recipeDetail.tested")}
           </span>
         )}
-        {/* Tags */}
         {(recipe.recipe_tags || []).map((rt: any) => (
           <span
             key={rt.id}
@@ -164,7 +169,7 @@ export default function RecipeDetail() {
       {/* Origin info */}
       {(recipe.origin_chef || recipe.origin_book || recipe.origin_url) && (
         <div className="bg-card rounded-xl p-4 shadow-card space-y-1.5">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Origen</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("recipeDetail.origin")}</p>
           {recipe.origin_chef && (
             <p className="text-sm flex items-center gap-2">
               <ChefHat className="h-4 w-4 text-primary" /> {recipe.origin_chef}
@@ -182,7 +187,7 @@ export default function RecipeDetail() {
               rel="noopener noreferrer"
               className="text-sm flex items-center gap-2 text-primary hover:underline"
             >
-              <Link className="h-4 w-4" /> Ver fuente original
+              <Link className="h-4 w-4" /> {t("recipeDetail.sourceLink")}
             </a>
           )}
         </div>
@@ -196,11 +201,11 @@ export default function RecipeDetail() {
       {/* Tabs */}
       <Tabs defaultValue="receta" className="w-full">
         <TabsList className="w-full grid grid-cols-5 bg-secondary rounded-lg h-10">
-          <TabsTrigger value="receta" className="rounded-md text-xs">Receta</TabsTrigger>
-          <TabsTrigger value="ingredientes" className="rounded-md text-xs">Ingredientes</TabsTrigger>
-          <TabsTrigger value="pasos" className="rounded-md text-xs">Pasos</TabsTrigger>
-          <TabsTrigger value="calculos" className="rounded-md text-xs">Cálculos</TabsTrigger>
-          <TabsTrigger value="mas" className="rounded-md text-xs">Más</TabsTrigger>
+          <TabsTrigger value="receta" className="rounded-md text-xs">{t("recipeDetail.tabRecipe")}</TabsTrigger>
+          <TabsTrigger value="ingredientes" className="rounded-md text-xs">{t("recipeDetail.tabIngredients")}</TabsTrigger>
+          <TabsTrigger value="pasos" className="rounded-md text-xs">{t("recipeDetail.tabSteps")}</TabsTrigger>
+          <TabsTrigger value="calculos" className="rounded-md text-xs">{t("recipeDetail.tabCalc")}</TabsTrigger>
+          <TabsTrigger value="mas" className="rounded-md text-xs">{t("recipeDetail.tabMore")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="receta" className="mt-4">
@@ -216,13 +221,13 @@ export default function RecipeDetail() {
           <div className="space-y-8">
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Ruler className="h-4 w-4 text-primary" /> Moldes y escalado
+                <Ruler className="h-4 w-4 text-primary" /> {t("recipeDetail.moldsSection")}
               </h3>
               <RecipeMoldsTab recipe={recipe} />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-primary" /> Costes
+                <Calculator className="h-4 w-4 text-primary" /> {t("recipeDetail.costsSection")}
               </h3>
               <RecipeCostsTab recipe={recipe} />
             </div>
@@ -239,27 +244,27 @@ export default function RecipeDetail() {
       {/* Action buttons */}
       <div className="flex gap-2 pt-2 pb-4">
         <Button variant="outline" className="rounded-lg flex-1" onClick={() => navigate(`/editar/${recipe.id}`)}>
-          <Pencil className="h-4 w-4 mr-1.5" /> Editar
+          <Pencil className="h-4 w-4 mr-1.5" /> {t("recipeDetail.edit")}
         </Button>
         <Button variant="outline" className="rounded-lg flex-1" onClick={handleDuplicate} disabled={duplicateRecipe.isPending}>
-          <Copy className="h-4 w-4 mr-1.5" /> Duplicar
+          <Copy className="h-4 w-4 mr-1.5" /> {t("recipeDetail.duplicate")}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="rounded-lg">
-              <Download className="h-4 w-4 mr-1.5" /> Exportar <ChevronDown className="h-3 w-3 ml-1" />
+              <Download className="h-4 w-4 mr-1.5" /> {t("recipeDetail.export")} <ChevronDown className="h-3 w-3 ml-1" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={async () => {
-              const t = toast.loading("Generando PDF…");
+              const toastId = toast.loading(t("recipeDetail.generatingPdf"));
               try { await exportRecipeToPdf(recipe); }
-              finally { toast.dismiss(t); }
+              finally { toast.dismiss(toastId); }
             }}>
-              <FileText className="h-4 w-4 mr-2" /> PDF
+              <FileText className="h-4 w-4 mr-2" /> {t("recipeDetail.exportPdf")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success("Receta exportada"); }}>
-              <Download className="h-4 w-4 mr-2" /> JSON
+            <DropdownMenuItem onClick={() => { exportRecipe(recipe); toast.success(t("recipes.exportedSuccess")); }}>
+              <Download className="h-4 w-4 mr-2" /> {t("recipeDetail.exportJson")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -271,15 +276,15 @@ export default function RecipeDetail() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>¿Eliminar receta?</AlertDialogTitle>
+              <AlertDialogTitle>{t("recipeDetail.deleteTitle")}</AlertDialogTitle>
               <AlertDialogDescription>
-                Esta acción no se puede deshacer. Se eliminará "{recipe.title}" y todos sus componentes.
+                {t("recipeDetail.deleteDescription", { title: recipe.title })}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="rounded-lg">Cancelar</AlertDialogCancel>
+              <AlertDialogCancel className="rounded-lg">{t("common.cancel")}</AlertDialogCancel>
               <AlertDialogAction onClick={handleDelete} className="rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                Eliminar
+                {t("recipeDetail.confirmDelete")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:prices.openfoodfacts.org)"
+      "WebFetch(domain:prices.openfoodfacts.org)",
+      "Bash(npm install i18next react-i18next --save)"
     ]
   }
 }

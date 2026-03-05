@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Pencil, Trash2, X, Check, Tag, AlertTriangle } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Check, Tag } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useTranslation } from "react-i18next";
 
 const COLORS = [
   "#E8784A", "#2B4C7E", "#6B8F4A", "#9B59B6",
@@ -30,6 +31,7 @@ interface TagRow {
 }
 
 export function TagsManager() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -68,10 +70,10 @@ export function TagsManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tags"] });
-      toast.success(editingId ? "Etiqueta actualizada" : "Etiqueta creada");
+      toast.success(editingId ? t("tags.updated") : t("tags.created"));
       resetForm();
     },
-    onError: () => toast.error("Error al guardar la etiqueta"),
+    onError: () => toast.error(t("tags.saveError")),
   });
 
   const deleteMutation = useMutation({
@@ -81,9 +83,9 @@ export function TagsManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tags"] });
-      toast.success("Etiqueta eliminada");
+      toast.success(t("tags.deletedSuccess"));
     },
-    onError: () => toast.error("Error al eliminar"),
+    onError: () => toast.error(t("tags.deleteError")),
   });
 
   const resetForm = () => {
@@ -103,10 +105,10 @@ export function TagsManager() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Mis Etiquetas</p>
+        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("tags.title")}</p>
         {!showForm && (
           <Button size="sm" className="rounded-lg" onClick={() => setShowForm(true)}>
-            <Plus className="h-4 w-4 mr-1" /> Añadir
+            <Plus className="h-4 w-4 mr-1" /> {t("tags.add")}
           </Button>
         )}
       </div>
@@ -118,7 +120,7 @@ export function TagsManager() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="rounded-lg"
-              placeholder="Nombre de la etiqueta"
+              placeholder={t("tags.namePlaceholder")}
             />
           </div>
           <div className="flex flex-wrap gap-2">
@@ -138,7 +140,7 @@ export function TagsManager() {
           </div>
           <div className="flex gap-2 justify-end">
             <Button variant="outline" size="sm" className="rounded-lg" onClick={resetForm}>
-              <X className="h-4 w-4 mr-1" /> Cancelar
+              <X className="h-4 w-4 mr-1" /> {t("common.cancel")}
             </Button>
             <Button
               size="sm"
@@ -146,7 +148,7 @@ export function TagsManager() {
               disabled={!name.trim() || upsert.isPending}
               onClick={() => upsert.mutate()}
             >
-              <Check className="h-4 w-4 mr-1" /> {editingId ? "Guardar" : "Crear"}
+              <Check className="h-4 w-4 mr-1" /> {editingId ? t("tags.save") : t("tags.create")}
             </Button>
           </div>
         </div>
@@ -161,9 +163,7 @@ export function TagsManager() {
       ) : !tags?.length ? (
         <div className="text-center py-8">
           <Tag className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-50" />
-          <p className="text-sm text-muted-foreground">
-            No tienes etiquetas aún. ¡Crea una para organizar tus recetas!
-          </p>
+          <p className="text-sm text-muted-foreground">{t("tags.empty")}</p>
         </div>
       ) : (
         <div className="flex flex-wrap gap-2">
@@ -201,13 +201,13 @@ export function TagsManager() {
       <AlertDialog open={!!deletingTag} onOpenChange={(open) => !open && setDeletingTag(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Eliminar etiqueta?</AlertDialogTitle>
+            <AlertDialogTitle>{t("tags.deleteTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
-              La etiqueta <strong>"{deletingTag?.name}"</strong> se eliminará de todas las recetas que la tengan asignada. Esta acción no se puede deshacer.
+              {t("tags.deleteDesc", { name: deletingTag?.name ?? "" })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={() => {
@@ -215,7 +215,7 @@ export function TagsManager() {
                 setDeletingTag(null);
               }}
             >
-              Eliminar
+              {t("common.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

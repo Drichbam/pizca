@@ -1,4 +1,5 @@
 import { useOpenPricesProduct } from "@/hooks/useOpenPrices";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   barcode: string;
@@ -19,6 +20,7 @@ function formatCurrency(amount: number, currency: string): string {
 }
 
 export function CommunityPricesPanel({ barcode }: Props) {
+  const { t } = useTranslation();
   const { data, isLoading, isError } = useOpenPricesProduct(barcode);
 
   if (isLoading) {
@@ -33,16 +35,16 @@ export function CommunityPricesPanel({ barcode }: Props) {
     <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/50 rounded-lg p-3 space-y-1.5">
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold text-blue-800 dark:text-blue-200">
-          {data.isSpainOnly ? "Precios en España" : "Precios globales"}
+          {data.isSpainOnly ? t("community.spainPrices") : t("community.globalPrices")}
         </p>
         <span className="text-xs text-blue-600 dark:text-blue-400">
-          {data.count} contribución{data.count !== 1 ? "es" : ""}
+          {t("community.contributions", { count: data.count })}
         </span>
       </div>
       <div className="grid grid-cols-2 gap-x-4 text-xs text-blue-700 dark:text-blue-300">
-        <span>Precio medio:</span>
+        <span>{t("community.avgPrice")}</span>
         <span className="font-medium tabular-nums">{formatCurrency(data.avgPrice, data.currency)}</span>
-        <span>Más reciente:</span>
+        <span>{t("community.latestPrice")}</span>
         <span className="font-medium tabular-nums">
           {formatCurrency(data.latestPrice, data.currency)}
           <span className="font-normal text-blue-500 dark:text-blue-400 ml-1">({formatDate(data.latestDate)})</span>
@@ -55,7 +57,7 @@ export function CommunityPricesPanel({ barcode }: Props) {
           rel="noopener noreferrer"
           className="underline hover:no-underline"
         >
-          Datos de Open Prices (ODbL)
+          {t("community.attribution")}
         </a>
       </p>
     </div>

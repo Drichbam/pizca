@@ -1,15 +1,17 @@
 import type { RecipePlanning } from "@/types/recipe";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   planning: RecipePlanning[];
 }
 
 export function RecipePlanningTimeline({ planning }: Props) {
+  const { t } = useTranslation();
   const sorted = [...planning].sort((a, b) => a.sort_order - b.sort_order);
 
   return (
     <div className="bg-card rounded-xl p-4 shadow-card">
-      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">📅 Planificación</p>
+      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">📅 {t("planning.title")}</p>
       <div className="relative">
         {/* Vertical line */}
         <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-border" />

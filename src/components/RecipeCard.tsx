@@ -1,15 +1,26 @@
 import { Cake, Clock, Star, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import type { Recipe, RecipeCategory, RecipeDifficulty } from "@/types/recipe";
-import { CATEGORY_LABELS, CATEGORY_COLORS, DIFFICULTY_LABELS } from "@/types/recipe";
+import type { Recipe } from "@/types/recipe";
+import { CATEGORY_COLORS } from "@/types/recipe";
+import { useTranslation } from "react-i18next";
+import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 
 interface RecipeCardProps {
   recipe: Recipe;
 }
 
+const DIFFICULTY_STARS: Record<string, number> = {
+  basico: 1,
+  intermedio: 2,
+  avanzado: 3,
+  experto: 4,
+};
+
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const totalTime = (recipe.prep_time_min || 0) + (recipe.bake_time_min || 0);
 
   return (
@@ -33,7 +44,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         {recipe.tested && (
           <div className="absolute top-2 right-2 bg-success text-success-foreground text-xs font-medium px-2 py-0.5 rounded-full flex items-center gap-1">
             <CheckCircle2 className="h-3 w-3" />
-            Probada
+            {t("recipeDetail.tested")}
           </div>
         )}
       </div>
@@ -46,7 +57,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
 
         <div className="flex items-center gap-2 flex-wrap">
           <span className={cn("text-xs font-medium px-2 py-0.5 rounded-full", CATEGORY_COLORS[recipe.category])}>
-            {CATEGORY_LABELS[recipe.category]}
+            {getCategoryLabel(recipe.category)}
           </span>
         </div>
 
@@ -59,10 +70,10 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           )}
           {recipe.difficulty && (
             <span className="flex items-center gap-1">
-              {Array.from({ length: { basico: 1, intermedio: 2, avanzado: 3, experto: 4 }[recipe.difficulty] }).map((_, i) => (
+              {Array.from({ length: DIFFICULTY_STARS[recipe.difficulty] || 1 }).map((_, i) => (
                 <Star key={i} className="h-3 w-3 fill-primary text-primary" />
               ))}
-              <span className="ml-0.5">{DIFFICULTY_LABELS[recipe.difficulty]}</span>
+              <span className="ml-0.5">{getDifficultyLabel(recipe.difficulty)}</span>
             </span>
           )}
         </div>

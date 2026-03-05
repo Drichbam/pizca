@@ -1,5 +1,6 @@
 import { Database } from "@/integrations/supabase/types";
 
+export type Ingredient = Database["public"]["Tables"]["ingredients"]["Row"];
 export type Recipe = Database["public"]["Tables"]["recipes"]["Row"];
 export type RecipeInsert = Database["public"]["Tables"]["recipes"]["Insert"];
 export type RecipeComponent = Database["public"]["Tables"]["recipe_components"]["Row"];
@@ -16,19 +17,6 @@ export type RecipeCategory = Database["public"]["Enums"]["recipe_category"];
 export type RecipeDifficulty = Database["public"]["Enums"]["recipe_difficulty"];
 export type IngredientUnit = Database["public"]["Enums"]["ingredient_unit"];
 
-export const CATEGORY_LABELS: Record<RecipeCategory, string> = {
-  tartes: "Tartes",
-  entremets: "Entremets",
-  biscuits: "Biscuits",
-  "gâteaux": "Gâteaux",
-  "pâtes-de-base": "Pâtes de base",
-  "crèmes-de-base": "Crèmes de base",
-  mousses: "Mousses",
-  "glaces-sorbets": "Glaces & Sorbets",
-  viennoiserie: "Viennoiserie",
-  confiserie: "Confiserie",
-  autre: "Autre",
-};
 
 export const CATEGORY_COLORS: Record<RecipeCategory, string> = {
   tartes: "bg-amber-100 text-amber-800",
@@ -44,12 +32,6 @@ export const CATEGORY_COLORS: Record<RecipeCategory, string> = {
   autre: "bg-muted text-muted-foreground",
 };
 
-export const DIFFICULTY_LABELS: Record<RecipeDifficulty, string> = {
-  basico: "Básico",
-  intermedio: "Intermedio",
-  avanzado: "Avanzado",
-  experto: "Experto",
-};
 
 export const DIFFICULTY_ICONS: Record<RecipeDifficulty, number> = {
   basico: 1,

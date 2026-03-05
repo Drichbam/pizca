@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Constants } from "@/integrations/supabase/types";
+import { useTranslation } from "react-i18next";
+import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,7 +26,7 @@ import { ComponentEditor, ComponentForm, emptyComponent } from "./ComponentEdito
 import { compressImage } from "@/lib/imageUtils";
 import { TagSelector } from "./TagSelector";
 import { useRecipeTags, useSetRecipeTags } from "@/hooks/useTags";
-import type { RecipeWithComponents } from "@/types/recipe";
+import type { RecipeWithComponents, RecipeCategory, RecipeDifficulty } from "@/types/recipe";
 
 const categories = Constants.public.Enums.recipe_category;
 const difficulties = Constants.public.Enums.recipe_difficulty;
@@ -81,7 +83,7 @@ function recipeToForm(r: RecipeWithComponents): FormData {
       .map(c => ({
         name: c.name, sort_order: c.sort_order,
         ingredients: (c.recipe_ingredients || []).sort((a, b) => a.sort_order - b.sort_order).map(i => ({
-          name: i.name, quantity: i.quantity ? String(i.quantity) : "", unit: i.unit || "", sort_order: i.sort_order,
+          display_name: i.display_name, quantity: i.quantity ? String(i.quantity) : "", unit: i.unit || "", sort_order: i.sort_order,
         })),
         steps: (c.recipe_steps || []).sort((a, b) => a.step_order - b.step_order).map(s => ({
           description: s.description, temp_c: s.temp_c ? String(s.temp_c) : "",
@@ -134,6 +136,8 @@ interface Props {
 }
 
 export function RecipeForm({ recipeId, initialRecipe }: Props) {
+  const { t } = useTranslation();
+  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const [data, setData] = useState<FormData>(initialRecipe ? recipeToForm(initialRecipe) : defaultForm());
   const [open, setOpen] = useState(new Set(["basic", "components"]));
   const [loading, setLoading] = useState(false);
@@ -174,9 +178,9 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    if (!data.title.trim()) { toast.error("El título es obligatorio"); return; }
-    if (!data.components.some(c => c.ingredients.some(i => i.name.trim()))) {
-      toast.error("Añade al menos un ingrediente"); return;
+    if (!data.title.trim()) { toast.error(t("recipeForm.titleRequired")); return; }
+    if (!data.components.some(c => c.ingredients.some(i => i.display_name.trim()))) {
+      toast.error(t("recipeForm.noIngredientsError")); return;
     }
     setLoading(true);
     try {
@@ -226,9 +230,9 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
           .insert({ recipe_id: finalId, name: comp.name, sort_order: comp.sort_order }).select().single();
         if (ce || !nc) throw ce;
 
-        const ings = comp.ingredients.filter(i => i.name.trim());
+        const ings = comp.ingredients.filter(i => i.display_name.trim());
         if (ings.length) await supabase.from("recipe_ingredients").insert(
-          ings.map((ig, i) => ({ component_id: nc.id, name: ig.name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
+          ings.map((ig, i) => ({ component_id: nc.id, display_name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
         );
         const stps = comp.steps.filter(s => s.description.trim());
         if (stps.length) {
@@ -278,10 +282,10 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
 
       queryClient.invalidateQueries({ queryKey: ["recipes"] });
       queryClient.invalidateQueries({ queryKey: ["recipe", finalId] });
-      toast.success(recipeId ? "¡Receta actualizada!" : "¡Receta guardada!");
+      toast.success(recipeId ? t("recipeForm.updated") : t("recipeForm.saved"));
       navigate(`/receta/${finalId}`);
     } catch (err: any) {
-      toast.error(err.message || "Error al guardar");
+      toast.error(err.message || t("recipeForm.saveError"));
     } finally {
       setLoading(false);
     }
@@ -290,58 +294,58 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
   return (
     <form onSubmit={handleSubmit} className="animate-fade-in space-y-3 max-w-3xl pb-8">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">{recipeId ? "Editar Receta" : "Crear Receta"}</h1>
-        <p className="text-muted-foreground mt-1 text-sm">{recipeId ? "Modifica los datos de tu receta" : "Añade una nueva receta a tu colección"}</p>
+        <h1 className="text-2xl font-bold text-foreground">{recipeId ? t("recipeForm.editTitle") : t("recipeForm.createTitle")}</h1>
+        <p className="text-muted-foreground mt-1 text-sm">{recipeId ? t("recipeForm.editSubtitle") : t("recipeForm.createSubtitle")}</p>
       </div>
 
       {/* ── 1. Info básica ────────────────────────────── */}
       <Collapsible open={open.has("basic")} onOpenChange={() => toggle("basic")}>
-        <SH icon={FileText} label="Info básica" open={open.has("basic")} />
+        <SH icon={FileText} label={t("recipeForm.basicInfo")} open={open.has("basic")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-4 px-1">
           <div className="space-y-1.5">
-            <Label>Título *</Label>
-            <Input value={data.title} onChange={e => set("title", e.target.value)} placeholder="Ej: Tarta de chocolate" required className="rounded-sm" />
+            <Label>{t("recipeForm.titleLabel")}</Label>
+            <Input value={data.title} onChange={e => set("title", e.target.value)} placeholder={t("recipeForm.titlePlaceholder")} required className="rounded-sm" />
           </div>
           <div className="space-y-1.5">
-            <Label>Descripción</Label>
-            <Textarea value={data.description} onChange={e => set("description", e.target.value)} placeholder="Breve descripción..." rows={2} className="rounded-sm" />
+            <Label>{t("recipeForm.description")}</Label>
+            <Textarea value={data.description} onChange={e => set("description", e.target.value)} placeholder={t("recipeForm.descriptionPlaceholder")} rows={2} className="rounded-sm" />
           </div>
 
           {/* Photo */}
           <div className="space-y-1.5">
-            <Label>Foto</Label>
+            <Label>{t("recipeForm.photo")}</Label>
             <input ref={fileRef} type="file" accept="image/*" onChange={handlePhotoSelect} className="hidden" />
             {photoPreview ? (
               <div className="relative">
-                <img src={photoPreview} alt="Preview" className="w-full h-40 object-cover rounded-lg" />
+                <img src={photoPreview} alt="" className="w-full h-40 object-cover rounded-lg" />
                 <Button type="button" variant="secondary" size="sm" className="absolute bottom-2 right-2 rounded-lg" onClick={() => fileRef.current?.click()}>
-                  <Camera size={14} className="mr-1" /> Cambiar
+                  <Camera size={14} className="mr-1" /> {t("recipeForm.changePhoto")}
                 </Button>
               </div>
             ) : (
               <button type="button" onClick={() => fileRef.current?.click()} className="w-full h-32 border-2 border-dashed border-border rounded-lg flex flex-col items-center justify-center gap-2 text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors">
                 <ImagePlus size={24} />
-                <span className="text-xs">Añadir foto</span>
+                <span className="text-xs">{t("recipeForm.addPhoto")}</span>
               </button>
             )}
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Categoría</Label>
+              <Label>{t("recipeForm.category")}</Label>
               <Select value={data.category} onValueChange={v => set("category", v)}>
                 <SelectTrigger className="rounded-sm"><SelectValue /></SelectTrigger>
-                <SelectContent>{categories.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                <SelectContent>{categories.map(c => <SelectItem key={c} value={c}>{getCategoryLabel(c as RecipeCategory)}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Subcategoría</Label>
-              <Input value={data.subcategory} onChange={e => set("subcategory", e.target.value)} placeholder="Opcional" className="rounded-sm" />
+              <Label>{t("recipeForm.subcategory")}</Label>
+              <Input value={data.subcategory} onChange={e => set("subcategory", e.target.value)} placeholder={t("recipeForm.optional")} className="rounded-sm" />
             </div>
           </div>
           {/* Tags */}
           <div className="space-y-1.5">
-            <Label>Etiquetas</Label>
+            <Label>{t("recipeForm.tags")}</Label>
             <TagSelector
               recipeId={recipeId}
               selectedTagIds={data.tag_ids}
@@ -350,22 +354,22 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="space-y-1.5">
-              <Label>Dificultad</Label>
+              <Label>{t("recipeForm.difficulty")}</Label>
               <Select value={data.difficulty} onValueChange={v => set("difficulty", v)}>
                 <SelectTrigger className="rounded-sm"><SelectValue /></SelectTrigger>
-                <SelectContent>{difficulties.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
+                <SelectContent>{difficulties.map(d => <SelectItem key={d} value={d}>{getDifficultyLabel(d as RecipeDifficulty)}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Porciones</Label>
+              <Label>{t("recipeForm.servings")}</Label>
               <Input value={data.servings} onChange={e => set("servings", e.target.value)} type="number" placeholder="—" className="rounded-sm" />
             </div>
             <div className="space-y-1.5">
-              <Label>Molde</Label>
-              <Input value={data.mold} onChange={e => set("mold", e.target.value)} placeholder="Ej: Círculo 24cm" className="rounded-sm" />
+              <Label>{t("recipeForm.mold")}</Label>
+              <Input value={data.mold} onChange={e => set("mold", e.target.value)} placeholder={t("recipeForm.moldPlaceholder")} className="rounded-sm" />
             </div>
             <div className="space-y-1.5">
-              <Label>Temperatura °C</Label>
+              <Label>{t("recipeForm.temperature")}</Label>
               <Input value={data.temperature} onChange={e => set("temperature", e.target.value)} type="number" placeholder="—" className="rounded-sm" />
             </div>
           </div>
@@ -374,30 +378,30 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
 
       {/* ── 2. Tiempos ───────────────────────────────── */}
       <Collapsible open={open.has("times")} onOpenChange={() => toggle("times")}>
-        <SH icon={Clock} label="Tiempos" open={open.has("times")} />
+        <SH icon={Clock} label={t("recipeForm.times")} open={open.has("times")} />
         <CollapsibleContent className="pt-4 pb-2 px-1">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="space-y-1.5"><Label>Preparación (min)</Label><Input value={data.prep_time_min} onChange={e => set("prep_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
-            <div className="space-y-1.5"><Label>Cocción (min)</Label><Input value={data.bake_time_min} onChange={e => set("bake_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
-            <div className="space-y-1.5"><Label>Reposo (min)</Label><Input value={data.rest_time_min} onChange={e => set("rest_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
-            <div className="space-y-1.5"><Label>Total activo (min)</Label><Input value={data.total_active_min} onChange={e => set("total_active_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
+            <div className="space-y-1.5"><Label>{t("recipeForm.prepMin")}</Label><Input value={data.prep_time_min} onChange={e => set("prep_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
+            <div className="space-y-1.5"><Label>{t("recipeForm.bakingMin")}</Label><Input value={data.bake_time_min} onChange={e => set("bake_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
+            <div className="space-y-1.5"><Label>{t("recipeForm.restMin")}</Label><Input value={data.rest_time_min} onChange={e => set("rest_time_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
+            <div className="space-y-1.5"><Label>{t("recipeForm.totalActiveMin")}</Label><Input value={data.total_active_min} onChange={e => set("total_active_min", e.target.value)} type="number" placeholder="—" className="rounded-sm" /></div>
           </div>
         </CollapsibleContent>
       </Collapsible>
 
       {/* ── 3. Origen ────────────────────────────────── */}
       <Collapsible open={open.has("origin")} onOpenChange={() => toggle("origin")}>
-        <SH icon={MapPin} label="Origen" open={open.has("origin")} />
+        <SH icon={MapPin} label={t("recipeForm.origin")} open={open.has("origin")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-3 px-1">
-          <div className="space-y-1.5"><Label>Chef / Autor</Label><Input value={data.origin_chef} onChange={e => set("origin_chef", e.target.value)} placeholder="Nombre del chef" className="rounded-sm" /></div>
-          <div className="space-y-1.5"><Label>URL fuente</Label><Input value={data.origin_url} onChange={e => set("origin_url", e.target.value)} placeholder="https://..." type="url" className="rounded-sm" /></div>
-          <div className="space-y-1.5"><Label>Libro / Referencia</Label><Input value={data.origin_book} onChange={e => set("origin_book", e.target.value)} placeholder="Nombre del libro" className="rounded-sm" /></div>
+          <div className="space-y-1.5"><Label>{t("recipeForm.chefAuthor")}</Label><Input value={data.origin_chef} onChange={e => set("origin_chef", e.target.value)} placeholder={t("recipeForm.chefPlaceholder")} className="rounded-sm" /></div>
+          <div className="space-y-1.5"><Label>{t("recipeForm.sourceUrl")}</Label><Input value={data.origin_url} onChange={e => set("origin_url", e.target.value)} placeholder="https://..." type="url" className="rounded-sm" /></div>
+          <div className="space-y-1.5"><Label>{t("recipeForm.book")}</Label><Input value={data.origin_book} onChange={e => set("origin_book", e.target.value)} placeholder={t("recipeForm.bookPlaceholder")} className="rounded-sm" /></div>
         </CollapsibleContent>
       </Collapsible>
 
       {/* ── 4. Componentes ───────────────────────────── */}
       <Collapsible open={open.has("components")} onOpenChange={() => toggle("components")}>
-        <SH icon={Layers} label="Componentes *" open={open.has("components")} />
+        <SH icon={Layers} label={t("recipeForm.components")} open={open.has("components")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-3 px-1">
           {data.components.map((comp, i) => (
             <ComponentEditor
@@ -412,39 +416,39 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
             />
           ))}
           <Button type="button" variant="outline" onClick={() => set("components", [...data.components, emptyComponent(data.components.length)])} className="w-full rounded-lg">
-            <Plus size={16} className="mr-1" /> Añadir componente
+            <Plus size={16} className="mr-1" /> {t("recipeForm.addComponent")}
           </Button>
         </CollapsibleContent>
       </Collapsible>
 
       {/* ── 5. Planning multi-día ────────────────────── */}
       <Collapsible open={open.has("planning")} onOpenChange={() => toggle("planning")}>
-        <SH icon={CalendarDays} label="Planning multi-día" open={open.has("planning")} />
+        <SH icon={CalendarDays} label={t("recipeForm.planningSection")} open={open.has("planning")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-3 px-1">
           <div className="flex items-center gap-3">
             <Switch checked={data.planning_enabled} onCheckedChange={v => set("planning_enabled", v)} />
-            <Label>Activar planificación por días</Label>
+            <Label>{t("recipeForm.activatePlanning")}</Label>
           </div>
           {data.planning_enabled && (
             <>
               {data.planning.map((day, di) => (
                 <div key={di} className="border border-border rounded-lg p-3 space-y-2">
                   <div className="flex items-center gap-2">
-                    <Input value={day.day_label} onChange={e => { const p = [...data.planning]; p[di] = { ...p[di], day_label: e.target.value }; set("planning", p); }} placeholder={`Día ${di + 1}`} className="flex-1 font-medium text-sm h-9" />
+                    <Input value={day.day_label} onChange={e => { const p = [...data.planning]; p[di] = { ...p[di], day_label: e.target.value }; set("planning", p); }} placeholder={t("recipeForm.dayPlaceholder", { count: di + 1 })} className="flex-1 font-medium text-sm h-9" />
                     <Button type="button" variant="ghost" size="icon" onClick={() => set("planning", data.planning.filter((_, i) => i !== di))} className="text-destructive h-8 w-8"><Trash2 size={14} /></Button>
                   </div>
                   {day.tasks.map((task, ti) => (
                     <div key={ti} className="flex items-center gap-1.5 ml-4">
                       <span className="text-xs text-muted-foreground">•</span>
-                      <Input value={task} onChange={e => { const p = [...data.planning]; const t = [...p[di].tasks]; t[ti] = e.target.value; p[di] = { ...p[di], tasks: t }; set("planning", p); }} placeholder="Tarea..." className="flex-1 text-sm h-8" />
+                      <Input value={task} onChange={e => { const p = [...data.planning]; const ts = [...p[di].tasks]; ts[ti] = e.target.value; p[di] = { ...p[di], tasks: ts }; set("planning", p); }} placeholder={t("recipeForm.taskPlaceholder")} className="flex-1 text-sm h-8" />
                       <button type="button" onClick={() => { const p = [...data.planning]; p[di] = { ...p[di], tasks: p[di].tasks.filter((_, i) => i !== ti) }; set("planning", p); }} className="text-destructive/60 hover:text-destructive p-1"><Trash2 size={12} /></button>
                     </div>
                   ))}
-                  <Button type="button" variant="ghost" size="sm" onClick={() => { const p = [...data.planning]; p[di] = { ...p[di], tasks: [...p[di].tasks, ""] }; set("planning", p); }} className="ml-4 h-7 text-xs"><Plus size={12} className="mr-1" /> Tarea</Button>
+                  <Button type="button" variant="ghost" size="sm" onClick={() => { const p = [...data.planning]; p[di] = { ...p[di], tasks: [...p[di].tasks, ""] }; set("planning", p); }} className="ml-4 h-7 text-xs"><Plus size={12} className="mr-1" /> {t("recipeForm.addTask")}</Button>
                 </div>
               ))}
               <Button type="button" variant="outline" size="sm" onClick={() => set("planning", [...data.planning, { day_label: "", tasks: [""], sort_order: data.planning.length }])} className="rounded-lg">
-                <Plus size={14} className="mr-1" /> Añadir día
+                <Plus size={14} className="mr-1" /> {t("recipeForm.addDay")}
               </Button>
             </>
           )}
@@ -453,65 +457,65 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
 
       {/* ── 6. Notas y Variantes ─────────────────────── */}
       <Collapsible open={open.has("notes")} onOpenChange={() => toggle("notes")}>
-        <SH icon={StickyNote} label="Notas y Variantes" open={open.has("notes")} />
+        <SH icon={StickyNote} label={t("recipeForm.notesSection")} open={open.has("notes")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-4 px-1">
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Tips / Notas</h4>
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">{t("recipeForm.tipsNotes")}</h4>
             {data.notes.map((note, i) => (
               <div key={i} className="flex items-start gap-1.5 mb-2">
-                <Textarea value={note.content} onChange={e => { const n = [...data.notes]; n[i] = { ...n[i], content: e.target.value }; set("notes", n); }} placeholder="Tip o nota..." rows={1} className="flex-1 text-sm min-h-[2rem]" />
+                <Textarea value={note.content} onChange={e => { const n = [...data.notes]; n[i] = { ...n[i], content: e.target.value }; set("notes", n); }} placeholder={t("recipeForm.notePlaceholder")} rows={1} className="flex-1 text-sm min-h-[2rem]" />
                 <button type="button" onClick={() => set("notes", data.notes.filter((_, idx) => idx !== i))} className="text-destructive/60 hover:text-destructive p-1 mt-1"><Trash2 size={13} /></button>
               </div>
             ))}
-            <Button type="button" variant="outline" size="sm" onClick={() => set("notes", [...data.notes, { content: "", sort_order: data.notes.length }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> Nota</Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => set("notes", [...data.notes, { content: "", sort_order: data.notes.length }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> {t("recipeForm.addNote")}</Button>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Variantes</h4>
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">{t("recipeForm.variantsSection")}</h4>
             {data.variants.map((v, i) => (
               <div key={i} className="flex items-start gap-1.5 mb-2">
-                <Input value={v.name} onChange={e => { const vs = [...data.variants]; vs[i] = { ...vs[i], name: e.target.value }; set("variants", vs); }} placeholder="Nombre" className="w-1/3 text-sm h-9" />
-                <Input value={v.description} onChange={e => { const vs = [...data.variants]; vs[i] = { ...vs[i], description: e.target.value }; set("variants", vs); }} placeholder="Descripción" className="flex-1 text-sm h-9" />
+                <Input value={v.name} onChange={e => { const vs = [...data.variants]; vs[i] = { ...vs[i], name: e.target.value }; set("variants", vs); }} placeholder={t("recipeForm.variantName")} className="w-1/3 text-sm h-9" />
+                <Input value={v.description} onChange={e => { const vs = [...data.variants]; vs[i] = { ...vs[i], description: e.target.value }; set("variants", vs); }} placeholder={t("recipeForm.variantDesc")} className="flex-1 text-sm h-9" />
                 <button type="button" onClick={() => set("variants", data.variants.filter((_, idx) => idx !== i))} className="text-destructive/60 hover:text-destructive p-1 mt-1"><Trash2 size={13} /></button>
               </div>
             ))}
-            <Button type="button" variant="outline" size="sm" onClick={() => set("variants", [...data.variants, { name: "", description: "" }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> Variante</Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => set("variants", [...data.variants, { name: "", description: "" }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> {t("recipeForm.addVariant")}</Button>
           </div>
         </CollapsibleContent>
       </Collapsible>
 
       {/* ── 7. Escala ────────────────────────────────── */}
       <Collapsible open={open.has("scale")} onOpenChange={() => toggle("scale")}>
-        <SH icon={Scale} label="Factores de escala" open={open.has("scale")} />
+        <SH icon={Scale} label={t("recipeForm.scaleFactors")} open={open.has("scale")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-3 px-1">
           {data.scale_factors.map((sf, i) => (
             <div key={i} className="flex items-center gap-2">
-              <Input value={sf.reference_mold} onChange={e => { const s = [...data.scale_factors]; s[i] = { ...s[i], reference_mold: e.target.value }; set("scale_factors", s); }} placeholder="Molde referencia" className="flex-1 text-sm h-9" />
+              <Input value={sf.reference_mold} onChange={e => { const s = [...data.scale_factors]; s[i] = { ...s[i], reference_mold: e.target.value }; set("scale_factors", s); }} placeholder={t("recipeForm.refMold")} className="flex-1 text-sm h-9" />
               <span className="text-muted-foreground text-xs">→</span>
-              <Input value={sf.target_mold} onChange={e => { const s = [...data.scale_factors]; s[i] = { ...s[i], target_mold: e.target.value }; set("scale_factors", s); }} placeholder="Molde destino" className="flex-1 text-sm h-9" />
+              <Input value={sf.target_mold} onChange={e => { const s = [...data.scale_factors]; s[i] = { ...s[i], target_mold: e.target.value }; set("scale_factors", s); }} placeholder={t("recipeForm.targetMold")} className="flex-1 text-sm h-9" />
               <Input value={sf.multiplier} onChange={e => { const s = [...data.scale_factors]; s[i] = { ...s[i], multiplier: e.target.value }; set("scale_factors", s); }} placeholder="×" className="w-16 text-sm h-9" type="number" step="any" />
               <button type="button" onClick={() => set("scale_factors", data.scale_factors.filter((_, idx) => idx !== i))} className="text-destructive/60 hover:text-destructive p-1"><Trash2 size={13} /></button>
             </div>
           ))}
-          <Button type="button" variant="outline" size="sm" onClick={() => set("scale_factors", [...data.scale_factors, { reference_mold: "", target_mold: "", multiplier: "1" }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> Factor</Button>
+          <Button type="button" variant="outline" size="sm" onClick={() => set("scale_factors", [...data.scale_factors, { reference_mold: "", target_mold: "", multiplier: "1" }])} className="h-8 text-xs"><Plus size={13} className="mr-1" /> {t("recipeForm.addFactor")}</Button>
         </CollapsibleContent>
       </Collapsible>
 
       {/* ── 8. Estado ────────────────────────────────── */}
       <Collapsible open={open.has("status")} onOpenChange={() => toggle("status")}>
-        <SH icon={FlaskConical} label="Estado" open={open.has("status")} />
+        <SH icon={FlaskConical} label={t("recipeForm.statusSection")} open={open.has("status")} />
         <CollapsibleContent className="pt-4 pb-2 space-y-4 px-1">
           <div className="flex items-center gap-3">
             <Switch checked={data.tested} onCheckedChange={v => set("tested", v)} />
-            <Label>Receta probada</Label>
+            <Label>{t("recipeForm.recipeTested")}</Label>
           </div>
           {data.tested && (
             <div className="space-y-3">
               <div className="space-y-1.5">
-                <Label>Notas de prueba</Label>
-                <Textarea value={data.test_notes} onChange={e => set("test_notes", e.target.value)} placeholder="¿Cómo salió? ¿Qué ajustarías?" rows={3} className="rounded-sm" />
+                <Label>{t("recipeForm.testNotes")}</Label>
+                <Textarea value={data.test_notes} onChange={e => set("test_notes", e.target.value)} placeholder={t("recipeForm.testNotesPlaceholder")} rows={3} className="rounded-sm" />
               </div>
               <div className="space-y-1.5">
-                <Label>Valoración</Label>
+                <Label>{t("recipeForm.rating")}</Label>
                 <StarRating value={data.rating} onChange={v => set("rating", v)} />
               </div>
             </div>
@@ -522,7 +526,7 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
       {/* ── Submit ────────────────────────────────────── */}
       <div className="pt-4">
         <Button type="submit" size="lg" className="w-full rounded-lg" disabled={loading}>
-          {loading ? "Guardando..." : recipeId ? "Actualizar receta" : "Guardar receta"}
+          {loading ? t("recipeForm.saving") : recipeId ? t("recipeForm.updateBtn") : t("recipeForm.saveBtn")}
         </Button>
       </div>
     </form>

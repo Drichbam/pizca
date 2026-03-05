@@ -2,9 +2,10 @@ import { pdf } from "@react-pdf/renderer";
 import { createElement } from "react";
 import { RecipePdfDocument } from "./RecipePdfDocument";
 import type { RecipeWithComponents } from "@/types/recipe";
+import i18n from "@/i18n";
 
 export async function exportRecipeToPdf(recipe: RecipeWithComponents): Promise<void> {
-  const blob = await pdf(createElement(RecipePdfDocument, { recipe }) as any).toBlob();
+  const blob = await pdf(createElement(RecipePdfDocument, { recipe, lang: i18n.language }) as any).toBlob();
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;

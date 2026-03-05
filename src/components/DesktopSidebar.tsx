@@ -1,15 +1,18 @@
 import { Home, BookOpen, Euro, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { to: "/", label: "Inicio", icon: Home },
-  { to: "/mis-recetas", label: "Mis Recetas", icon: BookOpen },
-  { to: "/mis-precios", label: "Mis Ingredientes", icon: Euro },
-  { to: "/perfil", label: "Perfil", icon: User },
-];
+import { useTranslation } from "react-i18next";
 
 export function DesktopSidebar() {
+  const { t } = useTranslation();
+
+  const navItems = [
+    { to: "/", label: t("nav.home"), icon: Home },
+    { to: "/mis-recetas", label: t("nav.recipes"), icon: BookOpen },
+    { to: "/mis-precios", label: t("nav.ingredients"), icon: Euro },
+    { to: "/perfil", label: t("nav.profile"), icon: User },
+  ];
+
   return (
     <aside className="hidden md:flex flex-col w-64 border-r border-border bg-card min-h-screen p-6">
       {/* Logo */}
@@ -17,7 +20,7 @@ export function DesktopSidebar() {
         <h1 className="text-2xl font-bold tracking-tight">
           <span className="text-primary">Pizca</span>
         </h1>
-        <p className="text-xs text-muted-foreground mt-1">Tu recetario dulce</p>
+        <p className="text-xs text-muted-foreground mt-1">{t("auth.tagline")}</p>
       </div>
 
       {/* Nav */}

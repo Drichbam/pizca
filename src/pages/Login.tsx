@@ -8,6 +8,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const [isRegister, setIsRegister] = useState(false);
@@ -16,6 +17,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   // Redirect if already logged in
   useEffect(() => {
@@ -33,14 +35,14 @@ export default function Login() {
           options: { emailRedirectTo: window.location.origin },
         });
         if (error) throw error;
-        toast.success("¡Cuenta creada! Ya puedes entrar.");
+        toast.success(t("auth.successCreated"));
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
       navigate("/");
     } catch (err: any) {
-      toast.error(err.message || "Error de autenticación");
+      toast.error(err.message || t("auth.errorAuth"));
     } finally {
       setLoading(false);
     }
@@ -50,7 +52,7 @@ export default function Login() {
     const { error } = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
-    if (error) toast.error("Error con Google");
+    if (error) toast.error(t("auth.errorGoogle"));
   };
 
   return (
@@ -58,17 +60,17 @@ export default function Login() {
       <div className="w-full max-w-md animate-fade-in">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary mb-2">Pizca</h1>
-          <p className="text-muted-foreground">Tu recetario de repostería</p>
+          <p className="text-muted-foreground">{t("auth.tagline")}</p>
         </div>
 
         <div className="bg-card rounded-xl p-8 shadow-card">
           <h2 className="text-xl font-semibold text-foreground mb-6">
-            {isRegister ? "Crear cuenta" : "Iniciar sesión"}
+            {isRegister ? t("auth.register") : t("auth.login")}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -81,7 +83,7 @@ export default function Login() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">{t("auth.password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -95,13 +97,13 @@ export default function Login() {
             </div>
 
             <Button type="submit" className="w-full rounded-lg" size="lg" disabled={loading}>
-              {loading ? "Cargando..." : isRegister ? "Registrarse" : "Entrar"}
+              {loading ? t("auth.loading") : isRegister ? t("auth.signUp") : t("auth.enter")}
             </Button>
           </form>
 
           <div className="flex items-center gap-3 my-6">
             <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground">o</span>
+            <span className="text-xs text-muted-foreground">{t("auth.or")}</span>
             <div className="flex-1 h-px bg-border" />
           </div>
 
@@ -112,13 +114,13 @@ export default function Login() {
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
             </svg>
-            Continuar con Google
+            {t("auth.continueGoogle")}
           </Button>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
-            {isRegister ? "¿Ya tienes cuenta?" : "¿No tienes cuenta?"}{" "}
+            {isRegister ? t("auth.alreadyHaveAccount") : t("auth.noAccount")}{" "}
             <button onClick={() => setIsRegister(!isRegister)} className="text-primary font-medium hover:underline">
-              {isRegister ? "Inicia sesión" : "Regístrate"}
+              {isRegister ? t("auth.signIn") : t("auth.signUpLink")}
             </button>
           </p>
         </div>

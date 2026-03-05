@@ -7,8 +7,27 @@ import {
   Image,
   StyleSheet,
 } from "@react-pdf/renderer";
-import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
 import type { RecipeWithComponents } from "@/types/recipe";
+
+const CATEGORY_LABELS: Record<string, Record<string, string>> = {
+  es: { "tartes": "Tartes", "entremets": "Entremets", "biscuits": "Biscuits", "gâteaux": "Gâteaux", "pâtes-de-base": "Pâtes de base", "crèmes-de-base": "Crèmes de base", "mousses": "Mousses", "glaces-sorbets": "Glaces & Sorbets", "viennoiserie": "Viennoiserie", "confiserie": "Confiserie", "autre": "Otro" },
+  fr: { "tartes": "Tartes", "entremets": "Entremets", "biscuits": "Biscuits", "gâteaux": "Gâteaux", "pâtes-de-base": "Pâtes de base", "crèmes-de-base": "Crèmes de base", "mousses": "Mousses", "glaces-sorbets": "Glaces & Sorbets", "viennoiserie": "Viennoiserie", "confiserie": "Confiserie", "autre": "Autre" },
+  en: { "tartes": "Tarts", "entremets": "Entremets", "biscuits": "Biscuits", "gâteaux": "Cakes", "pâtes-de-base": "Base doughs", "crèmes-de-base": "Base creams", "mousses": "Mousses", "glaces-sorbets": "Ice creams & Sorbets", "viennoiserie": "Viennoiserie", "confiserie": "Confectionery", "autre": "Other" },
+};
+const DIFFICULTY_LABELS: Record<string, Record<string, string>> = {
+  es: { "basico": "Básico", "intermedio": "Intermedio", "avanzado": "Avanzado", "experto": "Experto" },
+  fr: { "basico": "Basique", "intermedio": "Intermédiaire", "avanzado": "Avancé", "experto": "Expert" },
+  en: { "basico": "Basic", "intermedio": "Intermediate", "avanzado": "Advanced", "experto": "Expert" },
+};
+const PDF_LABELS: Record<string, {
+  tested: string; ingredients: string; preparation: string; notes: string;
+  servings: string; prep: string; bake: string; rest: string;
+  mold: string; chef: string; book: string; source: string; footer: string;
+}> = {
+  es: { tested: "✓ Probada", ingredients: "Ingredientes", preparation: "Preparación", notes: "Notas", servings: "porciones", prep: "Prep", bake: "Cocción", rest: "Reposo", mold: "Molde", chef: "Chef", book: "Libro", source: "Fuente", footer: "Generado con Pizca" },
+  fr: { tested: "✓ Testée", ingredients: "Ingrédients", preparation: "Préparation", notes: "Notes", servings: "portions", prep: "Prép.", bake: "Cuisson", rest: "Repos", mold: "Moule", chef: "Chef", book: "Livre", source: "Source", footer: "Généré avec Pizca" },
+  en: { tested: "✓ Tested", ingredients: "Ingredients", preparation: "Preparation", notes: "Notes", servings: "servings", prep: "Prep", bake: "Bake", rest: "Rest", mold: "Mold", chef: "Chef", book: "Book", source: "Source", footer: "Generated with Pizca" },
+};
 
 const ORANGE = "#E8784A";
 const BLUE = "#2B4C7E";
@@ -206,9 +225,14 @@ const styles = StyleSheet.create({
 
 interface Props {
   recipe: RecipeWithComponents;
+  lang?: string;
 }
 
-export function RecipePdfDocument({ recipe }: Props) {
+export function RecipePdfDocument({ recipe, lang = "es" }: Props) {
+  const l = lang in PDF_LABELS ? lang : "es";
+  const labels = PDF_LABELS[l];
+  const catLabels = CATEGORY_LABELS[l] || CATEGORY_LABELS["es"];
+  const diffLabels = DIFFICULTY_LABELS[l] || DIFFICULTY_LABELS["es"];
   const components = [...(recipe.recipe_components || [])].sort(
     (a, b) => a.sort_order - b.sort_order
   );
@@ -217,19 +241,19 @@ export function RecipePdfDocument({ recipe }: Props) {
   );
 
   const meta: string[] = [];
-  if (recipe.category) meta.push(CATEGORY_LABELS[recipe.category]);
-  if (recipe.servings) meta.push(`${recipe.servings} porciones`);
-  if (recipe.prep_time_min) meta.push(`Prep ${recipe.prep_time_min}′`);
-  if (recipe.bake_time_min) meta.push(`Cocción ${recipe.bake_time_min}′`);
-  if (recipe.rest_time_min) meta.push(`Reposo ${recipe.rest_time_min}′`);
-  if (recipe.difficulty) meta.push(DIFFICULTY_LABELS[recipe.difficulty]);
+  if (recipe.category) meta.push(catLabels[recipe.category] || recipe.category);
+  if (recipe.servings) meta.push(`${recipe.servings} ${labels.servings}`);
+  if (recipe.prep_time_min) meta.push(`${labels.prep} ${recipe.prep_time_min}′`);
+  if (recipe.bake_time_min) meta.push(`${labels.bake} ${recipe.bake_time_min}′`);
+  if (recipe.rest_time_min) meta.push(`${labels.rest} ${recipe.rest_time_min}′`);
+  if (recipe.difficulty) meta.push(diffLabels[recipe.difficulty] || recipe.difficulty);
   if (recipe.temperature) meta.push(`${recipe.temperature}°C`);
-  if (recipe.mold) meta.push(`Molde: ${recipe.mold}`);
+  if (recipe.mold) meta.push(`${labels.mold}: ${recipe.mold}`);
 
   const originParts: string[] = [];
-  if (recipe.origin_chef) originParts.push(`Chef: ${recipe.origin_chef}`);
-  if (recipe.origin_book) originParts.push(`Libro: ${recipe.origin_book}`);
-  if (recipe.origin_url) originParts.push(`Fuente: ${recipe.origin_url}`);
+  if (recipe.origin_chef) originParts.push(`${labels.chef}: ${recipe.origin_chef}`);
+  if (recipe.origin_book) originParts.push(`${labels.book}: ${recipe.origin_book}`);
+  if (recipe.origin_url) originParts.push(`${labels.source}: ${recipe.origin_url}`);
 
   const today = new Date().toLocaleDateString("es-ES", {
     year: "numeric",
@@ -259,7 +283,7 @@ export function RecipePdfDocument({ recipe }: Props) {
         {/* Metadata badges */}
         <View style={styles.metaRow}>
           {recipe.tested && (
-            <Text style={[styles.badge, styles.badgeTested]}>✓ Probada</Text>
+            <Text style={[styles.badge, styles.badgeTested]}>{labels.tested}</Text>
           )}
           {meta.map((m, i) => (
             <Text key={i} style={styles.badge}>
@@ -293,14 +317,14 @@ export function RecipePdfDocument({ recipe }: Props) {
               {/* Ingredients */}
               {ingredients.length > 0 && (
                 <View>
-                  <Text style={styles.sectionLabel}>Ingredientes</Text>
+                  <Text style={styles.sectionLabel}>{labels.ingredients}</Text>
                   {ingredients.map((ing) => (
                     <View key={ing.id} style={styles.ingredientRow}>
                       <Text style={styles.ingredientQty}>
                         {ing.quantity != null ? String(ing.quantity) : ""}
                       </Text>
                       <Text style={styles.ingredientUnit}>{ing.unit || ""}</Text>
-                      <Text style={styles.ingredientName}>{ing.name}</Text>
+                      <Text style={styles.ingredientName}>{ing.display_name}</Text>
                     </View>
                   ))}
                 </View>
@@ -309,7 +333,7 @@ export function RecipePdfDocument({ recipe }: Props) {
               {/* Steps */}
               {steps.length > 0 && (
                 <View>
-                  <Text style={styles.sectionLabel}>Preparación</Text>
+                  <Text style={styles.sectionLabel}>{labels.preparation}</Text>
                   {steps.map((step, idx) => (
                     <View key={step.id} style={styles.stepRow}>
                       <View style={styles.stepCircle}>
@@ -356,7 +380,7 @@ export function RecipePdfDocument({ recipe }: Props) {
         {/* Notes */}
         {notes.length > 0 && (
           <View style={styles.notesSection}>
-            <Text style={styles.sectionLabel}>Notas</Text>
+            <Text style={styles.sectionLabel}>{labels.notes}</Text>
             {notes.map((note) => (
               <View key={note.id} style={styles.noteItem}>
                 <Text style={styles.noteBullet}>•</Text>
@@ -368,7 +392,7 @@ export function RecipePdfDocument({ recipe }: Props) {
 
         {/* Footer */}
         <Text style={styles.footer}>
-          Generado con Pizca · {today}
+          {labels.footer} · {today}
         </Text>
       </Page>
     </Document>

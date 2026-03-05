@@ -6,10 +6,11 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { CATEGORY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty, IngredientUnit } from "@/types/recipe";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 
 // --- JSON shape types ---
 interface JsonIngredient {
@@ -452,6 +453,8 @@ interface ImportResult {
 export default function ImportarRecetas() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
+  const { getCategoryLabel } = useRecipeLabels();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [phase, setPhase] = useState<ImportPhase>("select");
@@ -547,7 +550,7 @@ export default function ImportarRecetas() {
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast({ title: "Error", description: "Debes iniciar sesión", variant: "destructive" });
+      toast({ title: t("common.error"), description: t("import.notLoggedIn"), variant: "destructive" });
       return;
     }
 
@@ -611,7 +614,7 @@ export default function ImportarRecetas() {
 
           const ingredients = comp.ingredientes.map((ing, j) => ({
             component_id: newComp.id,
-            name: ing.ingrediente,
+            display_name: ing.ingrediente,
             quantity: ing.cantidad ?? null,
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,
@@ -728,8 +731,8 @@ export default function ImportarRecetas() {
           <ChevronLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Importar Recetas</h1>
-          <p className="text-sm text-muted-foreground">Desde archivos JSON</p>
+          <h1 className="text-2xl font-bold text-foreground">{t("import.title")}</h1>
+          <p className="text-sm text-muted-foreground">{t("import.fromJson")}</p>
         </div>
       </div>
 
@@ -741,8 +744,8 @@ export default function ImportarRecetas() {
             className="border-2 border-dashed border-border rounded-xl p-12 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
           >
             <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="font-medium text-foreground mb-1">Selecciona archivos .json</p>
-            <p className="text-sm text-muted-foreground">Uno o varios archivos, cada uno con una receta</p>
+            <p className="font-medium text-foreground mb-1">{t("import.selectFiles")}</p>
+            <p className="text-sm text-muted-foreground">{t("import.selectFilesHint")}</p>
             <input
               ref={fileInputRef}
               type="file"
@@ -823,7 +826,7 @@ export default function ImportarRecetas() {
             }}
           >
             <Download className="h-4 w-4 mr-2" />
-            Descargar formato de ejemplo
+            {t("import.downloadExample")}
           </Button>
         </div>
       )}
@@ -836,7 +839,7 @@ export default function ImportarRecetas() {
             <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4 space-y-2">
               <div className="flex items-center gap-2 text-destructive font-medium text-sm">
                 <AlertTriangle className="h-4 w-4" />
-                {validationErrors.length} archivo{validationErrors.length !== 1 ? "s" : ""} con errores
+                {t("import.filesWithErrors", { count: validationErrors.length })}
               </div>
               {validationErrors.map((ve, i) => (
                 <div key={i} className="text-sm">
@@ -859,7 +862,7 @@ export default function ImportarRecetas() {
                 <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 space-y-3">
                   <div className="flex items-center gap-2 text-sky-800 font-medium text-sm">
                     <Info className="h-4 w-4" />
-                    {totalCorrections} corrección{totalCorrections !== 1 ? "es" : ""} automática{totalCorrections !== 1 ? "s" : ""} en {recipesWithCorrections} archivo{recipesWithCorrections !== 1 ? "s" : ""}
+                    {t("import.corrections", { count: totalCorrections })} {t("import.inFiles", { count: recipesWithCorrections })}
                   </div>
                   <div className="space-y-1">
                     {recipes.flatMap((r) =>
@@ -873,7 +876,7 @@ export default function ImportarRecetas() {
                               type="button"
                               onClick={() => revertCorrection(recipes.indexOf(r), c.id)}
                               className="ml-auto text-sky-500 hover:text-sky-800 transition-colors shrink-0"
-                              title="Deshacer"
+                              title={t("import.undo")}
                             >
                               <Undo2 className="h-3 w-3" />
                             </button>
@@ -887,11 +890,11 @@ export default function ImportarRecetas() {
 
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-foreground">
-                  {recipes.length} receta{recipes.length !== 1 ? "s" : ""} válida{recipes.length !== 1 ? "s" : ""}
+                  {t("import.validRecipes", { count: recipes.length })}
                 </p>
                 <div className="flex gap-2">
-                  <Button variant="ghost" size="sm" onClick={() => toggleAll(true)}>Todas</Button>
-                  <Button variant="ghost" size="sm" onClick={() => toggleAll(false)}>Ninguna</Button>
+                  <Button variant="ghost" size="sm" onClick={() => toggleAll(true)}>{t("import.selectAll")}</Button>
+                  <Button variant="ghost" size="sm" onClick={() => toggleAll(false)}>{t("import.selectNone")}</Button>
                 </div>
               </div>
 
@@ -914,10 +917,10 @@ export default function ImportarRecetas() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-medium text-foreground truncate">{r.json.nombre}</span>
-                          {isDup && <Badge variant="outline" className="text-xs border-amber-300 text-amber-700 bg-amber-50">Duplicada</Badge>}
+                          {isDup && <Badge variant="outline" className="text-xs border-amber-300 text-amber-700 bg-amber-50">{t("import.duplicate")}</Badge>}
                         </div>
                         <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground flex-wrap">
-                          <span>{CATEGORY_LABELS[r.json.categoria as RecipeCategory] || r.json.categoria}</span>
+                          <span>{getCategoryLabel(r.json.categoria as RecipeCategory) || r.json.categoria}</span>
                           <span>{r.json.componentes.length} comp.</span>
                           <span>{r.totalIngredients} ing.</span>
                           <span>{r.totalSteps} pasos</span>
@@ -933,7 +936,7 @@ export default function ImportarRecetas() {
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); revertCorrection(i, c.id); }}
                                     className="ml-0.5 hover:text-sky-900 transition-colors"
-                                    title="Deshacer esta corrección"
+                                    title={t("import.undoCorrection")}
                                   >
                                     <Undo2 className="h-3 w-3" />
                                   </button>
@@ -953,7 +956,7 @@ export default function ImportarRecetas() {
               {duplicatesInSelected > 0 && (
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
                   <p className="text-sm font-medium text-amber-800">
-                    {duplicatesInSelected} receta{duplicatesInSelected !== 1 ? "s" : ""} ya existe{duplicatesInSelected !== 1 ? "n" : ""}
+                    {t("import.duplicateNotice", { count: duplicatesInSelected })}
                   </p>
                   <div className="flex gap-2">
                     <Button
@@ -961,14 +964,14 @@ export default function ImportarRecetas() {
                       size="sm"
                       onClick={() => setDuplicateAction("skip")}
                     >
-                      Saltar duplicadas
+                      {t("import.skipDuplicates")}
                     </Button>
                     <Button
                       variant={duplicateAction === "overwrite" ? "default" : "outline"}
                       size="sm"
                       onClick={() => setDuplicateAction("overwrite")}
                     >
-                      Sobrescribir
+                      {t("import.overwrite")}
                     </Button>
                   </div>
                 </div>
@@ -977,10 +980,10 @@ export default function ImportarRecetas() {
               {/* Actions */}
               <div className="flex gap-3 pt-2">
                 <Button variant="outline" onClick={() => { setPhase("select"); setRecipes([]); setValidationErrors([]); }}>
-                  Volver
+                  {t("import.back")}
                 </Button>
                 <Button onClick={startImport} disabled={selectedCount === 0} className="flex-1">
-                  Importar {selectedCount} receta{selectedCount !== 1 ? "s" : ""}
+                  {t("import.importCount", { count: selectedCount })}
                 </Button>
               </div>
             </>
@@ -989,7 +992,7 @@ export default function ImportarRecetas() {
 
           {recipes.length === 0 && validationErrors.length > 0 && (
             <Button variant="outline" onClick={() => { setPhase("select"); setValidationErrors([]); }}>
-              Volver a seleccionar
+              {t("import.backToSelect")}
             </Button>
           )}
         </div>
@@ -999,7 +1002,7 @@ export default function ImportarRecetas() {
       {phase === "importing" && (
         <div className="bg-card rounded-xl p-8 shadow-card text-center space-y-4">
           <RefreshCw className="h-8 w-8 mx-auto text-primary animate-spin" />
-          <p className="font-medium text-foreground">Importando recetas...</p>
+          <p className="font-medium text-foreground">{t("import.importing")}</p>
           <Progress value={progress} className="h-2" />
           <p className="text-sm text-muted-foreground">{Math.round(progress)}%</p>
         </div>
@@ -1017,11 +1020,11 @@ export default function ImportarRecetas() {
                 {errorCount > 0 ? <AlertTriangle className="h-5 w-5 text-amber-600" /> : <Check className="h-5 w-5 text-accent-foreground" />}
               </div>
               <div>
-                <h3 className="font-semibold text-foreground text-lg">Importación completada</h3>
+                <h3 className="font-semibold text-foreground text-lg">{t("import.done")}</h3>
                 <p className="text-sm text-muted-foreground">
-                  {successCount} importada{successCount !== 1 ? "s" : ""}
-                  {skippedCount > 0 && `, ${skippedCount} saltada${skippedCount !== 1 ? "s" : ""}`}
-                  {errorCount > 0 && `, ${errorCount} error${errorCount !== 1 ? "es" : ""}`}
+                  {t("import.resultImported", { count: successCount })}
+                  {skippedCount > 0 && t("import.resultSkipped", { count: skippedCount })}
+                  {errorCount > 0 && t("import.resultErrors", { count: errorCount })}
                 </p>
               </div>
             </div>
@@ -1037,8 +1040,8 @@ export default function ImportarRecetas() {
                     <X className="h-4 w-4 text-destructive shrink-0" />
                   )}
                   <span className="text-foreground truncate">{r.title}</span>
-                  {r.action === "overwritten" && <Badge variant="outline" className="text-xs">Sobrescrita</Badge>}
-                  {r.action === "skipped" && <Badge variant="outline" className="text-xs">Saltada</Badge>}
+                  {r.action === "overwritten" && <Badge variant="outline" className="text-xs">{t("import.overwritten")}</Badge>}
+                  {r.action === "skipped" && <Badge variant="outline" className="text-xs">{t("import.skipped")}</Badge>}
                   {r.error && <span className="text-xs text-destructive">{r.error}</span>}
                 </div>
               ))}
@@ -1047,10 +1050,10 @@ export default function ImportarRecetas() {
 
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => { setPhase("select"); setRecipes([]); setResults([]); setValidationErrors([]); }}>
-              Importar más
+              {t("import.importMore")}
             </Button>
             <Button onClick={() => navigate("/mis-recetas")} className="flex-1">
-              Ver mis recetas
+              {t("import.viewRecipes")}
             </Button>
           </div>
         </div>

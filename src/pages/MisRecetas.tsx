@@ -1,16 +1,17 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, BookOpen, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
+import { Search, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRecipes } from "@/hooks/useRecipes";
 import { useTags } from "@/hooks/useTags";
 import { RecipeCard } from "@/components/RecipeCard";
-import { CATEGORY_LABELS, DIFFICULTY_LABELS } from "@/types/recipe";
+import { useRecipeLabels } from "@/hooks/useRecipeLabels";
 import type { RecipeCategory, RecipeDifficulty } from "@/types/recipe";
 import { cn } from "@/lib/utils";
 import { exportMultipleRecipes } from "@/lib/exportRecipe";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const ALL_CATEGORIES: RecipeCategory[] = [
   "tartes", "entremets", "biscuits", "gâteaux", "pâtes-de-base",
@@ -20,6 +21,8 @@ const ALL_DIFFICULTIES: RecipeDifficulty[] = ["basico", "intermedio", "avanzado"
 
 export default function MisRecetas() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const { data: recipes, isLoading } = useRecipes();
   const { data: tags } = useTags();
   const [search, setSearch] = useState("");
@@ -43,9 +46,9 @@ export default function MisRecetas() {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold text-foreground truncate">Mis Recetas</h1>
+          <h1 className="text-2xl font-bold text-foreground truncate">{t("recipes.title")}</h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            {recipes?.length || 0} receta{recipes?.length !== 1 ? "s" : ""}
+            {t("recipes.count", { count: recipes?.length || 0 })}
           </p>
         </div>
         <div className="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
@@ -55,22 +58,22 @@ export default function MisRecetas() {
               if (!recipes?.length) return;
               try {
                 await exportMultipleRecipes(recipes.map((r: any) => r.id));
-                toast.success(`${recipes.length} receta(s) exportada(s)`);
+                toast.success(t("recipes.exportedMany", { count: recipes.length }));
               } catch {
-                toast.error("Error al exportar");
+                toast.error(t("recipes.exportError"));
               }
             }}
             className="rounded-lg"
             size="sm"
             disabled={!recipes?.length}
           >
-            <Download className="h-4 w-4" /> <span className="hidden md:inline">Exportar</span>
+            <Download className="h-4 w-4" /> <span className="hidden md:inline">{t("recipes.export")}</span>
           </Button>
           <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg" size="sm">
-            <Upload className="h-4 w-4" /> <span className="hidden md:inline">Importar</span>
+            <Upload className="h-4 w-4" /> <span className="hidden md:inline">{t("recipes.import")}</span>
           </Button>
           <Button onClick={() => navigate("/crear")} className="rounded-lg" size="sm">
-            + Nueva
+            {t("recipes.new")}
           </Button>
         </div>
       </div>
@@ -79,7 +82,7 @@ export default function MisRecetas() {
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Buscar receta..."
+          placeholder={t("recipes.search")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="pl-10 rounded-lg"
@@ -95,7 +98,7 @@ export default function MisRecetas() {
             !categoryFilter ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
           )}
         >
-          Todas
+          {t("recipes.all")}
         </button>
         {ALL_CATEGORIES.map((cat) => (
           <button
@@ -106,7 +109,7 @@ export default function MisRecetas() {
               categoryFilter === cat ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             )}
           >
-            {CATEGORY_LABELS[cat]}
+            {getCategoryLabel(cat)}
           </button>
         ))}
       </div>
@@ -123,7 +126,7 @@ export default function MisRecetas() {
               difficultyFilter === diff ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"
             )}
           >
-            {DIFFICULTY_LABELS[diff]}
+            {getDifficultyLabel(diff)}
           </button>
         ))}
       </div>
@@ -172,20 +175,18 @@ export default function MisRecetas() {
             )}
           </div>
           <h3 className="font-semibold text-foreground text-lg mb-2">
-            {recipes?.length ? "Sin resultados" : "Aún no tienes recetas"}
+            {recipes?.length ? t("recipes.noResults") : t("recipes.empty")}
           </h3>
           <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-            {recipes?.length
-              ? "Prueba cambiando los filtros o la búsqueda."
-              : "¡Crea tu primera receta o importa desde un archivo JSON!"}
+            {recipes?.length ? t("recipes.noResultsHint") : t("recipes.emptyHint")}
           </p>
           {!recipes?.length && (
             <div className="flex gap-3 justify-center">
               <Button onClick={() => navigate("/crear")} className="rounded-lg">
-                Crear receta
+                {t("recipes.create")}
               </Button>
               <Button variant="outline" onClick={() => navigate("/importar")} className="rounded-lg">
-                <Upload className="h-4 w-4 mr-1" /> Importar
+                <Upload className="h-4 w-4 mr-1" /> {t("recipes.import")}
               </Button>
             </div>
           )}

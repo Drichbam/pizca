@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { useOpenFoodFactsSearch } from "@/hooks/useOpenFoodFactsSearch";
 import { useOpenPricesProduct } from "@/hooks/useOpenPrices";
 import type { OFFSearchResult } from "@/hooks/useOpenFoodFactsSearch";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   ingredientName: string;
 }
 
 export function IngredientPriceSearchPanel({ ingredientName }: Props) {
+  const { t } = useTranslation();
   const [triggered, setTriggered] = useState(false);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function IngredientPriceSearchPanel({ ingredientName }: Props) {
           className="h-7 px-2 text-xs text-muted-foreground rounded-lg"
           onClick={() => setTriggered(true)}
         >
-          <Search className="h-3 w-3 mr-1" /> Buscar precios comunitarios
+          <Search className="h-3 w-3 mr-1" /> {t("priceSearch.trigger")}
         </Button>
       </div>
     );
@@ -41,10 +43,10 @@ export function IngredientPriceSearchPanel({ ingredientName }: Props) {
       {isLoading ? (
         <div className="flex items-center gap-2 py-1 text-xs text-muted-foreground">
           <Loader2 className="h-3 w-3 animate-spin" />
-          Buscando productos…
+          {t("priceSearch.loading")}
         </div>
       ) : !results?.length ? (
-        <p className="text-xs text-muted-foreground py-1">Sin resultados en Open Food Facts</p>
+        <p className="text-xs text-muted-foreground py-1">{t("priceSearch.noResults")}</p>
       ) : (
         <ResultRows results={results} />
       )}
@@ -55,7 +57,7 @@ export function IngredientPriceSearchPanel({ ingredientName }: Props) {
           rel="noopener noreferrer"
           className="underline"
         >
-          Datos de Open Prices (ODbL)
+          {t("community.attribution")}
         </a>
       </p>
     </div>
@@ -63,6 +65,7 @@ export function IngredientPriceSearchPanel({ ingredientName }: Props) {
 }
 
 function ResultRows({ results }: { results: OFFSearchResult[] }) {
+  const { t } = useTranslation();
   const [resolved, setResolved] = useState<Record<string, boolean>>({});
 
   const allResolved = results.every((r) => r.barcode in resolved);
@@ -78,7 +81,7 @@ function ResultRows({ results }: { results: OFFSearchResult[] }) {
         <PriceRowTracked key={r.barcode} result={r} onResolved={handleResolved} />
       ))}
       {allResolved && !anyData && (
-        <p className="text-xs text-muted-foreground py-1">Sin datos de precio para este ingrediente</p>
+        <p className="text-xs text-muted-foreground py-1">{t("priceSearch.noData")}</p>
       )}
     </>
   );
@@ -91,6 +94,7 @@ function PriceRowTracked({
   result: OFFSearchResult;
   onResolved: (barcode: string, hasData: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const { data, isLoading, isError } = useOpenPricesProduct(result.barcode);
 
   useEffect(() => {
@@ -118,7 +122,7 @@ function PriceRowTracked({
         {" — "}
         <span className="text-foreground font-semibold">{data.avgPrice.toFixed(2)} €</span>
         {" avg · "}
-        {data.count} contribucione{data.count !== 1 ? "s" : ""}
+        {t("community.contributions", { count: data.count })}
         {data.isSpainOnly && " 🇪🇸"}
       </span>
     </div>

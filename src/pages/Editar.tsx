@@ -3,8 +3,10 @@ import { useRecipeDetail } from "@/hooks/useRecipes";
 import { RecipeForm } from "@/components/recipe-form/RecipeForm";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Editar() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: recipe, isLoading } = useRecipeDetail(id);
@@ -21,9 +23,9 @@ export default function Editar() {
   if (!recipe) {
     return (
       <div className="animate-fade-in text-center py-12">
-        <p className="text-muted-foreground">Receta no encontrada</p>
+        <p className="text-muted-foreground">{t("recipes.notFound")}</p>
         <Button variant="outline" onClick={() => navigate("/mis-recetas")} className="mt-4 rounded-lg">
-          Volver a mis recetas
+          {t("recipes.backToList")}
         </Button>
       </div>
     );

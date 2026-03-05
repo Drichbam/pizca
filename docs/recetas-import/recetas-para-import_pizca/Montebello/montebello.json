@@ -1,0 +1,391 @@
+{
+  "id": "montebello",
+  "nombre": "Montebello",
+  "categoria": "autre",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": "http://dailydelicious.blogspot.com.es/2012/01/montebello-reinvent-classic-fraisier.html",
+    "libro": null
+  },
+  "fecha_creacion": "2014-07-25",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 170,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 25.0,
+          "unidad": "g",
+          "ingrediente": "pistaches concassées"
+        },
+        {
+          "cantidad": 135.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 115.0,
+          "unidad": "g",
+          "ingrediente": "poudre d'amandes (125g ok)"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "Blancs d'oeufs (3-4 blancs)"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "sucre blanc"
+        },
+        {
+          "cantidad": 20.0,
+          "unidad": "g",
+          "ingrediente": "Pâte de pistaches"
+        },
+        {
+          "cantidad": 125.0,
+          "unidad": "g",
+          "ingrediente": "................................ Whole milk"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": ".................................. Granulated sugar"
+        },
+        {
+          "cantidad": 5.0,
+          "unidad": "g",
+          "ingrediente": "..................................... All purpose flour"
+        },
+        {
+          "cantidad": 5.0,
+          "unidad": "g",
+          "ingrediente": "..................................... Corn starch"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "................................... Egg yolks (1.5-2 jaunes)"
+        },
+        {
+          "cantidad": 10.0,
+          "unidad": "g",
+          "ingrediente": "................................... Unsalted butter"
+        },
+        {
+          "cantidad": 15.0,
+          "unidad": "g",
+          "ingrediente": "................................... Water"
+        },
+        {
+          "cantidad": 60.0,
+          "unidad": "g",
+          "ingrediente": "................................... Granulated sugar"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "................................... Egg white"
+        },
+        {
+          "cantidad": 35.0,
+          "unidad": "g",
+          "ingrediente": "................................... Whole milk"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "................................... Egg yolks (1.5-2 jaunes) m"
+        },
+        {
+          "cantidad": 15.0,
+          "unidad": "g",
+          "ingrediente": "................................... Granulated sugar"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "................................. Unsalted butter, soften"
+        },
+        {
+          "cantidad": 70.0,
+          "unidad": "g",
+          "ingrediente": "................................... La meringue italienne"
+        },
+        {
+          "cantidad": 300.0,
+          "unidad": "g",
+          "ingrediente": "................................ La Crème au beurre"
+        },
+        {
+          "cantidad": 40.0,
+          "unidad": "g",
+          "ingrediente": "................................... Pistachio paste"
+        },
+        {
+          "cantidad": 70.0,
+          "unidad": "g",
+          "ingrediente": "................................... La Crème pâtissière"
+        },
+        {
+          "cantidad": 400.0,
+          "unidad": "g",
+          "ingrediente": "................................ Fresh strawberries"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "viernes, 25 de julio de 2014",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "http://dailydelicious.blogspot.com.es/2012/01/montebello-reinvent-classic-fraisier.html",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Le biscuit dacquoise pistache",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Un peu de sucre glace pour saupoudrer la dacquoise",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "1/2 ................................... Vanilla bean",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "La meringue italienne",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "........................................... Green food coloring, optional",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": ".......................................... Strawberry jam",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "........................................... Pistachio nuts, roasted and chopped",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "Preheat the oven to170°C.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Butter the cake mold and line the base with non-stick baking paper.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "Sift together almond powder and icing sugar.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "Whip the egg whites until foamy and slowly add the sugar into the egg white, whip until stiff peaks form.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "Fold about 1/2 cup of meringue with pistachio paste.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 15,
+          "descripcion": "Fold the meringue, almond powder mixture and pistachio paste mixture together until combine.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 16,
+          "descripcion": "Pipe the batter into the cake mold, until 2 cm height, sprinkle with icing sugar and chopped pistachio nuts, and bake for 30 minutes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 17,
+          "descripcion": "Let it cool on a wire rack.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 18,
+          "descripcion": "Mix egg yolks, flour, corn starch, sugar and seed from vanilla bean and bring the milk to boil.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 19,
+          "descripcion": "Pour the milk into the egg yolk mixture, stirring all the time.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 20,
+          "descripcion": "Heat the mixture over low heat, stirring all the time. until the temperature reaches 82°C.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 21,
+          "descripcion": "Stir in the butter, and pour the mixture into large bowl, let it cool completely.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 22,
+          "descripcion": "Make Italian meringue following the method from here.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 23,
+          "descripcion": "Make la Crème au beurre:",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 24,
+          "descripcion": "Mix egg yolks and sugar, bring the milk to boil (by putting the milk in a microwavable cup and heat for 25-40 seconds).",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 25,
+          "descripcion": "Pour the milk into the egg yolk mixture, stirring all the time.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 26,
+          "descripcion": "Heat the mixture over low heat, stirring all the time. until the temperature reaches 82°C.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 27,
+          "descripcion": "Pour the mixture into a bowl, let it cool completely.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 28,
+          "descripcion": "Beat the butter into the custard base, then fold the 70g of Italian meringue into the butter base.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 29,
+          "descripcion": "Make La Crème mousseline:",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 30,
+          "descripcion": "Mix together la Crème au beurre, pistachio paste, 70g of La Crème pâtissière, and green food coloring (if using) until smooth.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 31,
+          "descripcion": "Melt and strain the strawberry jam, set aside (if it's too thick mix with a bit of water).",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 32,
+          "descripcion": "Pipe the crème mousseline over the biscuit dacquoise pistache, place the fresh strawberries on top, and brush with melted strawberry jam. Decorate with chopped pistachio nuts.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

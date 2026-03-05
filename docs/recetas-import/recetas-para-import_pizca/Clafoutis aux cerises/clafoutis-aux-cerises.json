@@ -1,0 +1,175 @@
+{
+  "id": "clafoutis-aux-cerises",
+  "nombre": "Clafoutis aux cerises",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Cyril Lignac",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2025-07-07",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 180,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 400.0,
+          "unidad": "g",
+          "ingrediente": "cerises lavées (dénoyautées ou non, selon votre préférence)"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "œufs"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 500.0,
+          "unidad": "ml",
+          "ingrediente": "lait (1/2 litro)"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pincée",
+          "ingrediente": "sel"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "lunes, 7 de julio de 2025",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Clafoutis aux cerises (Recette de Cyril Lignac)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "2 cuillères à soupe de kirsch (optionnel)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Un peu de beurre pour le moule",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Préchauffez le four à 180°C. Beurrez généreusement votre moule à clafoutis.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Lavez les cerises et dénoyautez-les si vous le souhaitez.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "Dans un saladier, mélangez les œufs et le sucre jusqu’à obtenir une pâte homogène.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "4. Ajoutez la moitié de la farine, une pincée de sel et la moitié du lait. Mélangez bien.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "5. Incorporez le reste de la farine et du lait, puis mélangez jusqu’à obtenir une pâte lisse.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "6. Ajoutez le kirsch si désiré et mélangez à nouveau.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "7. Disposez les cerises dans le fond du moule beurré.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "8. Versez la pâte sur les cerises.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "9. Faites cuire au four préchauffé à 180°C pendant 30 à 35 minutes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "10. Laissez tiédir avant de démouler. Le clafoutis est encore meilleur dégusté tiède.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

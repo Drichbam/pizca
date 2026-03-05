@@ -1,0 +1,424 @@
+{
+  "id": "gateau-basque",
+  "nombre": "Gâteau basque",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé / Mercotte / Philippe Conticini",
+    "fuente_url": "http://www.mercotte.fr/2013/02/27/gateau-basque-tout-simplement-et-casting-pour-la-saison-2-du-meilleur-patissier/",
+    "libro": null
+  },
+  "fecha_creacion": "2015-04-25",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 250.0,
+          "unidad": "g",
+          "ingrediente": "beurre doux en pommade"
+        },
+        {
+          "cantidad": 215.0,
+          "unidad": "g",
+          "ingrediente": "cassonade"
+        },
+        {
+          "cantidad": 125.0,
+          "unidad": "g",
+          "ingrediente": "poudre d'amandes"
+        },
+        {
+          "cantidad": 2.0,
+          "unidad": "pcs",
+          "ingrediente": "oeufs"
+        },
+        {
+          "cantidad": 310.0,
+          "unidad": "g",
+          "ingrediente": "farine de type T55"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "g",
+          "ingrediente": "levure chimique"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "pincée",
+          "ingrediente": "fleur de sel"
+        },
+        {
+          "cantidad": 25.0,
+          "unidad": "cl",
+          "ingrediente": "lait frais entier"
+        },
+        {
+          "cantidad": 20.0,
+          "unidad": "g",
+          "ingrediente": "semoule de blé, très fine"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "vanille"
+        },
+        {
+          "cantidad": 65.0,
+          "unidad": "g",
+          "ingrediente": "cassonade"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "jaune d'oeuf"
+        },
+        {
+          "cantidad": 15.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 65.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide entière"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "oeuf"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pincée",
+          "ingrediente": "sel fin"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "sábado, 25 de abril de 2015",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Mes envies de pâtisser se réveillent en toute occasion, en regardant une émission, en scrutant les vitrines des pâtisseries, en feuilletant les magazines ... Dire que cela devient une obsession serait encore un peu faible. C'est ainsi que, je ne sais comment, je me suis retrouvée samedi dernier, en terrasse, mon portable en main à la recherche d'une recette de ... gâteau basque. Mais pas n'importe laquelle, une recette testée et approuvée. Je ne suis pas allée chercher bien loin : une recette de Pierre Hermé validée par Mercotte. Pour ce gâteau, je sais qu'il existe des milliers de recettes et qu'il y a un grand débat sur la garniture ... avec ou sans confitures de cerises. Je suis mon Pierre et je suis Mercotte : mon gâteau basque sera garni de crème mais volontiers accompagné d'une bonne confiture de cerises :-)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Ingrédients pour la pâte (à faire la veille) :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "1/4 de cuillère à café de vanille en poudre (ou un sachet de sucre vanillé)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Ingrédients pour la crème :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "le zeste d'un demi citron jaune finement râpé",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "2 cuillères à café de rhum brun",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Ingrédients pour la dorure :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "Facultatif : sirop de sucre pour rendre le gâteau plus brillant",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "Vous êtes prêts ? Alors, place à la recette !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "ETAPE 1 : Préparation de la pâte (la veille)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "1/ Dans le bol du robot, mélanger 10 secondes le beurre pommade et la cassonade.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "2/ Ajouter la fleur de sel, la poudre d'amandes et la vanille. Mélanger très brièvement.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "3/ Incorporer les oeufs et mélanger quelques secondes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 15,
+          "descripcion": "4/ Ajouter la farine tamisée avec la levure et laisser tourner le robot 20 secondes. Il ne faut surtout pas trop travailler la pâte.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 16,
+          "descripcion": "5/ Former une boule de pâte, l'aplatir grossièrement et l'envelopper de film alimentaire. Réserver au réfrigérateur pendant 24 heures.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 17,
+          "descripcion": "ETAPE 2 : Préparation de la crème",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 18,
+          "descripcion": "1/ Verser le lait dans une casserole avec les grains de vanille, la gousse grattée et le zeste de citron râpé finement à l'aide d'une Microplane.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 19,
+          "descripcion": "2/ Dans un saladier, mélanger le jaune d'oeuf, la cassonade et la farine.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 20,
+          "descripcion": "3/ Porter le lait à ébullition et ajouter la semoule en pluie. Laisser cuire 5 minutes sur feu moyen-doux en remuant en continu à l'aide d'une spatule.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 21,
+          "descripcion": "4/ Ajouter le mélange oeufs-sucre-farine dans le lait et laisser cuire comme une crème pâtissière en remuant avec une spatule. Le mélange va vite éapissir, notamment grâce à la semoule de blé.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 22,
+          "descripcion": "5/ Faire bouillir la crème liquide et l'ajouter à la crème pâtissière.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 23,
+          "descripcion": "6/ Ôter le mélange du feu et ajouter le rhum. Bien mélanger.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 24,
+          "descripcion": "7/ Filmer au contact et laisser refroidir à température ambiante.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 25,
+          "descripcion": "ETAPE 3 : Montage du gâteau basque",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 26,
+          "descripcion": "1/ Beurrer le cercle et le poser sur une plaque recouverte de papier sulfurisé.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 27,
+          "descripcion": "2/ Placer la pâte entre deux feuilles de papier sulfurisé et l'étaler sur une épaisseur de 3mm environ. Cette technique vous permet d'étaler la pâte plus facilement et sans ajout de farine qui pourrait la dénaturer. Ne pas hésiter à placer le gâteau au réfrigérateur à plusieurs reprises pour que la pâte durcisse si jamais le fonçage est trop fastidieux.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 28,
+          "descripcion": "3/ Découper deux disques de la taille du cercle ainsi que des bandes rectangulaires de 2cm de largeur qui serviront à couvrir le pourtour des cercles. Sinon, vous pouvez simplement découper un disque de pâte 2cm plus grand que le cercle et le faire remonter sur les bords. C'est moins net mais plus simple que les bandes. L'essentiel, c'est de faire viiiiite car la pâte se réchauffe et ramollit en un rien de temps !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 29,
+          "descripcion": "4/ Foncer le cercle avec un disque de pâte au fond et les bandelettes sur le pourtour. \"Coller\" le fond et les bandelettes de pâte avec un peu d'eau, si nécessaire.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 30,
+          "descripcion": "5/ Garnir le gâteauavec la crème. Rabattre un peu les bords de pâte au-dessus de la garniture.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 31,
+          "descripcion": "6/ Poser le second disque de pâte au-dessus en s'assurant qu'il adhère bien aux bords.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 32,
+          "descripcion": "ETAPE 4 : Préparation de la dorure & cuisson",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 33,
+          "descripcion": "1/ Préchauffer le four à 180 degrés.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 34,
+          "descripcion": "2/ Dans un bol, casser l'oeuf et ajouter le demi jaune d'oeuf (oui, je sais, on a connu plus pratique) et le sel fin.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 35,
+          "descripcion": "3/ Badigeonner le gâteau de dorure à l'aide d'un pinceau. Placer le gâteau au réfrigérateur 30 minutes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 36,
+          "descripcion": "4/ Badigeonner de nouveau le gâteau de dorure et rayer le dessus avec les dents d'une fourchette.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 37,
+          "descripcion": "5/ Enfourner pendant 40 minutes environ, en surveillant car cela dépend des fours. Le gâteau doit être bien doré.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 38,
+          "descripcion": "6/ Facultatif: À la sortie du four, badigeonner le gâteau de sirop de sucre afin de le rendre plus brillant.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 39,
+          "descripcion": "6/ Laisser refroidir le gâteau sur une grille à pâtisserie et déguster ... deux jours après ! (je sais, c'est cruel, mais il n'en sera que meilleur !)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 40,
+          "descripcion": "Oui ... cela valait la peine d'attendre deux longs jours avant de goûter ...",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 41,
+          "descripcion": "Je rappelle à mes amis Dakarois que la liste des adresses utiles pour dénicher des ingrédients à Dakar, c'est par -ici- !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "J'ai longuement hésité entre cette recette et celle de Philippe Conticini mais je dois avouer que l'ajout de semoule très fine dans la crème de Pierre Hermé m'a intriguée. Je ne suis pas une grande connaisseuse du gâteau basque mais je dois dire que cette pâtisserie est vraiment excellente ! La semoule fine donne a la crème une texture plus dense mais fondante. Il est conseillé d'attendre deux jours avant de goûter le gâteau, le temps que les arômes se développent bien et c'est vrai qu'il est délicieusement parfumé à la vanille et au rhum. Un régal !",
+    "Avec les quantités ci-dessous, vous pourrez réaliser un gâteau basque de 20cm de diamètre et il vous restera certainement de la pâte. J'ai eu des difficultés à manipuler la pâte ... 30 degrés dans la cuisine et une pâte très fragile ... alors il faut vraiment faire vite pour l'étaler et foncer le cercle et ne pas hésiter à laisser des temps de pose au réfrigérateur. Attention : la pâte doit être préparée la veille."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image064.jpg",
+    "image065.jpg",
+    "image066.jpg",
+    "image067.jpg",
+    "image068.jpg",
+    "image069.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

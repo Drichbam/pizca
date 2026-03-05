@@ -1,0 +1,117 @@
+{
+  "id": "mousse-chocolat-michalak",
+  "nombre": "Mousse chocolat Michalak",
+  "categoria": "mousses",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Christophe Michalak",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2021-11-30",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "crème fleurette"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "lait"
+        },
+        {
+          "cantidad": 180.0,
+          "unidad": "g",
+          "ingrediente": "chocolat noir 70%"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "chocolat au lait 40%"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d'œufs"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pcs",
+          "ingrediente": "blancs d'œufs"
+        },
+        {
+          "cantidad": 20.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "martes, 30 de noviembre de 2021",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Dans une casserole portez à ébullition la crème et le lait. Hors du feu versez sur le chocolat haché puis mélangez au fouet. Ajoutez les jaunes d’œufs et mélangez bien.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Montez les blancs deux en neige avec le sucre au batteur électrique en vitesse moyenne dès le départ.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Lorsque la meringue est bien montée, mélangez-la avec la préparation chocolatée : commencez avec le fouet et finissez à la Maryse. Il ne doit pas y avoir de grains de Meringue le mélange doit être parfaitement homogène.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Dresser immédiatement la mousse dans un bol filmez et réservez au réfrigérateur pendant trois heures minimum. Sortez du réfrigérateur cinq minutes avant de déguster.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

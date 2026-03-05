@@ -1,0 +1,160 @@
+{
+  "id": "panacotta-ivoire-a-la-feve-de-tonka-coulis-de-fraise",
+  "nombre": "Panacotta ivoire à la fève de tonka, coulis de fraise",
+  "categoria": "crèmes-de-base",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": "Petits délices entre amis"
+  },
+  "fecha_creacion": "2016-02-06",
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": "Moules en silicone ou verrines",
+  "planificacion_dias": 2,
+  "planning": [
+    {
+      "dia": "Veille",
+      "tareas": [
+        "Panacotta au chocolat blanc",
+        "Coulis de fraise"
+      ]
+    },
+    {
+      "dia": "Jour J",
+      "tareas": [
+        "Filtrer coulis",
+        "Dresser"
+      ]
+    }
+  ],
+  "tiempos": {
+    "preparacion_min": 40,
+    "coccion_min": 5,
+    "reposo_min": 720,
+    "total_activo_min": 40
+  },
+  "dificultad": "intermedio",
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Panacotta au chocolat blanc",
+      "ingredientes": [
+        {
+          "cantidad": 4,
+          "unidad": "g",
+          "ingrediente": "gélatine en feuilles"
+        },
+        {
+          "cantidad": 175,
+          "unidad": "g",
+          "ingrediente": "chocolat blanc 35%"
+        },
+        {
+          "cantidad": 200,
+          "unidad": "g",
+          "ingrediente": "lait (20 cl)"
+        },
+        {
+          "cantidad": 300,
+          "unidad": "g",
+          "ingrediente": "crème liquide entière (30 cl)"
+        },
+        {
+          "cantidad": 0.5,
+          "unidad": "pcs",
+          "ingrediente": "fève de tonka"
+        }
+      ]
+    },
+    {
+      "nombre": "Coulis de fraise",
+      "ingredientes": [
+        {
+          "cantidad": 130,
+          "unidad": "g",
+          "ingrediente": "fraises"
+        },
+        {
+          "cantidad": 250,
+          "unidad": "g",
+          "ingrediente": "eau (25 cl)"
+        },
+        {
+          "cantidad": 25,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Panacotta au chocolat blanc",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Faites ramollir la gélatine dans un récipient rempli d'eau froide. Hachez le chocolat et faites-le fondre au bain-marie ou au four à micro-ondes (position décongélation ou puissance 500W en remuant de temps en temps).",
+          "temp_c": null,
+          "duracion_min": 10,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Dans une casserole, faites bouillir le lait et ajoutez la gélatine essorée. Versez lentement un tiers du mélange bouillant sur le chocolat fondu. À l'aide d'une maryse, mélangez énergiquement en décrivant de petits cercles pour créer un « noyau » élastique et brillant. Incorporez le deuxième tiers, mélangez selon le même procédé, puis incorporez le troisième tiers.",
+          "temp_c": null,
+          "duracion_min": 10,
+          "notas_tecnicas": "Technique d'émulsion Frédéric Bau: verser en 3 fois en petits cercles pour créer le noyau."
+        },
+        {
+          "orden": 3,
+          "descripcion": "Ajoutez la crème liquide froide et râpez la fève de tonka. Mixez au mixeur plongeant pour lisser et parfaire l'émulsion. Versez dans des moules en silicone ou des verrines. Réservez au réfrigérateur 1 nuit.",
+          "temp_c": 4,
+          "duracion_min": 5,
+          "notas_tecnicas": "Attendez un peu que la panacotta épaississe avant de la verser, afin d'éviter à la fève de tonka râpée de remonter à la surface."
+        }
+      ]
+    },
+    {
+      "componente": "Coulis de fraise",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Réservez quelques fraises entières et coupez les autres en petits morceaux dans un récipient. Dans une casserole, faites bouillir ensemble l'eau et le sucre, versez sur les fraises coupées et laissez reposer 1 nuit au réfrigérateur.",
+          "temp_c": 4,
+          "duracion_min": 5,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Montage (le lendemain)",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Passez lentement et délicatement le mélange dans une passoire pour récupérer le jus translucide, sans écraser les fraises qui viendraient troubler le jus. Nappez la panacotta de ce jus et décorez de quelques fraises coupées en deux, éventuellement de quelques framboises.",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Attendez un peu que la panacotta épaississe avant de la verser dans les moules ou verrines, afin d'éviter à la fève de tonka râpée de remonter à la surface.",
+    "Servie froide, accompagnée d'un thé vert léger, cette composition s'avère très rafraîchissante.",
+    "Source: livre « Petits délices entre amis », p. 234"
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image076.jpg",
+    "image077.jpg",
+    "image078.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

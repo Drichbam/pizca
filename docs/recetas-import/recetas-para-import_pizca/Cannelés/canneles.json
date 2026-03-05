@@ -1,0 +1,108 @@
+{
+  "id": "canneles",
+  "nombre": "Cannelés",
+  "categoria": "biscuits",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2015-11-25",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": 20,
+    "coccion_min": 60,
+    "reposo_min": 1440,
+    "total_activo_min": 30
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 200,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 500,
+          "unidad": "ml",
+          "ingrediente": "lait"
+        },
+        {
+          "cantidad": 250,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 100,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 2,
+          "unidad": "pcs",
+          "ingrediente": "oeufs entiers"
+        },
+        {
+          "cantidad": 2,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d'oeufs"
+        },
+        {
+          "cantidad": 1,
+          "unidad": "pcs",
+          "ingrediente": "gousse de vanille de Tahiti"
+        },
+        {
+          "cantidad": 50,
+          "unidad": "g",
+          "ingrediente": "beurre"
+        },
+        {
+          "cantidad": 1,
+          "unidad": "cs",
+          "ingrediente": "rhum brun"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Prélevez les 3/4 du lait, ajoutez le beurre et la vanille fendue en 2 et grattée, et faites chauffer à 84°C — très important, ne pas dépasser cette température.",
+          "temp_c": 84,
+          "duracion_min": 10,
+          "notas_tecnicas": "84°C est critique: au-dessus, les protéines du lait coagulent."
+        },
+        {
+          "orden": 2,
+          "descripcion": "Pendant ce temps, mélangez la farine et le sucre, ajoutez les oeufs entiers et les jaunes. Versez le lait chaud sur le mélange en fouettant. Ajoutez le reste du lait froid et le rhum.",
+          "temp_c": null,
+          "duracion_min": 10,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Laissez reposer la pâte au réfrigérateur au moins 24h (idéalement 48h). Cuire dans des moules à cannelés en cuivre beurrés.",
+          "temp_c": 4,
+          "duracion_min": null,
+          "notas_tecnicas": "Le repos est essentiel pour la formation de la croûte caramélisée."
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

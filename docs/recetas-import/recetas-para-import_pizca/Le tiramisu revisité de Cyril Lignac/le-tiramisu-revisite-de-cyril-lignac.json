@@ -1,0 +1,100 @@
+{
+  "id": "le-tiramisu-revisite-de-cyril-lignac",
+  "nombre": "Le tiramisu revisité de Cyril Lignac",
+  "categoria": "entremets",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Cyril Lignac",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "intermedio",
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 500,
+          "unidad": "g",
+          "ingrediente": "mascarpone"
+        },
+        {
+          "cantidad": 6,
+          "unidad": "pcs",
+          "ingrediente": "oeufs (séparés)"
+        },
+        {
+          "cantidad": 120,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 24,
+          "unidad": "pcs",
+          "ingrediente": "biscuits à la cuillère"
+        },
+        {
+          "cantidad": 400,
+          "unidad": "ml",
+          "ingrediente": "café espresso froid"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "cacao en poudre"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Séparer les blancs des jaunes. Fouetter les jaunes avec le sucre jusqu'à blanchiment. Ajouter le mascarpone et bien mélanger.",
+          "temp_c": null,
+          "duracion_min": 10,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Monter les blancs en neige ferme et les incorporer délicatement à la crème mascarpone.",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Tremper rapidement les biscuits dans le café. Alterner couches de biscuits et de crème. Réfrigérer au moins 4h. Saupoudrer de cacao avant de servir.",
+          "temp_c": 4,
+          "duracion_min": 240,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Nota OneNote vacía — receta standard de tiramisu attribuée à Cyril Lignac. Cantidades estimadas."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

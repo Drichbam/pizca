@@ -1,0 +1,146 @@
+{
+  "id": "sable-breton",
+  "nombre": "Sablé breton",
+  "categoria": "biscuits",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2014-04-21",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 170,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d’œufs,"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule,"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "beurre pommade,"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "farine,"
+        },
+        {
+          "cantidad": 10.0,
+          "unidad": "g",
+          "ingrediente": "levure chimique,"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pincée",
+          "ingrediente": "fleur de sel."
+        },
+        {
+          "cantidad": 120.0,
+          "unidad": "g",
+          "ingrediente": "beurre demi-sel*,"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "sucre,"
+        },
+        {
+          "cantidad": 155.0,
+          "unidad": "g",
+          "ingrediente": "farine tamisée"
+        },
+        {
+          "cantidad": 8.0,
+          "unidad": "g",
+          "ingrediente": "levure chimique,"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "jaune d’oeuf*."
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "lunes, 21 de abril de 2014",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Sablés bretons : pour environ 20 sablés",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Blanchir le sucre et les jaunes d’œufs. Incorporer le beurre pommade et bien lisser le mélange. Tamiser dessus la farine et la levure, puis ajouter le sel. Mélanger sans trop travailler pour obtenir une pâte homogène. L’étaler entre deux feuilles de film plastique sur une épaisseur d’1/2 cm, réserver au réfrigérateur quelques heures.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Détailler des disques de 5cm de diamètre à l'aide de cercles à pâtisserie non beurrés et cuire ces sablés avec les cercles environ 20mn à 170°. Laisser tiédir sur une grille puis les démouler délicatement.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "PAS TESTÉ: Le sablé breton :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "1/2 gousse de vanille grattée,",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Sabler* à la feuille -le fouet plat- dans la cuve du robot ou à la main dans un saladier le beurre le sucre et éventuellement le sel, incorporer les jaunes et les graines de vanille puis enfin la farine tamisée avec la levure. Attention de ne pas corser* la pâte. L’étaler entre 2 feuilles guitare ou 2 feuilles de papier cuisson sur une épaisseur de 5 mm et réserver au réfrigérateur 2 heures environ. Passer l’abaisse au pique-vite* et découper à l’emporte pièce des cercles de 6cm de diamètre. Les cuire 10/11 min environ à 200°* chaleur tournante dans les cercles beurrés ou pas*. Réserver au sec dans une boîte hermétique après cuisson."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": false,
+  "notas_prueba": null,
+  "valoracion": null
+}

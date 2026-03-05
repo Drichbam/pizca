@@ -1,0 +1,99 @@
+{
+  "id": "mousse-mascarpone",
+  "nombre": "Mousse mascarpone",
+  "categoria": "mousses",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2023-12-15",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 500.0,
+          "unidad": "g",
+          "ingrediente": "mascarpone"
+        },
+        {
+          "cantidad": 6.0,
+          "unidad": "pcs",
+          "ingrediente": "oeufs"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "viernes, 15 de diciembre de 2023",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "4 cuillères à soupe de sucre blanc",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Mélanger le mascarpone avec le sucre, les jaunes d’œufs et les spéculoos mixés.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Battre les blancs d’œufs en neige (ajouter une pincée de sel, ça monte plus vite).",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Mélanger les blancs battus avec le mascarpone, tourner délicatement en veillant de ne pas « casser » les blancs.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Mettre trois heures au frigo et c’est prêt.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

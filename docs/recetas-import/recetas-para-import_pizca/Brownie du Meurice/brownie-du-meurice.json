@@ -1,0 +1,119 @@
+{
+  "id": "brownie-du-meurice",
+  "nombre": "Brownie du Meurice",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 170.0,
+          "unidad": "g",
+          "ingrediente": "beurre"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "œufs"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "chocolat au lait"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "pistaches torréfiées"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "noisettes torréfiées"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Tuesday, February 9, 2016",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Ou autres noix, noix de cajou, …",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Faire fondre le beurre, ajouter le sucre, la farine, les œufs.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Incorporer le chocolat puis les pistaches et les noisettes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Cuire au four à 180ºC pendant ~20-25 minutes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image079.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

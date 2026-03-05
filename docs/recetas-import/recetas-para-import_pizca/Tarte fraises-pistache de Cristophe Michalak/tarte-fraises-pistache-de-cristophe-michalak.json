@@ -1,0 +1,177 @@
+{
+  "id": "tarte-fraises-pistache-de-cristophe-michalak",
+  "nombre": "Tarte fraises-pistache de Cristophe Michalak",
+  "categoria": "tartes",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Christophe Michalak",
+    "fuente_url": "http://cuisinecroqmimi.fr/recipe-items/tarte-fraises-creme-pistache-de-christophe-michalak/",
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "intermedio",
+  "temperatura_horno_c": 160,
+  "componentes": [
+    {
+      "nombre": "Shortbread",
+      "ingredientes": [
+        {
+          "cantidad": 300,
+          "unidad": "g",
+          "ingrediente": "beurre ½ sel"
+        },
+        {
+          "cantidad": 150,
+          "unidad": "g",
+          "ingrediente": "cassonade"
+        },
+        {
+          "cantidad": 350,
+          "unidad": "g",
+          "ingrediente": "farine"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème d'amandes",
+      "ingredientes": [
+        {
+          "cantidad": 3,
+          "unidad": "pcs",
+          "ingrediente": "œufs"
+        },
+        {
+          "cantidad": 150,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 150,
+          "unidad": "g",
+          "ingrediente": "poudre d'amandes"
+        },
+        {
+          "cantidad": 150,
+          "unidad": "g",
+          "ingrediente": "beurre"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème pistache",
+      "ingredientes": [
+        {
+          "cantidad": 360,
+          "unidad": "g",
+          "ingrediente": "crème liquide"
+        },
+        {
+          "cantidad": 160,
+          "unidad": "g",
+          "ingrediente": "chocolat blanc"
+        },
+        {
+          "cantidad": 25,
+          "unidad": "g",
+          "ingrediente": "pâte de pistaches"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "colorant vert"
+        }
+      ]
+    },
+    {
+      "nombre": "Décoration",
+      "ingredientes": [
+        {
+          "cantidad": 30,
+          "unidad": "pcs",
+          "ingrediente": "fraises (calibrage égal)"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "confiture de fraises"
+        },
+        {
+          "cantidad": 100,
+          "unidad": "g",
+          "ingrediente": "pistaches concassées"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Shortbread",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Préchauffer le four à 160°C. Mélanger avec les mains le beurre ½ sel mou avec la cassonade et la farine. Étaler sur plaque et cuire.",
+          "temp_c": 160,
+          "duracion_min": 20,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème d'amandes",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Préchauffer le four à 180°C. Mélanger à la maryse le beurre mou, le sucre glace, la poudre d'amandes et les œufs. Étaler sur le shortbread cuit et refroidi. Cuire 15-20 min.",
+          "temp_c": 180,
+          "duracion_min": 18,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème pistache",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Faire bouillir la crème, verser dessus le chocolat blanc et la pâte de pistaches. Ajouter le colorant vert. Mixer et réserver au frais.",
+          "temp_c": null,
+          "duracion_min": 10,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Dressage",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Déposer une fine couche de confiture de fraises sur le biscuit au pinceau. Pocher la crème pistache. Décorer avec les fraises coupées en deux et les pistaches concassées.",
+          "temp_c": null,
+          "duracion_min": 15,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image049.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

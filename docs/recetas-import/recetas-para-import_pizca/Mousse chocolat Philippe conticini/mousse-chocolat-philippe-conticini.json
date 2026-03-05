@@ -1,0 +1,523 @@
+{
+  "id": "mousse-chocolat-philippe-conticini",
+  "nombre": "Mousse chocolat Philippe conticini",
+  "categoria": "mousses",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Philippe Conticini",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2016-07-08",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 116,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 10.0,
+          "unidad": "g",
+          "ingrediente": "eau"
+        },
+        {
+          "cantidad": 35.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 55.0,
+          "unidad": "g",
+          "ingrediente": "noisettes entières brutes"
+        },
+        {
+          "cantidad": 260.0,
+          "unidad": "g",
+          "ingrediente": "d’eau"
+        },
+        {
+          "cantidad": 35.0,
+          "unidad": "g",
+          "ingrediente": "sucre roux"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "feuille",
+          "ingrediente": "gélatine"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "sucre roux"
+        },
+        {
+          "cantidad": 500.0,
+          "unidad": "g",
+          "ingrediente": "blancs d’œuf"
+        },
+        {
+          "cantidad": 140.0,
+          "unidad": "g",
+          "ingrediente": "lait demi-écrémé"
+        },
+        {
+          "cantidad": 300.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide"
+        },
+        {
+          "cantidad": 360.0,
+          "unidad": "g",
+          "ingrediente": "chocolat noir (68%)"
+        },
+        {
+          "cantidad": 120.0,
+          "unidad": "g",
+          "ingrediente": "chocolat au lait"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Le streusel chocolat :"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "sucre cassonade"
+        },
+        {
+          "cantidad": 65.0,
+          "unidad": "g",
+          "ingrediente": "poudre de noisette"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "farine (type T45)"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pincée",
+          "ingrediente": "fleur de sel"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "beurre très froid"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Le croustillant chocolat :"
+        },
+        {
+          "cantidad": 25.0,
+          "unidad": "g",
+          "ingrediente": "beurre"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "chocolat noir"
+        },
+        {
+          "cantidad": 45.0,
+          "unidad": "g",
+          "ingrediente": "noisettes entières"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "pâte de fruits secs caramélisé (à défaut, du praliné acheté dans le commerce)"
+        },
+        {
+          "cantidad": 210.0,
+          "unidad": "g",
+          "ingrediente": "streusel chocolat (voir ci-dessus)"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide"
+        },
+        {
+          "cantidad": 10.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "eau"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "noisettes entières brutes"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "amandes entières brutes"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans une cocotte en fonte, portez à ébullition l'eau avec le sucre."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Quand la température atteint 116°, ajoutez les noisettes entières."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Enrobez soigneusement les noisettes avec ce sirop de sucre, puis faites cuire le tout pendant 15 mn, sans jamais cesser de remuer à la cuillère de bois pour éviter aux noisettes de brûler."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "A la fin de la cuisson, les noisettes sont bien brillantes et ont pris une jolie couleur auburn (blond foncé)."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Versez les noisettes ainsi caramélisées sur une plaque en téflon, puis étalez-les pour que cela refroidisse plus rapidement."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "La veille toujours, dans une casserole, mélangez l’eau, le sucre roux et les noisettes caramélisées (voir recettes ci-dessus) préalablement concassées grossièrement."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Filmez la casserole avec un morceau de film alimentaire, puis portez le tout à frémissement, avant de retirer aussitôt la casserole du feu."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Laissez infuser le tout, hors du feu, pendant 15 mn."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Filtrez alors l’infusion, puis ajoutez les feuilles de gélatine préalablement trempées dans un bol d’eau froide et égouttées, ainsi que l’huile de noisette."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez bien jusqu’à ce que les feuilles de gélatine soient totalement fondues, puis mixez le tout à l’aide d’un mixeur plongeant."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mettez le tout au réfrigérateur pendant 24 h."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Le jour même, faites fondre la gelée de noisette dans une casserole, à 40°, jusqu’à ce qu’elle soit presque « sirupeuse », puis versez-la dans le fond de 4 verrines, sur 1,5 cm de hauteur."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Laissez-la prendre au réfrigérateur pendant au moins 2 h."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans un grand saladier, versez le sucre roux sur les blancs d'œufs, puis montez ces derniers en neige, de façon à ce qu'ils soient mousseux, bien moelleux, mais pas trop fermes."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans une casserole, portez le lait et la crème liquide à ébullition."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Faites fondre le chocolat au bain marie, puis versez, en deux fois, le mélange précédent (lait et crème liquide portés à ébullition)."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez le tout, hors du feu, de manière à faire descendre la température à 25°."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Incorporez alors, délicatement et en plusieurs fois, les blancs d’œufs montés en neige."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Le streusel chocolat :"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans la cuve du robot, versez l’ensemble des ingrédients, sauf le beurre, puis ajoutez ce dernier, bien froid, coupé en petits morceaux."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez le tout, à vitesse moyenne, pendant 5 mn, jusqu’à l’obtention d’une poudre grossière non amalgamée."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Répartissez cette poudre sur la plaque du four recouverte d’une feuille de papier sulfurisé, puis faites cuire le tout à 170°, pendant 15 mn."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Le croustillant chocolat :"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Faites fondre le beurre et le chocolat au bain marie, puis ajoutez les noisettes entières préalablement torréfiées (au four, à 160°, pendant 15 mn) et concassées."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez le tout intimement, dans la cuve du robot (à l’aide de la feuille), puis ajoutez le praliné, le streusel chocolat et la fleur de sel."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Une fois que la préparation est bien homogène, étalez l’ensemble sur la plaque du four recouverte d’une feuille de papier sulfurisé, sur une épaisseur de 1 cm d’épaisseur, puis faites cuire le tout à 160°, pendant 15 mn."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans une cocotte en fonte, portez à ébullition l'eau avec le sucre."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Enrobez soigneusement les fruits secs avec ce sirop de sucre, puis faites cuire le tout pendant 20 mn, sans jamais cesser de remuer à la cuillère de bois pour éviter aux amandes et aux noisettes de brûler."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "A la fin de la cuisson, les fruits secs sont bien brillants et ont pris une jolie couleur auburn (blond foncé)."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Versez les amandes et les noisettes ainsi caramélisées sur une plaque en téflon, puis étalez-les pour que cela refroidisse plus rapidement."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Quand ils sont bien froids, mixez les fruits secs dans un robot, en trois fois pour éviter que la pâte ne chauffe trop, jusqu'à l'obtention d'une pâte de praliné bien crémeuse."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Au fond de chaque verrine où se trouve déjà la gelée de noisette, versez la pâte de fruits secs caramélisés sur 0,5 cm de hauteur, puis déposez délicatement, par-dessus et contre les parois de la verrine, quelques morceaux de croustillant chocolat."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Recouvrez le tout, alors, de mousse au chocolat jusqu’aux deux tiers du verre, puis laissez prendre l’ensemble au frigo pendant 1 h."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Juste avant de servir, ajoutez, en surface, une rosace de chantilly (réalisée à l’aide d’une poche et d’une douille cannelée), ainsi que quelques morceaux de croustillant chocolat préalablement réduits en poudre grossière."
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "viernes, 8 de julio de 2016",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Le Chef a fait des siennes ce matin et à retravailler sa recette au dernier moment pour qu'elle soit encore plus \"un gros câlin\".",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Nous attendons les photos de vos réalisations avec impatience.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Pour les noisettes caramélisées :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Pour la gelée à la noisette :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Les noisettes caramélisées (voir recette ci-dessus)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "1 c.à.s d’huile de noisette (5 g)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Pour la mousse au chocolat (version \"Gros câlin\") :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "Pour le croustillant chocolat :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "2 belles pincées de fleur de sel (3 g)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Pour la pâte de fruits secs caramélisés :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "Pour les noisettes caramélisées :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "Le sucre, qui blanchit (masse) quelques minutes après l'adjonction des fruits secs, va finir par caraméliser de toutes parts.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "La veille et le jour même :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 15,
+          "descripcion": "Pour la gelée à la noisette",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 16,
+          "descripcion": "Pour la mousse au chocolat :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 17,
+          "descripcion": "Pour le croustillant chocolat :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 18,
+          "descripcion": "Pour la pâte de fruits secs caramélisés :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 19,
+          "descripcion": "Quand la température atteint 116°, ajoutez les noisettes et les amandes entières.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 20,
+          "descripcion": "Le sucre, qui blanchit (masse) quelques minutes après l'adjonction des fruits secs, va finir par caraméliser de toutes parts.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 21,
+          "descripcion": "Dans un saladier, mélangez la crème liquide avec le sucre glace, puis fouettez le tout en chantilly.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 22,
+          "descripcion": "Pour le montage de la mousse au chocolat :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Après le Live et les précieux conseils du Chef, voici la recette complète de la délicieuse mousse au chocolat du Chef."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

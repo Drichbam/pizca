@@ -1,0 +1,171 @@
+{
+  "id": "gateau-au-yaourt-teste-2025",
+  "nombre": "Gâteau au yaourt (testé 2025)",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": "http://www.gateauauyaourt.com/recette-gateau/gateau-au-yaourt-moelleux.html",
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 200,
+  "componentes": [
+    {
+      "nombre": "ingrédients",
+      "ingredientes": [
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "yaourt nature (mesure)"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "pot d'huile"
+        },
+        {
+          "cantidad": 2.0,
+          "unidad": "pcs",
+          "ingrediente": "pots de sucre"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pcs",
+          "ingrediente": "pots de farine"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "pot de poudre d'amande (ou frangipane)"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pcs",
+          "ingrediente": "oeufs"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "1/2 sachet de levure chimique"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "sachet",
+          "ingrediente": "sucre vanillé"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pincée",
+          "ingrediente": "sel"
+        }
+      ]
+    },
+    {
+      "nombre": "Préparation",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Préchauffez votre four à 200° (thermostat 6)"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Dans un saladier, versez le yaourt"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Ajoutez par dessus 2 pots de sucre, et 3 pots de farine"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Ajoutez le pot d'amande en poudre, c'est ce qui rendra votre gâteau moelleux !"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Ajoutez le pot d'huile"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Cassez les 3 oeufs et ajoutez-les"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Ajoutez le demi sachet de levure, et le sucre vanillé"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez le tout avec un fouet, jusqu'à obtenir une pâte lisse et homogène"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Préparez votre moule ( moule à cake, ou moule à tarte ), en le beurrant bien, pour le démouler facilement après cuisson."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Etalez la pâte dans le moule, et enfournez pendant 30 minutes !"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Regardez de temps en temps si le gateau est cuit, car selon les fours, la durée est différente. Pour celà, à partir d'une vingtaine de minutes, enfoncez la pointe d'un couteau au milieu de votre gateau au yaourt. Si il ressort sans pâte collée, alors c'est cuit !"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Thursday, July 31, 2014",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Préparation",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "From <http://www.gateauauyaourt.com/recette-gateau/gateau-au-yaourt-moelleux.html>",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

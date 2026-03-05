@@ -1,0 +1,196 @@
+{
+  "id": "dome-poire-chocolat",
+  "nombre": "Dôme poire-chocolat",
+  "categoria": "entremets",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2014-03-30",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 185,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 2.0,
+          "unidad": "g",
+          "ingrediente": "gélatine soit une feuille"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "jaunes d'œufs"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "œuf entier"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "pulpe de poire"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "miel d'acacia"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "vanille fendue grattée 150 g de farine"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "crème fraîche entière"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "beurre clarifié"
+        },
+        {
+          "cantidad": 60.0,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "perles craquantes"
+        },
+        {
+          "cantidad": 120.0,
+          "unidad": "g",
+          "ingrediente": "chocolat à 64 % de cacao"
+        },
+        {
+          "cantidad": 2.0,
+          "unidad": "g",
+          "ingrediente": "gélatine soit une feuille"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "crème fleurette à 30 ou 35 % 100 g de lait frais entier"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "domingo, 30 de marzo de 2014",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "L'insert poire gimgembre",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "1 doigt de gingembre frais râpé 75 g de beurre",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "1 cc de levure chimique",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "La mousse vanillée Ivoire caramel",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "La réalisationL'insert",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "Faites tremper la gélatine dans beaucoup d’eau froide. Dans un cul-de-poule, réunissez la pulpe de poire, le sucre et les œufs. Faites épaissir au bain-marie sans cesser de remuer. Hors du feu, ajoutez la gélatine essorée puis le gingembre râpé. Quand le mélange est à 35°C, incorporez au mixeur plongeant le beurre pommade. Dressez dans les 12 empreintes demi-sphères de 5 cm sur 1 cm d’épaisseur et congelez.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Tamisez la farine et la levure. Fouettez 3 min les œufs, le sucre, le miel, ajoutez la crème puis incorporez la farine et la levure tamisées et enfin le beurre tiède et les graines de vanille. Étalez sur un Flexipat®, parsemez de perles craquantes et enfournez 10 min à 185°C. Démoulez et découpez à l’emporte-pièce 12 disques de 8 cm de diamètre. Réservez-les en intercalant du papier cuisson entre chaque biscuit.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "Faites tremper la gélatine dans de l’eau froide. Portez le lait à ébullition, y dissoudre la gélatine essorée. Parallèlement, faites fondre le chocolat au bain-marie. Réalisez une émulsion en versant en trois fois le lait chaud dans le chocolat en frictionnant à la maryse. Quand le mélange est à 40°C, incorporez délicatement la crème montée mousseuse.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "Dans les 12 empreintes demi-sphères de 8 cm, coulez la mousse aux 3 quarts de la hauteur, posez par- dessus en appuyant légèrement un insert aux poires congelé, côté bombé vers le bas. Terminez par un cercle de biscuit. Congelez à nouveau.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Sortez les entremets du congélateur et réservez-les 6 heures au réfrigérateur avant de les consommer. Décorez avec quelques perles craquantes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image002.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

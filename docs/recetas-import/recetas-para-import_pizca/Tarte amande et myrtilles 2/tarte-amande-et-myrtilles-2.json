@@ -1,0 +1,63 @@
+{
+  "id": "tarte-amande-et-myrtilles-2",
+  "nombre": "Tarte amande et myrtilles 2",
+  "categoria": "tartes",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Philippe Conticini",
+    "fuente_url": null,
+    "libro": "La Pâtisserie des Rêves"
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "avanzado",
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "pâte sucrée vanillée"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "beurre d'amandes"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "crème à l'amande au rhum"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "myrtilles fraîches + crème de cassis"
+        }
+      ]
+    }
+  ],
+  "preparacion": [],
+  "notas": [
+    "Version 2 — même recette Conticini, variante non détaillée dans OneNote."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

@@ -1,0 +1,88 @@
+{
+  "id": "chocolate-cremeux",
+  "nombre": "Chocolate Crémeux",
+  "categoria": "crèmes-de-base",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "intermedio",
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 250,
+          "unidad": "g",
+          "ingrediente": "chocolat noir 70%"
+        },
+        {
+          "cantidad": 250,
+          "unidad": "g",
+          "ingrediente": "crème liquide"
+        },
+        {
+          "cantidad": 125,
+          "unidad": "g",
+          "ingrediente": "lait entier"
+        },
+        {
+          "cantidad": 50,
+          "unidad": "g",
+          "ingrediente": "jaunes d'oeufs (2-3)"
+        },
+        {
+          "cantidad": 40,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Faire chauffer le lait et la crème. Blanchir les jaunes avec le sucre, verser le mélange chaud dessus et cuire à 82-84°C comme une crème anglaise.",
+          "temp_c": 84,
+          "duracion_min": 10,
+          "notas_tecnicas": "Ne pas dépasser 84°C."
+        },
+        {
+          "orden": 2,
+          "descripcion": "Verser sur le chocolat haché en 3 fois, en émulsionnant avec une maryse. Mixer au plongeant pour lisser. Filmer au contact et réserver au frais.",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Receta básica de crémeux au chocolat — nota OneNote sin detalle. Cantidades estimadas standard."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

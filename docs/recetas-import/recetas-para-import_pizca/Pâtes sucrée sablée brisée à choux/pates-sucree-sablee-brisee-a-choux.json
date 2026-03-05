@@ -1,0 +1,69 @@
+{
+  "id": "pates-sucree-sablee-brisee-a-choux",
+  "nombre": "Pâtes sucrée sablée brisée à choux",
+  "categoria": "biscuits",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Mercotte",
+    "fuente_url": "http://www.mercotte.fr/generalites-sur-les-pates-astuces-et-tours-de-main/",
+    "libro": null
+  },
+  "fecha_creacion": "2016-02-28",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Référence",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "page de référence — voir Mercotte pour détails des différentes pâtes"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "domingo, 28 de febrero de 2016",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "http://www.mercotte.fr/generalites-sur-les-pates-astuces-et-tours-de-main/",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Page de référence OneNote avec lien Mercotte sur les différentes pâtes de base.",
+    "Ce n'est pas une receta individuelle mais un mémo technique."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

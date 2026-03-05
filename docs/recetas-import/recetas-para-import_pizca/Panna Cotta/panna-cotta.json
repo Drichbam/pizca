@@ -1,0 +1,92 @@
+{
+  "id": "panna-cotta",
+  "nombre": "Panna Cotta",
+  "categoria": "crèmes-de-base",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2016-01-18",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Ingredientes (6-8 raciones)",
+      "ingredientes": [
+        {
+          "cantidad": 500.0,
+          "unidad": "pcs",
+          "ingrediente": "ml. de nata para montar, 300 ml. de leche entera, 50 gramos de azúcar glas, 1 vaina de vainilla, 4 hojas de gelatina."
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "lunes, 18 de enero de 2016",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Ingredientes (6-8 raciones)",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Vierte la nata, la leche y el azúcar glas en un cazo que puedas llevar al fuego. Abre la vaina de vainilla y raspa las semillas del interior, vertiéndolas en la nata. Pon las hojas de gelatina en remojo, en agua fría, para que se hidraten.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Pon el cazo al fuego y lleva a ebullición la nata con la leche, moviendo de vez en cuando para que no se pegue al fondo. Cuando rompa a hervir incorpora las hojas de gelatina bien escurridas, mezcla bien para que se disuelva y retira del fuego.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Vierte el preparado de la panacota en un recipiente amplio para que se enfríe rápido, pasándolo por un colador. Deja enfriar y después introdúcelo en el frigorífico, tapándolo previamente con film transparente.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "En cuanto veas que empieza a espesar, remueve enérgicamente para repartir bien las semillas de la vainilla que pueden haber quedado en la superficie, y vierte la panacota en los moldes elegidos. Tápalos y vuelve a introducirlos en el frigorífico, lo ideal es dejarlos reposar y cuajar hasta el día siguiente, o como mínimo 5 horas.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

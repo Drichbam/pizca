@@ -1,0 +1,180 @@
+{
+  "id": "le-millefeuille-de-pierre-herme-lexpress",
+  "nombre": "Le millefeuille de Pierre Hermé - L'Express",
+  "categoria": "entremets",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé",
+    "fuente_url": "https://www.google.es/amp/www.lexpress.fr/styles/saveurs/recette/le-millefeuille-de-pierre-herme_1229743.amp.html?client=safari",
+    "libro": null
+  },
+  "fecha_creacion": "2017-02-05",
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 230,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 400.0,
+          "unidad": "g",
+          "ingrediente": "fraises ou framboises"
+        },
+        {
+          "cantidad": 400.0,
+          "unidad": "g",
+          "ingrediente": "pâte feuilletée"
+        },
+        {
+          "cantidad": 25.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 500.0,
+          "unidad": "g",
+          "ingrediente": "crème fraîche liquide"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "g",
+          "ingrediente": "vanille"
+        },
+        {
+          "cantidad": 5.0,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d'oeufs"
+        },
+        {
+          "cantidad": 125.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 330.0,
+          "unidad": "g",
+          "ingrediente": "mascarpone"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Préchauffez votre four à 230 °C."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Étalez 2 rectangles de pâte feuilletée de 30 x 40 cm. Mettez-les au frais 15 min, puis poudrez-les de sucre semoule."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Enfournez et baissez aussitôt le thermostat à 190 °C."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Au bout de 8 min, couvrez la pâte de papier sulfurisé pour l'empêcher de lever et poursuivez la cuisson 10 min."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Hors du four, poudrez les rectangles de pâte de sucre glace et enfournez de nouveau pour les faire caraméliser. Laissez refroidir."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Faites tremper la gélatine dans de l'eau froide."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Mélangez les jaunes d'oeufs avec le sucre semoule."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Portez à ébullition la crème avec la vanille, laissez infuser."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Versez la crème sur les jaunes et le sucre, fouettez et remettez dans la casserole avant de la cuire comme une crème anglaise. Ajoutez la gélatine égouttée, réservez au frais."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Fouettez le mascarpone et détendez-le progressivement avec la crème anglaise."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Découpez chaque plaque de pâte en 3 bandes puis chaque bande en 3/4 rectangles."
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "Posez les fruits sur l'un d'eux, recouvrez d'un autre tronçon, puis appliquez la crème au mascarpone avec une poche à douille, et terminez par un rectangle de pâte."
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "domingo, 5 de febrero de 2017",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "3,5 feuilles de gélatine",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Pour cette recette de millefeuille aux fruits rouges :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "https://www.google.es/amp/www.lexpress.fr/styles/saveurs/recette/le-millefeuille-de-pierre-herme_1229743.amp.html?client=safari",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

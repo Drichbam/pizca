@@ -1,0 +1,136 @@
+{
+  "id": "cake-choco-banane",
+  "nombre": "Cake choco banane",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": "https://cuisine.journaldesfemmes.fr/astuces-termes-et-tournemains/1957989-fondre-definition/",
+    "libro": null
+  },
+  "fecha_creacion": "2024-01-24",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 150,
+          "unidad": "g",
+          "ingrediente": "chocolat"
+        },
+        {
+          "cantidad": 80,
+          "unidad": "g",
+          "ingrediente": "sucre en poudre"
+        },
+        {
+          "cantidad": 80,
+          "unidad": "g",
+          "ingrediente": "cassonade"
+        },
+        {
+          "cantidad": 160,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 130,
+          "unidad": "g",
+          "ingrediente": "beurre"
+        },
+        {
+          "cantidad": 4,
+          "unidad": "pcs",
+          "ingrediente": "bananes"
+        },
+        {
+          "cantidad": 3,
+          "unidad": "pcs",
+          "ingrediente": "oeufs"
+        },
+        {
+          "cantidad": 0.5,
+          "unidad": "pcs",
+          "ingrediente": "paquet de levure"
+        },
+        {
+          "cantidad": 2,
+          "unidad": "cs",
+          "ingrediente": "rhum"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "miércoles, 24 de enero de 2024",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Couper les bananes en rondelles, les faire revenir 5 minutes dans une poêle avec un morceau de beurre. Les laisser refroidir.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "3Mélanger les deux sucres avec les œufs jusqu’à blanchiment.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "4Ajouter la farine et la levure, puis le beurre fondu. Ajouter le rhum, et le chocolat grossièrement coupé en pépites.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "5Ajouter les bananes bien refroidies, pour ne pas faire fondre le chocolat.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Pour finir Verser la pâte dans un moule à cake (beurré ou recouvert de papier sulfurisé) et laisser cuire 40 minutes.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image097.gif"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

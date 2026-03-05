@@ -1,0 +1,135 @@
+{
+  "id": "creme-brulee",
+  "nombre": "Crème brûlée",
+  "categoria": "crèmes-de-base",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "MeilleurduChef.com",
+    "fuente_url": "https://www.meilleurduchef.com/cgi/mdc/l/fr/recette/creme-brulee.html",
+    "libro": null
+  },
+  "fecha_creacion": "2016-01-10",
+  "fecha_actualizacion": null,
+  "porciones": 6,
+  "molde": "6 ramequins / plats à crème brûlée",
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "intermedio",
+  "temperatura_horno_c": 100,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 6,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d'oeufs"
+        },
+        {
+          "cantidad": 75,
+          "unidad": "cl",
+          "ingrediente": "crème fraîche liquide entière"
+        },
+        {
+          "cantidad": 100,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 2,
+          "unidad": "pcs",
+          "ingrediente": "gousses de vanille"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "cassonade (pour caraméliser)"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Fouetter les oeufs et le sucre dans un récipient, sans les blanchir.",
+          "temp_c": null,
+          "duracion_min": 3,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Ajouter la crème en plusieurs fois et mélanger.",
+          "temp_c": null,
+          "duracion_min": 2,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Fendre la gousse de vanille en deux et gratter les graines. Les ajouter au mélange.",
+          "temp_c": null,
+          "duracion_min": 2,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Lier l'appareil aux oeufs et au sucre. Bien mélanger.",
+          "temp_c": null,
+          "duracion_min": 2,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Répartir les trois ingrédients dans les ramequins.",
+          "temp_c": null,
+          "duracion_min": 3,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Remplir les plats à crème brûlée du mélange au maximum.",
+          "temp_c": null,
+          "duracion_min": 2,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "Enfourner. Cuire doucement pendant 1h à 1h30 au bain-marie à 100°C, voire un peu moins. Il ne faut pas que la crème bouille ni que des bulles se forment.",
+          "temp_c": 100,
+          "duracion_min": 75,
+          "notas_tecnicas": "Température critique: la crème ne doit jamais bouillir."
+        },
+        {
+          "orden": 8,
+          "descripcion": "Placer les crèmes bien refroidies. Saupoudrer de cassonade en couche fine suffisamment épaisse. Caraméliser au chalumeau.",
+          "temp_c": null,
+          "duracion_min": 5,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Source: MeilleurduChef.com — recette extraite depuis screenshot OneNote.",
+    "La crème est un vrai pur délice. La texture fondante en bouche, les petits points noirs de la vanille, un vrai régal pour les gourmands."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image073.jpg",
+    "image074.jpg",
+    "image075.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

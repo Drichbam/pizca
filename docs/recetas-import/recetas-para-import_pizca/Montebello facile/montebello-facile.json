@@ -1,0 +1,201 @@
+{
+  "id": "montebello-facile",
+  "nombre": "Montebello facile",
+  "categoria": "autre",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": null,
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Biscuit dacquoise pistache",
+      "ingredientes": [
+        {
+          "cantidad": 25.0,
+          "unidad": "g",
+          "ingrediente": "pistaches"
+        },
+        {
+          "cantidad": 135.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace (et un peu pour saupoudrer)"
+        },
+        {
+          "cantidad": 115.0,
+          "unidad": "g",
+          "ingrediente": "amandes en poudre (125g: ok)"
+        },
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "blancs d'œufs (3-4 blancs)"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "sucre en poudre"
+        },
+        {
+          "cantidad": 20.0,
+          "unidad": "g",
+          "ingrediente": "pâte de pistache"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème pistache facile",
+      "ingredientes": [
+        {
+          "cantidad": 360.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide"
+        },
+        {
+          "cantidad": 160.0,
+          "unidad": "g",
+          "ingrediente": "chocolat blanc"
+        },
+        {
+          "cantidad": 25.0,
+          "unidad": "g",
+          "ingrediente": "pâte de pistaches"
+        }
+      ]
+    },
+    {
+      "nombre": "Garniture",
+      "ingredientes": [
+        {
+          "cantidad": 400.0,
+          "unidad": "g",
+          "ingrediente": "fraises"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Tuesday, June 23, 2015",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Garniture",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Pistaches mondées et concassées",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème pistache",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Dans une casserole, faites bouillir la crème, verser dessus le chocolat blanc et la pâte de pistaches (j’ai ajouté un peu de colorant vert pour que la crème est une belle couleur pistache). Mixer, mettre en poche et réserver 1 nuit au réfrigérateur.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Dacquoise",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Préparez le biscuit dacquoise. Hachez finement les pistaches. Mélangez le sucre glace avec les amandes en poudres et les pistaches hachées. Fouettez les blancs d'œufs en neige en y incorporant en 3 fois le sucre en poudre. Assouplissez la pâte de pistache avec un peu de blancs montés.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Incorporez délicatement avec une spatule le mélange sucre glace - amandes et la pâte de pistache. Garnissez-en un poche à douille munie d'une douille lisse nº10",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Préchauffez le four à 170 ºC",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Badigeonnez de beurre un cercle à pâtisserie de 24cm de diamètre et de 2 cm de haut, ou un cadre en inox de 20x15. Posez-le sur une plaque à pâtisserie recouverte de papier sulfurisé spécial cuisson. En partant du centre, façonnez une spirale avec la pâte jusqu'au bord du cercle, puis dressez des boules en bordure côte à côte. Dans le cas d'un cadre en inox, tracez des boudins parallèles et ajouter un boudin sur tout le périmètre.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Saupoudrez de sucre glace. Glissez dans le four et laissez cuire 30-40 minutes. Laissez refroidir sur un grille à pâtisserie.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Montage",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Pochez des lignes de crème pistache sur la dacquoise.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Équeutez les fraises. Coupez-les en deux et disposez-les harmonieusement sur la crème. Préparer du nappage neutre (en vente dans le commerce) et nappez-en les fraises pour leur les faire briller. Parsemez de pistaches mondées et concassées.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image045.jpg",
+    "image046.jpg",
+    "image047.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

@@ -1,0 +1,90 @@
+{
+  "id": "tarte-amande-et-myrtilles",
+  "nombre": "Tarte Amande et Myrtilles",
+  "categoria": "tartes",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Philippe Conticini",
+    "fuente_url": null,
+    "libro": "La Pâtisserie des Rêves"
+  },
+  "fecha_creacion": null,
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": "avanzado",
+  "temperatura_horno_c": null,
+  "componentes": [
+    {
+      "nombre": "Pâte sucrée vanillée",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "pâte sucrée vanillée (voir recette de base)"
+        }
+      ]
+    },
+    {
+      "nombre": "Beurre d'amandes",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "beurre d'amandes (voir livre Conticini)"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème à l'amande au rhum",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "crème à l'amande parfumée au rhum (voir livre)"
+        }
+      ]
+    },
+    {
+      "nombre": "Garniture myrtilles",
+      "ingredientes": [
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "myrtilles fraîches"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "crème de cassis"
+        },
+        {
+          "cantidad": null,
+          "unidad": "QS",
+          "ingrediente": "fruits secs caramélisés"
+        }
+      ]
+    }
+  ],
+  "preparacion": [],
+  "notas": [
+    "Recette de Philippe Conticini (La Pâtisserie des Rêves).",
+    "Nota OneNote contenait un long texte de blog sans quantités précises — à compléter depuis le livre.",
+    "Association clé: jus de myrtilles + crème de cassis pour sublimer le fruit."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

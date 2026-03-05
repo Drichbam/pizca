@@ -1,0 +1,169 @@
+{
+  "id": "biscuits-sables-viennois-sprits",
+  "nombre": "Biscuits sablés viennois- sprits",
+  "categoria": "biscuits",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé",
+    "fuente_url": null,
+    "libro": null
+  },
+  "fecha_creacion": "2014-07-13",
+  "fecha_actualizacion": null,
+  "porciones": null,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 180,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 190.0,
+          "unidad": "g",
+          "ingrediente": "beurre doux en pommade"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "fleur de sel"
+        },
+        {
+          "cantidad": 75.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "blanc d'oeuf (1 blanc apprx)"
+        },
+        {
+          "cantidad": 220.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "domingo, 13 de julio de 2014",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "2-3 pincées de poudre de vanille",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Travaillez le beurre au batteur jusqu’à ce qu’il devienne bien crémeux",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Ajoutez-y le sucre glace, la fleur de sel, la vanille, blanchir le mélange",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "et le blanc d’œuf et mélangez à nouveau au batteur jusqu’à ce que le mélange devienne homogène et s'aére vitesse max",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Incorporez la farine doucement et dès lors que celle-ci est bien incorporée, cessez de travailler la pâte. À la maryse c'est bien aussi",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "Préchauffez le four à 180°C",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Transvasez la pâte dans une poche à douille munie d’une douille cannelé",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "Dressez vos sablés en « W » sur une plaque recouverte de papier cuisson en veillant à bien les espacer",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "Enfournez pour 12 à 15 minutes",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Laissez refroidir sur une grille",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "– Apportez une petite touche originale à vos Spritz en les enrobant de noix de coco râpé après les avoir trempés dans le chocolat fondu",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "– Ces sablés peuvent se conserver une petite semaine dans une boite hermétique.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "– La pâte étant assez compacte vous remarquerez qu’il est difficile de dresser les sablés, cependant avec une douille suffisamment large (aux alentours de 13 mm de diamètre comme la mienne), l’opération devrait s’avérer moins compliquée."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image030.jpg",
+    "image031.jpg",
+    "image032.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

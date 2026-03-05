@@ -1,0 +1,556 @@
+{
+  "id": "tarte-infiniment-vanille",
+  "nombre": "Tarte Infiniment Vanille",
+  "categoria": "tartes",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé / Mercotte",
+    "fuente_url": "https://www.mercotte.fr/2012/04/04/apres-linfiniment-cafe-et-pour-valoriser-les-restes-voici-la-tarte-infiniment-vanille-de-pierre-herme-toujours-et-encore/",
+    "libro": null
+  },
+  "fecha_creacion": "2015-01-08",
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 190,
+  "componentes": [
+    {
+      "nombre": "Pâte sablée",
+      "ingredientes": [
+        {
+          "cantidad": 150.0,
+          "unidad": "g",
+          "ingrediente": "beurre doux"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "sucre glace"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "poudre d’amande blanche"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "vanille en poudre"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pcs",
+          "ingrediente": "œuf (60 g)"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "fleur de sel de Guérande"
+        },
+        {
+          "cantidad": 250.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        }
+      ]
+    },
+    {
+      "nombre": "Biscuit cuillère",
+      "ingredientes": [
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "blancs d’œufs (140 g)"
+        },
+        {
+          "cantidad": 90.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "jaunes d’œufs (80g)"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 50.0,
+          "unidad": "g",
+          "ingrediente": "fécule de pomme de terre"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème anglaise à la vanille",
+      "ingredientes": [
+        {
+          "cantidad": 500.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide (32/34 % MG)"
+        },
+        {
+          "cantidad": 2.0,
+          "unidad": "g",
+          "ingrediente": "vanille Madagascar fendue et grattée"
+        },
+        {
+          "cantidad": 130.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "feuille",
+          "ingrediente": "gélatine (8g) qualité Or (200 Blooms)"
+        }
+      ]
+    },
+    {
+      "nombre": "Crème de mascarpone à la vanille",
+      "ingredientes": [
+        {
+          "cantidad": 450.0,
+          "unidad": "g",
+          "ingrediente": "crème anglaise à la vanille"
+        },
+        {
+          "cantidad": 300.0,
+          "unidad": "g",
+          "ingrediente": "mascarpone"
+        }
+      ]
+    },
+    {
+      "nombre": "Ganache à la vanille",
+      "ingredientes": [
+        {
+          "cantidad": 230.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide (32/34 % MG)"
+        },
+        {
+          "cantidad": 2.0,
+          "unidad": "g",
+          "ingrediente": "vanille Madagascar fendue et grattée"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "g",
+          "ingrediente": "d’extrait de vanille naturel sans alcool"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "vanille en poudre"
+        },
+        {
+          "cantidad": 250.0,
+          "unidad": "g",
+          "ingrediente": "chocolat blanc"
+        }
+      ]
+    },
+    {
+      "nombre": "Sirop à la vanille",
+      "ingredientes": [
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "d’eau minérale"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "g",
+          "ingrediente": "vanille Madagascar"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "g",
+          "ingrediente": "d’extrait de vanille liquide sans alcool"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 10.0,
+          "unidad": "g",
+          "ingrediente": "vieux rhum brun agricole"
+        }
+      ]
+    },
+    {
+      "nombre": "Glaçage à la vanille",
+      "ingredientes": [
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "chocolat blanc"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "g",
+          "ingrediente": "sucre semoule"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "g",
+          "ingrediente": "pectine* NH à confiture"
+        },
+        {
+          "cantidad": 60.0,
+          "unidad": "g",
+          "ingrediente": "d’eau minérale"
+        },
+        {
+          "cantidad": 40.0,
+          "unidad": "g",
+          "ingrediente": "crème liquide (32/34 % MG)"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "g",
+          "ingrediente": "poudre d’oxyde titane* (en pharmacie)"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "jueves, 8 de enero de 2015",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Ingrédients (8 personnes- cercle 24cm x 2cm - préparation : 120 min - cuisson : 90 min) :",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Recette prise du blog de Mercotte prise du best of Pierre Hermé origine pour 17cm",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "https://www.mercotte.fr/2012/04/04/apres-linfiniment-cafe-et-pour-valoriser-les-restes-voici-la-tarte-infiniment-vanille-de-pierre-herme-toujours-et-encore/",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "De 17cm à 24cm multiplier par 2",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "De 17cm à 35x25 multiplier par 4 (3,86)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "J-X: pâte sablée (x2 ou x4 pour en préparer d'avance)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "J-3: crème anglaise et crème mascarpone à la vanille, congeler le disque",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "J-2: fond de tarte, sirop d'imbibage et biscuit à la cuillère",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "J-1: ganache, glaçage, montage",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Pour un cercle de 24cm (les proportions sont déjà multipliés par 2):",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Crème anglaise à la vanille",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "4-5 jaunes d’œufs (100 g)",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Glaçage à la vanille",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "0,5 gousse de vanille Madagascar fendue et grattée",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    },
+    {
+      "componente": "Finition",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "Après le succès incontestable de la tarte Infiniment Café de Pierre Hermé il me restait de la pâte sucrée et un disque de biscuit à la cuillère, tout ce qu’il fallait pour tenter la Tarte Infiniment Vanille qui m’avait séduite dans le Best of Hermé récemment paru aux Éditions Ducasse. Cerise sur le gâteau, l’avantage de cette collection c’est que les recettes sont photographiées pas à pas, ça peut aider… Et cette fois pas d’adaptation, j’ai suivi la recette de bout en bout jusqu’au glaçage !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Pour un cercle à tarte de 17cm… je redonne tout.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "La pâte sablée-sucrée selon les interprétations* : 75g de beurre doux, 15g de poudre d’amande blanche, 50g de sucre glace, 1/2gousse de vanille en poudre, 30g d’œuf, 0.5g de fleur de sel, 125g de farine.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Dans le bol du robot, crémez au fouet plat le sucre glace et le beurre pommade, ajoutez la poudre d’amande, le sel, les graines de vanille, l’œuf et la farine tamisée. Ne corsez* pas la pâte. Rassemblez-la entre 2 feuilles guitare*, étalez-la finement. Marquez un disque avec le cercle à pâtisserie de 17cm et avec le dos d’un couteau marquez également 2 bandes rectangulaires* de 1.5cm de large pour les côtés du moule. Réservez au réfrigérateur 2 heures ou mieux 30min au congélateur. Foncez le moule, égalisez les bords*, piquez les fonds et les bords à la fourchette et enfournez à 190° 12min environ, la tarte doit être dorée. Laissez refroidir, retirez le cercle et réservez.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Le biscuit à la cuillère : 70g de blancs d’œufs, 45g de sucre semoule, 40g de jaunes d’œufs, 25g de farine, 25g de fécule.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Montez les blancs en ajoutant le sucre petit à petit dès qu’ils commencent à mousser. Quand ils sont au bec d’oiseau*, ajoutez rapidement les jaunes à vitesse minimum puis incorporez délicatement à la maryse la fécule tamisée avec la farine. A l’aide d’une poche munie d’une douille de 7mm dressez en spirale sur un papier cuisson un disque de 13cm de diamètre. Enfournez 10min environ à 200°*. Laissez refroidir.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "La crème anglaise à la vanille : 250g de crème liquide entière, 1 gousse de vanille de Madagascar fendue et grattée, 50g de jaunes d’œufs, 65g de sucre semoule, 2 feuilles de gélatine soit 4g.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Faites tremper la gélatine 20min dans l’eau froide et laissez infuser la gousse et les graines de vanille 30min dans la crème bouillie. Passez au chinois. Mélangez les jaunes et le sucre, portez à nouveau la crème à ébullition et versez-la sur les jaunes et le sucre. Fouettez le tout et reportez sur le feu. Laissez cuire en remuant à 84°. Ajoutez la gélatine égouttée, mixez, laissez refroidir et réservez au réfrigérateur.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "Crème mascarpone à la vanille : 225g de crème anglaise à la vanille, 150g de mascarpone.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "Dans la cuve du robot foisonnez* légèrement au fouet le mascarpone puis détendez progressivement avec une partie de la crème anglaise, puis le restant et laissez monter. Utilisez aussitôt.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "Version Mercotte : Chemisez de rhodoïd un cercle de 17 cm* de diamètre et pochez* la crème sur 1.5cm de hauteur. Bloquez au froid*.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "Version PH : Moulez la crème à la poche à douille dans un cercle de 20cm de diamètre et de 1.5cm de haut trempé dans l’eau chaude et égoutté. Lissez à la spatule, démoulez aussitôt et glissez au congélateur. Le cercle ne doit être ni trop chaud ni trop froid, s’il est trop chaud la crème va devenir liquide, s’il est trop froid le démoulage ne sera pas net …. Utilisez une fois congelé.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "Sirop d’imbibage à la vanille : 100g d’eau minérale, 1gousse 1/2 de vanille de Madagascar fendue et grattée, 2g d’extrait de vanille liquide sans alcool, 50g de sucre semoule, 5g de vieux rhum agricole brun.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "Mélangez l’eau, le sucre, la gousse de vanille fendue et grattée. Portez à ébullition et laissez infusez minimum 30min. Ajoutez l’extrait et le rhum. Réservez dans une boîte hermétique au réfrigérateur.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 15,
+          "descripcion": "Ganache à la vanille : 115g de crème liquide entière, 1 gousse de vanille fendue et grattée, 2g d’extrait de vanille naturel sans alcool, 0.5g de vanille en poudre, 125g de chocolat blanc si possible Ivoire de Valrhona.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 16,
+          "descripcion": "Chauffez aux environs de 50° la crème avec la gousse et les graines de vanille. Laissez infuser 30min. Faites fondre le chocolat au bain-marie, faites bouillir la crème passée au chinois en ajoutant l’extrait et la poudre et versez-la en 3 fois dans le chocolat en frictionnant à la maryse pour obtenir un noyau lisse et brillant signe d’une émulsion démarrée*. Mixez et utilisez aussitôt.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 17,
+          "descripcion": "Dans le fond de tarte, versez les 2/3 de la ganache. Imbibez au pinceau le disque de biscuit à la cuillère avec le sirop vanille, posez-le au centre de la tarte et appuyez légèrement. Versez le reste de ganache et laissez cristalliser au réfrigérateur. Une fois la ganache figée posez la tarte sur une semelle en carton et/ou sur un plat adapté. Pendant ce temps préparez le glaçage.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 18,
+          "descripcion": "Le glaçage à la vanille : 50g de chocolat blanc, 15g de sucre semoule, 0.5g de pectine NH*, 30g d’eau minérale, 20g de crème liquide entière, 1/4 de gousse de vanille fendue et grattée, 2g de poudre d’oxyde de titane*.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 19,
+          "descripcion": "Faites fondre le chocolat au bain-marie, mélangez le sucre et la pectine. Portez à ébullition l’eau la crème et la vanille, retirez la gousse et ajoutez le mélange sucre pectine. Faites à nouveau bouillir versez sur le chocolat et frictionnez à la maryse, ajoutez la poudre de titane. Mixez et utilisez aussitôt.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 20,
+          "descripcion": "La finition : sortez le disque de crème mascarpone du congélateur, retirez immédiatement le rhodoïd si vous avez choisi cette option, posez-le sur une grille et versez dessus à la louche le glaçage chauffé à 35°, lissez à l’aide d’une palette pour avoir une couche fine et régulière puis centrez-le sur la ganache figée. A l’aide d’une passette à thé saupoudrez le côté gauche de vanille en poudre sur une largeur d’environ 2cm. Réservez au réfrigérateur jusqu’à la consommation. La tarte est meilleure le lendemain, elle se tranche très facilement. Elle se conserve 2 jours au frais.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 21,
+          "descripcion": "Explications utiles ou futiles",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 22,
+          "descripcion": "La cuisson du jour : contrairement à la tarte au café PH chemise le fond de pâte de papier aluminium, le remplit de billes de cuisson et enfourne à 170°environ 25min. Idem pour le biscuit à la cuillère PH ou celui qui a écrit la recette le cuit environ 6min à 230°. Deux recettes semblables, 2 transmissions différentes selon le livre de référence. Choisissez votre camp !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 23,
+          "descripcion": "La vanille : désolée je n’ai que de la Tahiti, et Thierry si tu me lis, le kilo rapporté commence à s’épuiser….je passe commande aux locaux.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 24,
+          "descripcion": "Foisonner : c’est incorporer de l’air, il ne faut pas le faire à grande vitesse car les bulles d’air vont être grosses et irrégulières. On veut obtenir des micro bulles serrées les unes contre les autres pour avoir in fine une texture optimum. Pour cela il faut toujours foisonner à vitesse moyenne et constante.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 25,
+          "descripcion": "Réflexions personnelles sur la version PH de la crème mascarpone : tout d’abord pourquoi un cercle de 20cm pour un fond de tarte de 17 ? Sur la photo du livre il ne dépasse pas après le dressage final. Ensuite, je trouve que chemiser de rhodoïd un cercle puis congeler le tout donne une finition lisse et pose moins de problème, mais bon, c’est juste ma façon de faire… suis pas une pro non plus.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 26,
+          "descripcion": "Frictionner à la maryse pour obtenir un noyau lisse et brillant signe d’une émulsion démarrée : comment réaliser une émulsion : phrase emblématique signée Frédéric Bau à retenir coûte que coûte !",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 27,
+          "descripcion": "La pectine NH : différente de la pectine jaune utilisée pour les pâtes de fruits car réversible. Voir tous les détailsici clic.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 28,
+          "descripcion": "L’oxyde de titane : colorant minéral naturel blanc, utilisé aussi comme agent blanchissant dans les dentifrices, E 171 pour ceux qui ont comme moi l’application pour smartphone Les E très utile pour connaître les dangers de certains additifs ou conservateurs. Indispensable pour avoir des macarons blancs. Vous en trouvez ici clic",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [
+    "Pâte sucrée ou pâte sablée : connaissez vous la différence, j’ai eu une remarque dans les commentaires de la semaine dernière. En réalité ce qui les différencie c’est le beurre. La sablée est plus friable car elle a plus de beurre que de sucre et la sucrée est plus « dure » et facile à étaler car elle a moins de beurre. Concluez vous même !",
+    "La pâte sablée : vous remarquerez que les proportions sont divisées par 2 ce qui implique de peser l’œuf, je vous conseille de faire la recette entière, c’est bien pratique d’avoir de la pâte prête à utiliser au congélateur.. je dis ça je dis rien…."
+  ],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [
+    "image059.jpg",
+    "image060.jpg",
+    "image061.jpg"
+  ],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

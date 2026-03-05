@@ -1,0 +1,190 @@
+{
+  "id": "clafoutis",
+  "nombre": "Clafoutis",
+  "categoria": "gâteaux",
+  "subcategoria": null,
+  "tags": [],
+  "origen": {
+    "chef_autor": "Pierre Hermé / Mercotte / Christophe Felder",
+    "fuente_url": "https://cuisine.journaldesfemmes.fr/encyclopedie-produits/1956805-cerise/",
+    "libro": null
+  },
+  "fecha_creacion": "2021-06-18",
+  "fecha_actualizacion": null,
+  "porciones": 8,
+  "molde": null,
+  "planificacion_dias": null,
+  "planning": [],
+  "tiempos": {
+    "preparacion_min": null,
+    "coccion_min": null,
+    "reposo_min": null,
+    "total_activo_min": null
+  },
+  "dificultad": null,
+  "temperatura_horno_c": 180,
+  "componentes": [
+    {
+      "nombre": "Principal",
+      "ingredientes": [
+        {
+          "cantidad": 500.0,
+          "unidad": "g",
+          "ingrediente": "cerises noires"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "sucre (70 g pour moi)"
+        },
+        {
+          "cantidad": 1.0,
+          "unidad": "pincée",
+          "ingrediente": "sel"
+        },
+        {
+          "cantidad": 125.0,
+          "unidad": "g",
+          "ingrediente": "farine"
+        },
+        {
+          "cantidad": 3.0,
+          "unidad": "pcs",
+          "ingrediente": "oeufs bio ou label rouge"
+        },
+        {
+          "cantidad": 30.0,
+          "unidad": "cl",
+          "ingrediente": "lait"
+        },
+        {
+          "cantidad": 100.0,
+          "unidad": "g",
+          "ingrediente": "poudre d'amandes"
+        },
+        {
+          "cantidad": 200.0,
+          "unidad": "g",
+          "ingrediente": "sucre"
+        },
+        {
+          "cantidad": 4.0,
+          "unidad": "pcs",
+          "ingrediente": "œufs entiers + 2 jaunes"
+        }
+      ]
+    }
+  ],
+  "preparacion": [
+    {
+      "componente": "Principal",
+      "pasos": [
+        {
+          "orden": 1,
+          "descripcion": "viernes, 18 de junio de 2021",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 2,
+          "descripcion": "Passez les cerises sous l'eau fraîche. Ne les dénoyautez pas.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 3,
+          "descripcion": "Dans un cul de poule, versez la farine, le sucre, la pincée de sel, mélangez.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 4,
+          "descripcion": "Faites un puits et ajoutez les oeufs battus en omelette. Mélangez délicatement au fouet en ajoutant progressivement le lait.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 5,
+          "descripcion": "Beurrez et farinez votre moule. Déposez les cerises dans le fond du moule et versez doucement la pâte.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 6,
+          "descripcion": "Enfournez dans le four préchauffé à 180°C pour 40 mn (50 mn pour mon four).",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 7,
+          "descripcion": "L’appareil : 75g de poudre d’amandes, 60g de sucre muscovado clair ou de blond de canne, 15g de fécule, 1 gros oeuf + un jaune, 75 g de crème epaisse*, plein de cerises non dénoyautées*, QS de beurre et de muscovado pour le cercle.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 8,
+          "descripcion": "Préchauffer le four à 180° chaleur tournante. Dans la cuve du robot ou dans un grand saladier faire monter l’œuf, le jaune et le sucre pour obtenir un mélange mousseux et léger, ajouter la crème épaisse puis délicatement la fécule et la poudre d’amandes sans corser l’appareil.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 9,
+          "descripcion": "La cuisson : beurrer et sucrer le cercle à pâtisserie, le poser sur une plaque recouverte de papier cuisson. Enfourner pendant 10min. Retirer le futur clafoutis du four et recouvrir toute la surface avec beaucoup de cerises en les enfonçant un peu puis terminer la cuisson pendant environ 30 min* ou plus, la surface doit être prise. Laisser tiédir, démouler et poudrer de sucre glace. Déguster tiède ou froid.",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 10,
+          "descripcion": "2 cuillères à café de Maïzéna",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 11,
+          "descripcion": "6 cuillères à soupe de crème fraîche épaisse",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 12,
+          "descripcion": "Melanger Amandes sucre maizena",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 13,
+          "descripcion": "Battre les oeufs et la creme fraiche",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        },
+        {
+          "orden": 14,
+          "descripcion": "Beurrer le moule, étaler les cerises, ajouter l'appareil",
+          "temp_c": null,
+          "duracion_min": null,
+          "notas_tecnicas": null
+        }
+      ]
+    }
+  ],
+  "notas": [],
+  "variantes": [],
+  "escalado": null,
+  "fotos": [],
+  "probado": true,
+  "notas_prueba": null,
+  "valoracion": null
+}

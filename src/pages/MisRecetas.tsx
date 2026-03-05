@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, Upload, Download, Tag as TagIcon, Cake } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,8 @@ import { useRecipes } from "@/hooks/useRecipes";
 import { useTags } from "@/hooks/useTags";
 import { RecipeCard } from "@/components/RecipeCard";
 import { useRecipeLabels } from "@/hooks/useRecipeLabels";
+import { useIngredientCatalog, findMatchingIngredientIds } from "@/hooks/useIngredientCatalog";
+import { supabase } from "@/integrations/supabase/client";
 import type { RecipeCategory, RecipeDifficulty } from "@/types/recipe";
 import { cn } from "@/lib/utils";
 import { exportMultipleRecipes } from "@/lib/exportRecipe";
@@ -25,21 +28,49 @@ export default function MisRecetas() {
   const { getCategoryLabel, getDifficultyLabel } = useRecipeLabels();
   const { data: recipes, isLoading } = useRecipes();
   const { data: tags } = useTags();
+  const { data: catalog = [] } = useIngredientCatalog();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<RecipeCategory | null>(null);
   const [difficultyFilter, setDifficultyFilter] = useState<RecipeDifficulty | null>(null);
   const [tagFilter, setTagFilter] = useState<string | null>(null);
 
+  // Find catalog ingredient IDs that match the search term (client-side, fast)
+  const matchingIngredientIds = useMemo(
+    () => (search ? findMatchingIngredientIds(search, catalog) : []),
+    [search, catalog]
+  );
+
+  // Fetch recipe IDs that contain those ingredient IDs
+  const { data: ingredientMatchIds } = useQuery({
+    queryKey: ["recipe_ids_by_ingredient", matchingIngredientIds],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("recipe_ingredients")
+        .select("component_id, recipe_components!inner(recipe_id)")
+        .in("ingredient_id", matchingIngredientIds);
+      if (error) throw error;
+      const ids = new Set<string>();
+      (data || []).forEach((r: any) => {
+        if (r.recipe_components?.recipe_id) ids.add(r.recipe_components.recipe_id);
+      });
+      return ids;
+    },
+    enabled: matchingIngredientIds.length > 0,
+  });
+
   const filtered = useMemo(() => {
     if (!recipes) return [];
     return recipes.filter((r: any) => {
-      const matchesSearch = !search || r.title.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch =
+        !search ||
+        r.title.toLowerCase().includes(search.toLowerCase()) ||
+        (ingredientMatchIds?.has(r.id) ?? false);
       const matchesCategory = !categoryFilter || r.category === categoryFilter;
       const matchesDifficulty = !difficultyFilter || r.difficulty === difficultyFilter;
       const matchesTag = !tagFilter || (r.recipe_tags || []).some((rt: any) => rt.tag_id === tagFilter);
       return matchesSearch && matchesCategory && matchesDifficulty && matchesTag;
     });
-  }, [recipes, search, categoryFilter, difficultyFilter, tagFilter]);
+  }, [recipes, search, ingredientMatchIds, categoryFilter, difficultyFilter, tagFilter]);
 
   return (
     <div className="animate-fade-in space-y-5 max-w-full">

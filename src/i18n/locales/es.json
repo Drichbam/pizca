@@ -361,6 +361,11 @@
     "noResults": "Sin resultados en Open Food Facts",
     "noData": "Sin datos de precio para este ingrediente"
   },
+  "shoppingList": {
+    "title": "Lista de compra",
+    "generate": "Lista de compra",
+    "empty": "Sin ingredientes."
+  },
   "notFound": {
     "message": "Página no encontrada",
     "return": "Volver al inicio"

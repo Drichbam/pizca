@@ -361,6 +361,11 @@
     "noResults": "Aucun résultat sur Open Food Facts",
     "noData": "Aucune donnée de prix pour cet ingrédient"
   },
+  "shoppingList": {
+    "title": "Liste de courses",
+    "generate": "Liste de courses",
+    "empty": "Aucun ingrédient."
+  },
   "notFound": {
     "message": "Page introuvable",
     "return": "Retour à l'accueil"

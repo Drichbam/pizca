@@ -77,8 +77,8 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   'en:flours'),
 
 ('almond-flour', 'flour',
-  '{"es":"harina de almendra","fr":"poudre d\'amande","en":"almond flour"}',
-  '{"fr":["poudre d\'amandes","poudre d\'amande blanche","poudre d\'amande émondée","amandes en poudre"],"es":["almendra molida","almendra en polvo","harina de almendras"],"en":["almond meal","ground almonds"]}',
+  '{"es":"harina de almendra","fr":"poudre d''amande","en":"almond flour"}',
+  '{"fr":["poudre d''amandes","poudre d''amande blanche","poudre d''amande émondée","amandes en poudre"],"es":["almendra molida","almendra en polvo","harina de almendras"],"en":["almond meal","ground almonds"]}',
   'en:nuts'),
 
 ('starch-potato', 'flour',
@@ -117,7 +117,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('flour-spelt', 'flour',
-  '{"es":"harina de espelta","fr":"farine d\'épeautre","en":"spelt flour"}',
+  '{"es":"harina de espelta","fr":"farine d''épeautre","en":"spelt flour"}',
   '{"fr":["épeautre"],"es":[],"en":[]}',
   NULL),
 
@@ -139,7 +139,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('powdered-sugar', 'sugar',
   '{"es":"azúcar glas","fr":"sucre glace","en":"powdered sugar"}',
-  '{"fr":["sucre impalpable","sucre en neige","sucre à glacer"],"es":["azúcar lustre","azúcar impalpable","azúcar flor","icing sugar"],"en":["icing sugar","confectioners sugar","confectioners\' sugar"]}',
+  '{"fr":["sucre impalpable","sucre en neige","sucre à glacer"],"es":["azúcar lustre","azúcar impalpable","azúcar flor","icing sugar"],"en":["icing sugar","confectioners sugar","confectioners'' sugar"]}',
   'en:sugars'),
 
 ('brown-sugar', 'sugar',
@@ -154,12 +154,12 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('honey', 'sugar',
   '{"es":"miel","fr":"miel","en":"honey"}',
-  '{"fr":["miel liquide","miel d\'acacia","miel toutes fleurs","miel de fleurs"],"es":["miel de acacia","miel líquida","miel cruda"],"en":["acacia honey","raw honey","clear honey"]}',
+  '{"fr":["miel liquide","miel d''acacia","miel toutes fleurs","miel de fleurs"],"es":["miel de acacia","miel líquida","miel cruda"],"en":["acacia honey","raw honey","clear honey"]}',
   'en:honeys'),
 
 ('maple-syrup', 'sugar',
-  '{"es":"sirope de arce","fr":"sirop d\'érable","en":"maple syrup"}',
-  '{"fr":["sirop d\'érable pur"],"es":["jarabe de arce","syrup de arce"],"en":["pure maple syrup"]}',
+  '{"es":"sirope de arce","fr":"sirop d''érable","en":"maple syrup"}',
+  '{"fr":["sirop d''érable pur"],"es":["jarabe de arce","syrup de arce"],"en":["pure maple syrup"]}',
   NULL),
 
 ('glucose', 'sugar',
@@ -199,8 +199,8 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   'en:plant-oils'),
 
 ('oil-olive', 'fat',
-  '{"es":"aceite de oliva","fr":"huile d\'olive","en":"olive oil"}',
-  '{"fr":["huile d\'olive vierge extra","EVOO"],"es":["aceite de oliva virgen extra","AOVE"],"en":["extra virgin olive oil","EVOO"]}',
+  '{"es":"aceite de oliva","fr":"huile d''olive","en":"olive oil"}',
+  '{"fr":["huile d''olive vierge extra","EVOO"],"es":["aceite de oliva virgen extra","AOVE"],"en":["extra virgin olive oil","EVOO"]}',
   'en:olive-oils'),
 
 ('coconut-oil', 'fat',
@@ -220,17 +220,17 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   'en:eggs'),
 
 ('egg-yolk', 'egg',
-  '{"es":"yema","fr":"jaune d\'oeuf","en":"egg yolk"}',
-  '{"fr":["jaunes d\'oeufs","jaune","jaunes","jaune d\'oeuf (4-5)","jaunes d\'oeufs (4-5)"],"es":["yemas","yema de huevo","yemas de huevo"],"en":["egg yolks","yolks"]}',
+  '{"es":"yema","fr":"jaune d''oeuf","en":"egg yolk"}',
+  '{"fr":["jaunes d''oeufs","jaune","jaunes","jaune d''oeuf (4-5)","jaunes d''oeufs (4-5)"],"es":["yemas","yema de huevo","yemas de huevo"],"en":["egg yolks","yolks"]}',
   'en:eggs'),
 
 ('egg-white', 'egg',
-  '{"es":"clara","fr":"blanc d\'oeuf","en":"egg white"}',
-  '{"fr":["blancs d\'oeufs","blancs","blanc d\'oeuf","blancs d\'oeuf","blanc"],"es":["claras","clara de huevo","claras de huevo"],"en":["egg whites","whites"]}',
+  '{"es":"clara","fr":"blanc d''oeuf","en":"egg white"}',
+  '{"fr":["blancs d''oeufs","blancs","blanc d''oeuf","blancs d''oeuf","blanc"],"es":["claras","clara de huevo","claras de huevo"],"en":["egg whites","whites"]}',
   'en:eggs'),
 
 ('egg-white-powder', 'egg',
-  '{"es":"clara en polvo","fr":"blanc d\'oeuf en poudre","en":"egg white powder"}',
+  '{"es":"clara en polvo","fr":"blanc d''oeuf en poudre","en":"egg white powder"}',
   '{"fr":["albumine","poudre de blancs"],"es":["albúmina","albumina en polvo"],"en":["albumin powder","dried egg white"]}',
   NULL),
 
@@ -298,7 +298,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('orange', 'fruit',
   '{"es":"naranja","fr":"orange","en":"orange"}',
-  '{"fr":["orange non traitée","jus d\'orange","zeste d\'orange","orange confite"],"es":["zumo de naranja","jugo de naranja","ralladura de naranja","naranja confitada"],"en":["orange juice","orange zest","candied orange"]}',
+  '{"fr":["orange non traitée","jus d''orange","zeste d''orange","orange confite"],"es":["zumo de naranja","jugo de naranja","ralladura de naranja","naranja confitada"],"en":["orange juice","orange zest","candied orange"]}',
   'en:oranges'),
 
 ('lemon-zest', 'fruit',
@@ -307,8 +307,8 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('orange-zest', 'fruit',
-  '{"es":"ralladura de naranja","fr":"zeste d\'orange","en":"orange zest"}',
-  '{"fr":["zestes d\'orange","zeste orange"],"es":["piel de naranja","cáscara de naranja"],"en":["orange peel","orange rind"]}',
+  '{"es":"ralladura de naranja","fr":"zeste d''orange","en":"orange zest"}',
+  '{"fr":["zestes d''orange","zeste orange"],"es":["piel de naranja","cáscara de naranja"],"en":["orange peel","orange rind"]}',
   NULL),
 
 ('passion-fruit', 'fruit',
@@ -338,7 +338,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('apricot', 'fruit',
   '{"es":"albaricoque","fr":"abricot","en":"apricot"}',
-  '{"fr":["abricots","purée d\'abricot","confiture d\'abricot","nappage abricot"],"es":["albaricoques","melocotón","albaricoque en almíbar"],"en":["apricots","apricot jam","apricot glaze"]}',
+  '{"fr":["abricots","purée d''abricot","confiture d''abricot","nappage abricot"],"es":["albaricoques","melocotón","albaricoque en almíbar"],"en":["apricots","apricot jam","apricot glaze"]}',
   'en:apricots'),
 
 ('pear', 'fruit',
@@ -368,7 +368,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('pineapple', 'fruit',
   '{"es":"piña","fr":"ananas","en":"pineapple"}',
-  '{"fr":["ananas frais","dés d\'ananas"],"es":["piña tropical","ananá"],"en":["pineapple chunks","fresh pineapple"]}',
+  '{"fr":["ananas frais","dés d''ananas"],"es":["piña tropical","ananá"],"en":["pineapple chunks","fresh pineapple"]}',
   NULL),
 
 ('blackberry', 'fruit',
@@ -450,7 +450,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('yeast-fresh', 'leavening',
   '{"es":"levadura fresca","fr":"levure fraîche","en":"fresh yeast"}',
-  '{"fr":["levure de boulanger fraîche","levure pressée","cube de levure"],"es":["levadura de panadería fresca","levadura prensada"],"en":["fresh baker\'s yeast","cake yeast","compressed yeast"]}',
+  '{"fr":["levure de boulanger fraîche","levure pressée","cube de levure"],"es":["levadura de panadería fresca","levadura prensada"],"en":["fresh baker''s yeast","cake yeast","compressed yeast"]}',
   NULL),
 
 ('baking-soda', 'leavening',
@@ -476,7 +476,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 -- ─── GELATIN ────────────────────────────────────────────────────────
 ('gelatin', 'gelatin',
   '{"es":"gelatina","fr":"gélatine","en":"gelatin"}',
-  '{"fr":["gélatine en feuilles","feuilles de gélatine","gélatine Or","gélatine 200 Blooms","gélatine (4 feuilles Or 200 Blooms)","gélatine halal","feuilles d\'or gélatine","gélatine en poudre","gélatine de poisson","gélatine boeuf","gélatine porc"],"es":["gelatina en hojas","hojas de gelatina","cola de pescado","gelatina en polvo","gelatina neutra"],"en":["gelatin sheets","gelatin leaves","gelatin powder","sheet gelatin","gold gelatin","200 bloom gelatin"]}',
+  '{"fr":["gélatine en feuilles","feuilles de gélatine","gélatine Or","gélatine 200 Blooms","gélatine (4 feuilles Or 200 Blooms)","gélatine halal","feuilles d''or gélatine","gélatine en poudre","gélatine de poisson","gélatine boeuf","gélatine porc"],"es":["gelatina en hojas","hojas de gelatina","cola de pescado","gelatina en polvo","gelatina neutra"],"en":["gelatin sheets","gelatin leaves","gelatin powder","sheet gelatin","gold gelatin","200 bloom gelatin"]}',
   NULL),
 
 ('agar-agar', 'gelatin',
@@ -517,17 +517,17 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('grand-marnier', 'liquid',
   '{"es":"Grand Marnier","fr":"Grand Marnier","en":"Grand Marnier"}',
-  '{"fr":["Grand Marnier Cordon Rouge","liqueur d\'orange"],"es":["licor de naranja"],"en":["orange liqueur"]}',
+  '{"fr":["Grand Marnier Cordon Rouge","liqueur d''orange"],"es":["licor de naranja"],"en":["orange liqueur"]}',
   NULL),
 
 ('kirsch', 'liquid',
   '{"es":"kirsch","fr":"kirsch","en":"kirsch"}',
-  '{"fr":["kirsch d\'Alsace","alcool de cerise","eau de vie de cerise"],"es":["aguardiente de cereza"],"en":["cherry brandy","kirshwasser"]}',
+  '{"fr":["kirsch d''Alsace","alcool de cerise","eau de vie de cerise"],"es":["aguardiente de cereza"],"en":["cherry brandy","kirshwasser"]}',
   NULL),
 
 ('cointreau', 'liquid',
   '{"es":"Cointreau","fr":"Cointreau","en":"Cointreau"}',
-  '{"fr":["triple sec","curaçao","liqueur d\'orange triple sec"],"es":["triple seco","curaçao"],"en":["triple sec","orange triple sec"]}',
+  '{"fr":["triple sec","curaçao","liqueur d''orange triple sec"],"es":["triple seco","curaçao"],"en":["triple sec","orange triple sec"]}',
   NULL),
 
 ('cognac', 'liquid',
@@ -537,7 +537,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('amaretto', 'liquid',
   '{"es":"amaretto","fr":"amaretto","en":"amaretto"}',
-  '{"fr":["liqueur d\'amande","Amaretto di Saronno"],"es":["licor de almendra","Disaronno"],"en":["almond liqueur","Disaronno"]}',
+  '{"fr":["liqueur d''amande","Amaretto di Saronno"],"es":["licor de almendra","Disaronno"],"en":["almond liqueur","Disaronno"]}',
   NULL),
 
 ('rose-water', 'liquid',
@@ -546,8 +546,8 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('orange-blossom-water', 'liquid',
-  '{"es":"agua de azahar","fr":"eau de fleur d\'oranger","en":"orange blossom water"}',
-  '{"fr":["eau de fleur d\'oranger","fleur d\'oranger","eau florale d\'oranger"],"es":["agua de flor de naranjo","esencia de azahar"],"en":["orange flower water","neroli water"]}',
+  '{"es":"agua de azahar","fr":"eau de fleur d''oranger","en":"orange blossom water"}',
+  '{"fr":["eau de fleur d''oranger","fleur d''oranger","eau florale d''oranger"],"es":["agua de flor de naranjo","esencia de azahar"],"en":["orange flower water","neroli water"]}',
   NULL),
 
 ('tea', 'liquid',
@@ -562,7 +562,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('stock-syrup', 'liquid',
   '{"es":"almíbar","fr":"sirop","en":"simple syrup"}',
-  '{"fr":["sirop de sucre","sirop simple","sirop à 30°","sirop à imbiber","sirop d\'imbibage"],"es":["jarabe de azúcar","sirope","almíbar simple","sirope de imbibar"],"en":["sugar syrup","stock syrup","imbibing syrup","30 brix syrup"]}',
+  '{"fr":["sirop de sucre","sirop simple","sirop à 30°","sirop à imbiber","sirop d''imbibage"],"es":["jarabe de azúcar","sirope","almíbar simple","sirope de imbibar"],"en":["sugar syrup","stock syrup","imbibing syrup","30 brix syrup"]}',
   NULL),
 
 -- ─── NUT ────────────────────────────────────────────────────────────
@@ -612,8 +612,8 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('almond-paste', 'nut',
-  '{"es":"pasta de almendra","fr":"pâte d\'amande","en":"marzipan"}',
-  '{"fr":["massepain","pâte d\'amandes","marzipan","amandes broyées","pâte d\'amandes crue"],"es":["mazapán","pasta de almendras","marzipán"],"en":["almond paste","raw marzipan","fondant marzipan"]}',
+  '{"es":"pasta de almendra","fr":"pâte d''amande","en":"marzipan"}',
+  '{"fr":["massepain","pâte d''amandes","marzipan","amandes broyées","pâte d''amandes crue"],"es":["mazapán","pasta de almendras","marzipán"],"en":["almond paste","raw marzipan","fondant marzipan"]}',
   NULL),
 
 ('macadamia', 'nut',
@@ -624,7 +624,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 -- ─── OTHER ──────────────────────────────────────────────────────────
 ('titanium-dioxide', 'other',
   '{"es":"dióxido de titanio","fr":"dioxyde de titane","en":"titanium dioxide"}',
-  '{"fr":["oxyde de titane","poudre de titane","poudre d\'oxyde de titane","E171","colorant blanc"],"es":["óxido de titanio","E171","colorante blanco"],"en":["titanium oxide","E171","white food coloring"]}',
+  '{"fr":["oxyde de titane","poudre de titane","poudre d''oxyde de titane","E171","colorant blanc"],"es":["óxido de titanio","E171","colorante blanco"],"en":["titanium oxide","E171","white food coloring"]}',
   NULL),
 
 ('neutral-glaze', 'other',
@@ -638,13 +638,13 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('gold-leaf', 'other',
-  '{"es":"pan de oro","fr":"feuille d\'or","en":"gold leaf"}',
-  '{"fr":["feuilles d\'or alimentaire","or en feuilles","or comestible"],"es":["hoja de oro comestible","oro alimentario"],"en":["edible gold leaf","gold sheet"]}',
+  '{"es":"pan de oro","fr":"feuille d''or","en":"gold leaf"}',
+  '{"fr":["feuilles d''or alimentaire","or en feuilles","or comestible"],"es":["hoja de oro comestible","oro alimentario"],"en":["edible gold leaf","gold sheet"]}',
   NULL),
 
 ('silver-leaf', 'other',
-  '{"es":"pan de plata","fr":"feuille d\'argent","en":"silver leaf"}',
-  '{"fr":["feuilles d\'argent alimentaire","argent comestible"],"es":["hoja de plata comestible","plata alimentaria"],"en":["edible silver leaf","silver sheet"]}',
+  '{"es":"pan de plata","fr":"feuille d''argent","en":"silver leaf"}',
+  '{"fr":["feuilles d''argent alimentaire","argent comestible"],"es":["hoja de plata comestible","plata alimentaria"],"en":["edible silver leaf","silver sheet"]}',
   NULL),
 
 ('rose-petals', 'other',
@@ -684,7 +684,7 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
 
 ('yeast-nutritional', 'other',
   '{"es":"levadura nutricional","fr":"levure nutritionnelle","en":"nutritional yeast"}',
-  '{"fr":["levure de bière","levure maltée"],"es":["levadura de cerveza"],"en":["brewer\'s yeast"]}',
+  '{"fr":["levure de bière","levure maltée"],"es":["levadura de cerveza"],"en":["brewer''s yeast"]}',
   NULL),
 
 ('alcohol-neutral', 'liquid',
@@ -693,13 +693,13 @@ INSERT INTO public.ingredients (canonical_name, category, translations, aliases,
   NULL),
 
 ('jam-apricot', 'other',
-  '{"es":"mermelada de albaricoque","fr":"confiture d\'abricot","en":"apricot jam"}',
-  '{"fr":["gelée d\'abricot","nappage abricot","confiture abricot"],"es":["confitura de albaricoque","gelatina de albaricoque","brillo de albaricoque"],"en":["apricot preserve","apricot jelly","apricot glaze"]}',
+  '{"es":"mermelada de albaricoque","fr":"confiture d''abricot","en":"apricot jam"}',
+  '{"fr":["gelée d''abricot","nappage abricot","confiture abricot"],"es":["confitura de albaricoque","gelatina de albaricoque","brillo de albaricoque"],"en":["apricot preserve","apricot jelly","apricot glaze"]}',
   NULL),
 
 ('candied-orange-peel', 'fruit',
   '{"es":"naranja confitada","fr":"orange confite","en":"candied orange peel"}',
-  '{"fr":["zestes d\'orange confits","écorces d\'orange confites","orangeat"],"es":["piel de naranja confitada","corteza de naranja confitada"],"en":["candied orange","orange confit"]}',
+  '{"fr":["zestes d''orange confits","écorces d''orange confites","orangeat"],"es":["piel de naranja confitada","corteza de naranja confitada"],"en":["candied orange","orange confit"]}',
   NULL),
 
 ('sesame', 'nut',

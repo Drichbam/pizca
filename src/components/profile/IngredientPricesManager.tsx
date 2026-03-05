@@ -133,12 +133,12 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("name");
+        .select("display_name");
       if (error) throw error;
       // Extraer nombres únicos normalizados
       const nameSet = new Set<string>();
       (data || []).forEach((r) => {
-        const n = r.name?.trim();
+        const n = r.display_name?.trim();
         // Filtrar pasos de preparación importados por error (textos muy largos o con verbos/frases)
         if (n && n.length <= 60 && !n.includes(",") && !n.includes(".")) nameSet.add(n.toLowerCase());
       });

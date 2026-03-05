@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { useRecipeLabels } from "@/hooks/useRecipeLabels";
+import { enrichWithIngredientIds } from "@/lib/ingredientMatcher";
+import type { Ingredient } from "@/types/recipe";
 
 // --- JSON shape types ---
 interface JsonIngredient {
@@ -554,6 +556,10 @@ export default function ImportarRecetas() {
       return;
     }
 
+    // Load ingredient catalog once for matching
+    const { data: catalogData } = await supabase.from("ingredients").select("*");
+    const catalog: Ingredient[] = (catalogData as Ingredient[]) || [];
+
     for (let i = 0; i < selected.length; i++) {
       const r = selected[i];
       const isDuplicate = duplicateSlugs.has(r.slug);
@@ -612,13 +618,14 @@ export default function ImportarRecetas() {
           if (!newComp) continue;
           compMap.set(comp.nombre, newComp.id);
 
-          const ingredients = comp.ingredientes.map((ing, j) => ({
+          const rawIngredients = comp.ingredientes.map((ing, j) => ({
             component_id: newComp.id,
             display_name: ing.ingrediente,
             quantity: ing.cantidad ?? null,
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,
           }));
+          const ingredients = enrichWithIngredientIds(rawIngredients, catalog);
           if (ingredients.length) await supabase.from("recipe_ingredients").insert(ingredients);
         }
 

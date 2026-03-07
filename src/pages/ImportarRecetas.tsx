@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
+import { enrichWithIngredientIds } from "@/lib/ingredientMatcher";
 import { CATEGORY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty, IngredientUnit } from "@/types/recipe";
 import { cn } from "@/lib/utils";
@@ -601,6 +602,7 @@ export default function ImportarRecetas() {
 
         // Components + Ingredients
         const compMap = new Map<string, string>(); // compName -> compId
+        const insertedIngredients: { id: string; display_name: string }[] = [];
         for (let ci = 0; ci < r.json.componentes.length; ci++) {
           const comp = r.json.componentes[ci];
           const { data: newComp } = await supabase.from("recipe_components").insert({
@@ -616,7 +618,18 @@ export default function ImportarRecetas() {
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,
           }));
-          if (ingredients.length) await supabase.from("recipe_ingredients").insert(ingredients);
+          if (ingredients.length) {
+            const { data: inserted } = await supabase
+              .from("recipe_ingredients")
+              .insert(ingredients)
+              .select("id, display_name");
+            if (inserted) insertedIngredients.push(...inserted);
+          }
+        }
+
+        // Enrich ingredient_id links against catalog (fire-and-forget)
+        if (insertedIngredients.length) {
+          enrichWithIngredientIds(insertedIngredients).catch(() => {});
         }
 
         // Steps (from preparacion)

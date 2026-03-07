@@ -31,12 +31,14 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
   const costData = useMemo(() => {
     if (!prices) return null;
 
-    const priceMap = new Map<string, IngredientPrice>();
+    const priceById = new Map<string, IngredientPrice>();
+    const priceByName = new Map<string, IngredientPrice>();
     for (const p of prices) {
-      const key = p.ingredient_name.toLowerCase().trim();
-      if (!priceMap.has(key) || p.is_default) {
-        priceMap.set(key, p);
+      if (p.ingredient_id) {
+        if (!priceById.has(p.ingredient_id) || p.is_default) priceById.set(p.ingredient_id, p);
       }
+      const key = p.ingredient_name.toLowerCase().trim();
+      if (!priceByName.has(key) || p.is_default) priceByName.set(key, p);
     }
 
     let grandTotal = 0;
@@ -48,8 +50,9 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
       let compAllPriced = true;
 
       const items = ingredients.map((ing) => {
-        const key = ing.display_name.toLowerCase().trim();
-        const price = priceMap.get(key);
+        const price =
+          (ing.ingredient_id ? priceById.get(ing.ingredient_id) : undefined) ??
+          priceByName.get(ing.display_name.toLowerCase().trim());
         let cost: number | null = null;
 
         if (price && ing.quantity != null && price.package_size && price.package_size > 0) {

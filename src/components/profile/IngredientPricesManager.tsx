@@ -17,6 +17,7 @@ import { BarcodeSearchField } from "@/components/profile/BarcodeSearchField";
 import { CommunityPricesPanel } from "@/components/profile/CommunityPricesPanel";
 import { IngredientPriceSearchPanel } from "@/components/profile/IngredientPriceSearchPanel";
 import type { OpenFoodFactsProduct } from "@/hooks/useOpenFoodFacts";
+import { useIngredientCatalog, findMatchingIngredientIds } from "@/hooks/useIngredientCatalog";
 
 type IngredientPrice = Database["public"]["Tables"]["ingredient_prices"]["Row"];
 type IngredientUnit = Database["public"]["Enums"]["ingredient_unit"];
@@ -63,10 +64,10 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       const matches = (data || []).filter(
-        (r: any) => r.name?.trim().toLowerCase() === normalizedName
+        (r: any) => r.display_name?.trim().toLowerCase() === normalizedName
       );
       const seen = new Set<string>();
       const result: { id: string; title: string }[] = [];
@@ -114,6 +115,8 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
   const [filter, setFilter] = useState<FilterMode>("all");
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(null);
 
+  const { data: catalog } = useIngredientCatalog();
+
   // Query: precios existentes
   const { data: prices, isLoading } = useQuery({
     queryKey: ["ingredient_prices"],
@@ -133,16 +136,18 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("display_name");
+        .select("display_name, ingredient_id");
       if (error) throw error;
-      // Extraer nombres únicos normalizados
-      const nameSet = new Set<string>();
+      // Deduplicar: por ingredient_id cuando existe, por nombre normalizado si no
+      const seen = new Map<string, { name: string; ingredient_id: string | null }>();
       (data || []).forEach((r) => {
         const n = r.display_name?.trim();
-        // Filtrar pasos de preparación importados por error (textos muy largos o con verbos/frases)
-        if (n && n.length <= 60 && !n.includes(",") && !n.includes(".")) nameSet.add(n.toLowerCase());
+        // Filtrar textos muy largos o con comas/puntos (pasos importados por error)
+        if (!n || n.length > 60 || n.includes(",") || n.includes(".")) return;
+        const key = r.ingredient_id ? `id:${r.ingredient_id}` : `name:${n.toLowerCase()}`;
+        if (!seen.has(key)) seen.set(key, { name: n.toLowerCase(), ingredient_id: r.ingredient_id ?? null });
       });
-      return Array.from(nameSet).sort();
+      return Array.from(seen.values()).sort((a, b) => a.name.localeCompare(b.name));
     },
   });
 
@@ -154,11 +159,11 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
       if (!activeIngredientName) return [];
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("component_id, name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("component_id, display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       // Filtrar por nombre (case-insensitive)
       const matches = (data || []).filter(
-        (r: any) => r.name?.trim().toLowerCase() === activeIngredientName
+        (r: any) => r.display_name?.trim().toLowerCase() === activeIngredientName
       );
       // Deduplicar por recipe id
       const seen = new Set<string>();
@@ -177,9 +182,15 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
 
   // Fusionar ingredientes con y sin precio
   const combinedList = useMemo<CombinedItem[]>(() => {
-    const priceMap = new Map<string, IngredientPrice>();
+    // Indexar precios por ingredient_id (semántico) y por nombre (fallback texto)
+    const priceById = new Map<string, IngredientPrice>();
+    const priceByName = new Map<string, IngredientPrice>();
     (prices || []).forEach((p) => {
-      priceMap.set(p.ingredient_name.trim().toLowerCase(), p);
+      if (p.ingredient_id) {
+        if (!priceById.has(p.ingredient_id) || p.is_default) priceById.set(p.ingredient_id, p);
+      }
+      const key = p.ingredient_name.trim().toLowerCase();
+      if (!priceByName.has(key) || p.is_default) priceByName.set(key, p);
     });
 
     // Ingredientes con precio (pueden no estar en recetas)
@@ -189,12 +200,12 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
       price: p,
     }));
 
-    // Ingredientes de recetas sin precio
-    const pricedNames = new Set(
-      (prices || []).map((p) => p.ingredient_name.trim().toLowerCase())
-    );
-    (recipeIngredients || []).forEach((name) => {
-      if (!pricedNames.has(name)) {
+    // Ingredientes de recetas sin precio:
+    // un ingrediente está "cubierto" si coincide por ingredient_id o por texto
+    (recipeIngredients || []).forEach(({ name, ingredient_id }) => {
+      const coveredById = !!ingredient_id && priceById.has(ingredient_id);
+      const coveredByName = priceByName.has(name);
+      if (!coveredById && !coveredByName) {
         items.push({ type: "unpriced", name });
       }
     });
@@ -226,9 +237,13 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
   const upsert = useMutation({
     mutationFn: async (data: FormData) => {
       if (!user) throw new Error("Not authenticated");
+      const matchingIds = catalog ? findMatchingIngredientIds(data.ingredient_name, catalog) : [];
+      const resolvedIngredientId = matchingIds[0] ?? null;
+
       const payload = {
         user_id: user.id,
         ingredient_name: data.ingredient_name.trim(),
+        ingredient_id: resolvedIngredientId,
         brand: data.brand.trim() || null,
         supermarket: data.supermarket.trim() || null,
         price: Number(data.price),

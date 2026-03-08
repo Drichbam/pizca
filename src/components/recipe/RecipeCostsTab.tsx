@@ -52,7 +52,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
       const items = ingredients.map((ing) => {
         const price =
           (ing.ingredient_id ? priceById.get(ing.ingredient_id) : undefined) ??
-          priceByName.get(ing.display_name.toLowerCase().trim());
+          priceByName.get(ing.name.toLowerCase().trim());
         let cost: number | null = null;
 
         if (price && ing.quantity != null && price.package_size && price.package_size > 0) {

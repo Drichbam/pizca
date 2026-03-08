@@ -130,7 +130,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
                 <tbody>
                   {items.map(({ ingredient, cost }) => (
                     <tr key={ingredient.id} className="border-b border-border/50 last:border-0">
-                      <td className="py-1.5 text-foreground">{ingredient.display_name}</td>
+                      <td className="py-1.5 text-foreground">{ingredient.name}</td>
                       <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                         {ingredient.quantity != null ? `${ingredient.quantity} ${ingredient.unit || ""}` : "QS"}
                       </td>

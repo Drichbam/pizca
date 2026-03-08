@@ -82,6 +82,7 @@ function recipeToForm(r: RecipeWithComponents): FormData {
         name: c.name, sort_order: c.sort_order,
         ingredients: (c.recipe_ingredients || []).sort((a, b) => a.sort_order - b.sort_order).map(i => ({
           display_name: i.name, quantity: i.quantity ? String(i.quantity) : "", unit: i.unit || "", sort_order: i.sort_order,
+          ingredient_id: i.ingredient_id ?? null, suggestion_dismissed: !!i.ingredient_id,
         })),
         steps: (c.recipe_steps || []).sort((a, b) => a.step_order - b.step_order).map(s => ({
           description: s.description, temp_c: s.temp_c ? String(s.temp_c) : "",
@@ -228,7 +229,7 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
 
         const ings = comp.ingredients.filter(i => i.display_name.trim());
         if (ings.length) await supabase.from("recipe_ingredients").insert(
-          ings.map((ig, i) => ({ component_id: nc.id, name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
+          ings.map((ig, i) => ({ component_id: nc.id, name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i, ingredient_id: ig.ingredient_id ?? null }))
         );
         const stps = comp.steps.filter(s => s.description.trim());
         if (stps.length) {

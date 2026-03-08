@@ -121,7 +121,7 @@ export function useDuplicateRecipe() {
         if (!newComp) continue;
 
         const ingredients = (comp.recipe_ingredients || []).map((ing: any) => ({
-          component_id: newComp.id, name: ing.name || ing.display_name, quantity: ing.quantity, unit: ing.unit, sort_order: ing.sort_order,
+          component_id: newComp.id, name: ing.name || ing.display_name, quantity: ing.quantity, unit: ing.unit, sort_order: ing.sort_order, ingredient_id: ing.ingredient_id ?? null,
         }));
         if (ingredients.length) await supabase.from("recipe_ingredients").insert(ingredients);
 

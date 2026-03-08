@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { enrichWithIngredientIds } from "@/lib/ingredientMatcher";
+import { UnlinkedIngredientsReview } from "@/components/import/UnlinkedIngredientsReview";
 import { CATEGORY_LABELS } from "@/types/recipe";
 import type { RecipeCategory, RecipeDifficulty, IngredientUnit } from "@/types/recipe";
 import { cn } from "@/lib/utils";
@@ -462,6 +463,7 @@ export default function ImportarRecetas() {
   const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>("skip");
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState<ImportResult[]>([]);
+  const [unlinkedIngredients, setUnlinkedIngredients] = useState<{ id: string; display_name: string }[]>([]);
 
   const handleFiles = useCallback(async (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -545,6 +547,7 @@ export default function ImportarRecetas() {
     setPhase("importing");
     setProgress(0);
     const importResults: ImportResult[] = [];
+    const allInsertedIngredients: { id: string; name: string }[] = [];
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
@@ -627,10 +630,7 @@ export default function ImportarRecetas() {
           }
         }
 
-        // Enrich ingredient_id links against catalog (fire-and-forget)
-        if (insertedIngredients.length) {
-          enrichWithIngredientIds(insertedIngredients).catch(() => {});
-        }
+        if (insertedIngredients.length) allInsertedIngredients.push(...insertedIngredients);
 
         // Steps (from preparacion)
         if (r.json.preparacion) {
@@ -721,6 +721,20 @@ export default function ImportarRecetas() {
       }
 
       setProgress(((i + 1) / selected.length) * 100);
+    }
+
+    // Enrich ingredient_id links against catalog for all inserted ingredients
+    if (allInsertedIngredients.length) {
+      await enrichWithIngredientIds(allInsertedIngredients).catch(() => {});
+      // Re-query to find still-unlinked ingredients
+      const { data: stillUnlinked } = await supabase
+        .from("recipe_ingredients")
+        .select("id, name")
+        .in("id", allInsertedIngredients.map(i => i.id))
+        .is("ingredient_id", null);
+      if (stillUnlinked?.length) {
+        setUnlinkedIngredients(stillUnlinked.map(r => ({ id: r.id, display_name: r.name })));
+      }
     }
 
     setResults(importResults);
@@ -1058,8 +1072,15 @@ export default function ImportarRecetas() {
             </div>
           </div>
 
+          {unlinkedIngredients.length > 0 && (
+            <UnlinkedIngredientsReview
+              ingredients={unlinkedIngredients}
+              onLinked={(id) => setUnlinkedIngredients(prev => prev.filter(u => u.id !== id))}
+            />
+          )}
+
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => { setPhase("select"); setRecipes([]); setResults([]); setValidationErrors([]); }}>
+            <Button variant="outline" onClick={() => { setPhase("select"); setRecipes([]); setResults([]); setValidationErrors([]); setUnlinkedIngredients([]); }}>
               Importar más
             </Button>
             <Button onClick={() => navigate("/mis-recetas")} className="flex-1">

@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Trash2, Plus, ChevronUp, ChevronDown, HelpCircle, ImagePlus, X } from "lucide-react";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { Constants } from "@/integrations/supabase/types";
+import { IngredientCatalogSuggestion } from "./IngredientCatalogSuggestion";
 
 const units = Constants.public.Enums.ingredient_unit;
 
@@ -13,6 +14,8 @@ export interface IngredientForm {
   quantity: string;
   unit: string;
   sort_order: number;
+  ingredient_id: string | null;
+  suggestion_dismissed: boolean;
 }
 
 export interface StepForm {
@@ -33,7 +36,7 @@ export interface ComponentForm {
 }
 
 export function emptyIngredient(order = 0): IngredientForm {
-  return { display_name: "", quantity: "", unit: "", sort_order: order };
+  return { display_name: "", quantity: "", unit: "", sort_order: order, ingredient_id: null, suggestion_dismissed: false };
 }
 export function emptyStep(order = 0): StepForm {
   return { description: "", temp_c: "", duration_min: "", technical_notes: "", step_order: order, photo_url: "" };
@@ -64,6 +67,24 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
   const updateIng = (i: number, field: keyof IngredientForm, value: string) => {
     const ingredients = [...component.ingredients];
     ingredients[i] = { ...ingredients[i], [field]: value };
+    onChange({ ...component, ingredients });
+  };
+
+  const updateIngName = (i: number, value: string) => {
+    const ingredients = [...component.ingredients];
+    ingredients[i] = { ...ingredients[i], display_name: value, ingredient_id: null, suggestion_dismissed: false };
+    onChange({ ...component, ingredients });
+  };
+
+  const acceptIngredientLink = (i: number, id: string) => {
+    const ingredients = [...component.ingredients];
+    ingredients[i] = { ...ingredients[i], ingredient_id: id };
+    onChange({ ...component, ingredients });
+  };
+
+  const dismissIngredientSuggestion = (i: number) => {
+    const ingredients = [...component.ingredients];
+    ingredients[i] = { ...ingredients[i], ingredient_id: null, suggestion_dismissed: true };
     onChange({ ...component, ingredients });
   };
 
@@ -132,8 +153,9 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
         </div>
         <div className="space-y-2">
           {component.ingredients.map((ing, i) => (
-            <div key={i} className="flex gap-1.5 items-center">
-              <Input placeholder="Nombre" value={ing.display_name} onChange={(e) => updateIng(i, "display_name", e.target.value)} className="flex-1 text-sm h-9" />
+            <div key={i}>
+            <div className="flex gap-1.5 items-center">
+              <Input placeholder="Nombre" value={ing.display_name} onChange={(e) => updateIngName(i, e.target.value)} className="flex-1 text-sm h-9" />
               <Input placeholder="Cant." value={ing.quantity} onChange={(e) => updateIng(i, "quantity", e.target.value)} className="w-[4.5rem] text-sm h-9" type="number" step="any" />
               <Select value={ing.unit || "none"} onValueChange={(v) => updateIng(i, "unit", v === "none" ? "" : v)}>
                 <SelectTrigger className="w-[4.5rem] text-sm h-9"><SelectValue placeholder="Ud." /></SelectTrigger>
@@ -149,6 +171,14 @@ export function ComponentEditor({ component, index, total, onChange, onDelete, o
               <button type="button" onClick={() => onChange({ ...component, ingredients: component.ingredients.filter((_, idx) => idx !== i) })} className="text-destructive/60 hover:text-destructive p-1">
                 <Trash2 size={13} />
               </button>
+            </div>
+            <IngredientCatalogSuggestion
+              displayName={ing.display_name}
+              currentIngredientId={ing.ingredient_id}
+              dismissed={ing.suggestion_dismissed}
+              onAccept={(id) => acceptIngredientLink(i, id)}
+              onDismiss={() => dismissIngredientSuggestion(i)}
+            />
             </div>
           ))}
         </div>

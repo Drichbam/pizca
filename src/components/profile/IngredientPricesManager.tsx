@@ -117,6 +117,16 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
 
   const { data: catalog } = useIngredientCatalog();
 
+  const catalogLinkLabel = useMemo(() => {
+    if (!catalog || form.ingredient_name.trim().length < 2) return null;
+    const matchIds = findMatchingIngredientIds(form.ingredient_name, catalog);
+    if (!matchIds.length) return form.ingredient_name.trim().length >= 3 ? "" : null;
+    const match = catalog.find(c => c.id === matchIds[0]);
+    if (!match) return null;
+    const t = (match.translations as Record<string, string>) || {};
+    return t["es"] || t["fr"] || t["en"] || match.canonical_name;
+  }, [catalog, form.ingredient_name]);
+
   // Query: precios existentes
   const { data: prices, isLoading } = useQuery({
     queryKey: ["ingredient_prices"],
@@ -358,6 +368,13 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
                 className="rounded-lg"
                 placeholder="Ej: harina"
               />
+              {catalogLinkLabel !== null && (
+                <p className={`text-xs mt-1 ${catalogLinkLabel ? "text-emerald-600" : "text-amber-600"}`}>
+                  {catalogLinkLabel
+                    ? `Se vinculará a: ${catalogLinkLabel}`
+                    : "No reconocido en catálogo — se guardará igualmente"}
+                </p>
+              )}
               <IngredientPriceSearchPanel ingredientName={form.ingredient_name} />
             </div>
             <div>

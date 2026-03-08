@@ -136,12 +136,12 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("display_name, ingredient_id");
+        .select("name, ingredient_id");
       if (error) throw error;
       // Deduplicar: por ingredient_id cuando existe, por nombre normalizado si no
       const seen = new Map<string, { name: string; ingredient_id: string | null }>();
       (data || []).forEach((r) => {
-        const n = r.display_name?.trim();
+        const n = r.name?.trim();
         // Filtrar textos muy largos o con comas/puntos (pasos importados por error)
         if (!n || n.length > 60 || n.includes(",") || n.includes(".")) return;
         const key = r.ingredient_id ? `id:${r.ingredient_id}` : `name:${n.toLowerCase()}`;

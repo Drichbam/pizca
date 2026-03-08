@@ -142,7 +142,7 @@ export function RecipeCostsTab({ recipe, onAddPrice }: Props) {
                             variant="ghost"
                             size="sm"
                             className="h-6 px-2 text-xs text-muted-foreground hover:text-primary"
-                            onClick={() => onAddPrice?.(ingredient.display_name)}
+                            onClick={() => onAddPrice?.(ingredient.name)}
                           >
                             <HelpCircle className="h-3 w-3 mr-1" />?
                           </Button>

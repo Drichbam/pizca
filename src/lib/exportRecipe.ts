@@ -37,7 +37,7 @@ function recipeToJson(recipe: RecipeWithComponents) {
         .map((ing) => ({
           cantidad: ing.quantity ?? null,
           unidad: ing.unit || null,
-          ingrediente: ing.display_name,
+          ingrediente: ing.name,
         })),
     })),
     preparacion: components

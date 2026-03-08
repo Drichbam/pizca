@@ -50,7 +50,7 @@ export function groupIngredients(
         quantitiesByUnit: new Map(),
       });
     } else {
-      groups.get(key)!.displayNames.add(ing.display_name);
+      groups.get(key)!.displayNames.add(ing.name);
     }
 
     const group = groups.get(key)!;

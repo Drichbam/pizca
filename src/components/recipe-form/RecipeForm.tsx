@@ -228,7 +228,7 @@ export function RecipeForm({ recipeId, initialRecipe }: Props) {
 
         const ings = comp.ingredients.filter(i => i.display_name.trim());
         if (ings.length) await supabase.from("recipe_ingredients").insert(
-          ings.map((ig, i) => ({ component_id: nc.id, display_name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
+          ings.map((ig, i) => ({ component_id: nc.id, name: ig.display_name.trim(), quantity: num(ig.quantity), unit: (ig.unit || null) as any, sort_order: i }))
         );
         const stps = comp.steps.filter(s => s.description.trim());
         if (stps.length) {

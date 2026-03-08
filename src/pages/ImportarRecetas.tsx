@@ -613,7 +613,7 @@ export default function ImportarRecetas() {
 
           const ingredients = comp.ingredientes.map((ing, j) => ({
             component_id: newComp.id,
-            display_name: ing.ingrediente,
+            name: ing.ingrediente,
             quantity: ing.cantidad ?? null,
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,
@@ -622,7 +622,7 @@ export default function ImportarRecetas() {
             const { data: inserted } = await supabase
               .from("recipe_ingredients")
               .insert(ingredients)
-              .select("id, display_name");
+              .select("id, name");
             if (inserted) insertedIngredients.push(...inserted);
           }
         }

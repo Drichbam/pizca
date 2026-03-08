@@ -159,11 +159,11 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
       if (!activeIngredientName) return [];
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("component_id, display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("component_id, name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       // Filtrar por nombre (case-insensitive)
       const matches = (data || []).filter(
-        (r: any) => r.display_name?.trim().toLowerCase() === activeIngredientName
+        (r: any) => r.name?.trim().toLowerCase() === activeIngredientName
       );
       // Deduplicar por recipe id
       const seen = new Set<string>();

@@ -64,10 +64,10 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       const matches = (data || []).filter(
-        (r: any) => r.display_name?.trim().toLowerCase() === normalizedName
+        (r: any) => r.name?.trim().toLowerCase() === normalizedName
       );
       const seen = new Set<string>();
       const result: { id: string; title: string }[] = [];

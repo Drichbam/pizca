@@ -300,7 +300,7 @@ export function RecipePdfDocument({ recipe }: Props) {
                         {ing.quantity != null ? String(ing.quantity) : ""}
                       </Text>
                       <Text style={styles.ingredientUnit}>{ing.unit || ""}</Text>
-                      <Text style={styles.ingredientName}>{ing.display_name}</Text>
+                      <Text style={styles.ingredientName}>{ing.name}</Text>
                     </View>
                   ))}
                 </View>

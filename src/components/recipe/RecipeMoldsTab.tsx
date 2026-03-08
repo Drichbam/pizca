@@ -185,11 +185,11 @@ export function RecipeMoldsTab({ recipe }: Props) {
                     <tbody>
                       {ingredients.map((ing) => {
                         const adapted = ing.quantity != null
-                          ? smartRound(ing.quantity * factor, ing.unit, ing.display_name)
+                          ? smartRound(ing.quantity * factor, ing.unit, ing.name)
                           : null;
                         return (
                           <tr key={ing.id} className="border-b border-border/50 last:border-0">
-                            <td className="py-1.5 text-foreground">{ing.display_name}</td>
+                            <td className="py-1.5 text-foreground">{ing.name}</td>
                             <td className="py-1.5 text-right tabular-nums text-muted-foreground">
                               {ing.quantity != null ? `${ing.quantity} ${ing.unit || ""}` : "QS"}
                             </td>

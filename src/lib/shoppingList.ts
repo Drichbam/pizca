@@ -32,25 +32,25 @@ export function groupIngredients(
   for (const ing of ingredients) {
     const key = ing.ingredient_id
       ? `id:${ing.ingredient_id}`
-      : `raw:${normalize(ing.display_name)}`;
+      : `raw:${normalize(ing.name)}`;
 
     if (!groups.has(key)) {
-      let label = ing.display_name;
+      let label = ing.name;
       if (ing.ingredient_id) {
         const cat = catalogMap.get(ing.ingredient_id);
         if (cat) {
           const t = (cat.translations as Record<string, string>) || {};
-          label = t[lang] || t["es"] || t["fr"] || t["en"] || ing.display_name;
+          label = t[lang] || t["es"] || t["fr"] || t["en"] || ing.name;
         }
       }
       groups.set(key, {
         ingredient_id: ing.ingredient_id ?? null,
-        displayNames: new Set([ing.display_name]),
+        displayNames: new Set([ing.name]),
         label,
         quantitiesByUnit: new Map(),
       });
     } else {
-      groups.get(key)!.displayNames.add(ing.display_name);
+      groups.get(key)!.displayNames.add(ing.name);
     }
 
     const group = groups.get(key)!;

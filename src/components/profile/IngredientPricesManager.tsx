@@ -64,10 +64,10 @@ function IngredientRecipesList({ ingredientName, navigate }: { ingredientName: s
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       const matches = (data || []).filter(
-        (r: any) => r.display_name?.trim().toLowerCase() === normalizedName
+        (r: any) => r.name?.trim().toLowerCase() === normalizedName
       );
       const seen = new Set<string>();
       const result: { id: string; title: string }[] = [];
@@ -136,12 +136,12 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
     queryFn: async () => {
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("display_name, ingredient_id");
+        .select("name, ingredient_id");
       if (error) throw error;
       // Deduplicar: por ingredient_id cuando existe, por nombre normalizado si no
       const seen = new Map<string, { name: string; ingredient_id: string | null }>();
       (data || []).forEach((r) => {
-        const n = r.display_name?.trim();
+        const n = r.name?.trim();
         // Filtrar textos muy largos o con comas/puntos (pasos importados por error)
         if (!n || n.length > 60 || n.includes(",") || n.includes(".")) return;
         const key = r.ingredient_id ? `id:${r.ingredient_id}` : `name:${n.toLowerCase()}`;
@@ -159,11 +159,11 @@ export function IngredientPricesManager({ initialIngredient, initialBarcode }: P
       if (!activeIngredientName) return [];
       const { data, error } = await supabase
         .from("recipe_ingredients")
-        .select("component_id, display_name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
+        .select("component_id, name, recipe_components!inner(recipe_id, recipes!inner(id, title))");
       if (error) throw error;
       // Filtrar por nombre (case-insensitive)
       const matches = (data || []).filter(
-        (r: any) => r.display_name?.trim().toLowerCase() === activeIngredientName
+        (r: any) => r.name?.trim().toLowerCase() === activeIngredientName
       );
       // Deduplicar por recipe id
       const seen = new Set<string>();

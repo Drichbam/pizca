@@ -602,7 +602,7 @@ export default function ImportarRecetas() {
 
         // Components + Ingredients
         const compMap = new Map<string, string>(); // compName -> compId
-        const insertedIngredients: { id: string; display_name: string }[] = [];
+        const insertedIngredients: { id: string; name: string }[] = [];
         for (let ci = 0; ci < r.json.componentes.length; ci++) {
           const comp = r.json.componentes[ci];
           const { data: newComp } = await supabase.from("recipe_components").insert({
@@ -613,7 +613,7 @@ export default function ImportarRecetas() {
 
           const ingredients = comp.ingredientes.map((ing, j) => ({
             component_id: newComp.id,
-            display_name: ing.ingrediente,
+            name: ing.ingrediente,
             quantity: ing.cantidad ?? null,
             unit: (VALID_UNITS.includes(ing.unidad as IngredientUnit) ? ing.unidad : null) as IngredientUnit | null,
             sort_order: j,
@@ -622,7 +622,7 @@ export default function ImportarRecetas() {
             const { data: inserted } = await supabase
               .from("recipe_ingredients")
               .insert(ingredients)
-              .select("id, display_name");
+              .select("id, name");
             if (inserted) insertedIngredients.push(...inserted);
           }
         }

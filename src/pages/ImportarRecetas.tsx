@@ -602,7 +602,7 @@ export default function ImportarRecetas() {
 
         // Components + Ingredients
         const compMap = new Map<string, string>(); // compName -> compId
-        const insertedIngredients: { id: string; display_name: string }[] = [];
+        const insertedIngredients: { id: string; name: string }[] = [];
         for (let ci = 0; ci < r.json.componentes.length; ci++) {
           const comp = r.json.componentes[ci];
           const { data: newComp } = await supabase.from("recipe_components").insert({

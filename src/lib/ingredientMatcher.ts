@@ -32,14 +32,14 @@ function findIngredientId(displayName: string, catalog: Ingredient[]): string | 
 }
 
 export async function enrichWithIngredientIds(
-  ingredients: { id: string; display_name: string }[]
+  ingredients: { id: string; name: string }[]
 ): Promise<void> {
   const { data: catalog } = await supabase.from("ingredients").select("*");
   if (!catalog?.length) return;
 
   const updates: { id: string; ingredient_id: string }[] = [];
   for (const ing of ingredients) {
-    const ingredientId = findIngredientId(ing.display_name, catalog as Ingredient[]);
+    const ingredientId = findIngredientId(ing.name, catalog as Ingredient[]);
     if (ingredientId) updates.push({ id: ing.id, ingredient_id: ingredientId });
   }
 
